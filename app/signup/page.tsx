@@ -1,30 +1,14 @@
+"use client"
 import * as React from "react";
 import logo from "../assets/images/logo/onthegoLogo.jpg";
 import Image from "next/image";
-import * as yup from "yup";
-import { Formik } from "formik";
+import { useDispatch } from "react-redux";
 
-interface SignUpFormValues {
-  firstName: string;
-  lastName: string;
-  email: string | null;
-  mobile: string;
-  password: string;
-}
-
-let signUpSchema = yup.object().shape({
-  firstName: yup.string().required("First Name is Required"),
-  lastName: yup.string().required("Last Name is Required"),
-  email: yup
-    .string()
-    .nullable()
-    .email("Email should be valid")
-    .required("Email is Required"),
-  mobile: yup.string().required("Mobile No. is Required"),
-  password: yup.string().required("Password is Required"),
-});
 
 export default function page() {
+ 
+  const dispatch = useDispatch()
+
   return (
     <section className="bg-gray-50 ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -39,19 +23,14 @@ export default function page() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
               Create an account
             </h1>
-            <form onSubmit={Formik.handleSubmit} action="#">
+            
+            <form action="#">
               <div className="space-y-4 md:space-y-6 grid grid-cols-2 gap-2">
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 ">
                     Enter name here
                   </label>
                   <input
-                    // type="text"
-                    // name="firstName"
-                    // placeholder="Your First Name Here"
-                    value={formik.values.firstName}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     type="text"
                     name="name"
                     id="name"
