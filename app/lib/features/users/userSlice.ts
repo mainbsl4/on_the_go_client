@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { base_url } from "../../../utils/config";
+// import { redirect } from "next/navigation";
 
 interface UserState {
   user: any;
@@ -42,6 +43,7 @@ export const signinUser = createAsyncThunk(
       }
       if(response.data.token){
         window.location.href = "/dashbord";
+        // redirect('/dashbord')
       }
 
       return response.data;
