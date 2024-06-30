@@ -22,6 +22,11 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../lib/store/store";
+import { getUser } from "../lib/features/users/userSlice";
+
 
 const linkData = [
   {
@@ -76,7 +81,7 @@ const linkData = [
   //   ),
   //   link: "/dashbord/cancle-booking",
   // },
-  
+
   {
     id: 6,
     text: "Lone Request",
@@ -84,6 +89,63 @@ const linkData = [
     link: "/dashbord/lone-request",
   },
 ];
+const userLinkData = [
+
+  {
+    id: 7,
+    text: "Visa Apply",
+    icon: <Icon className="text-3xl" icon="codicon:git-stash-apply" />,
+    link: "/dashbord/visa-apply",
+  },
+  {
+    id: 8,
+    text: "Visa Application List",
+    icon: (
+      <Icon
+        className="text-3xl"
+        icon="streamline:task-list"
+      />
+    ),
+    link: "/dashbord/visa-application-list",
+  },
+  {
+    id: 2,
+    text: "Bank Details",
+    icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
+    link: "/dashbord/bank-details",
+  },
+  {
+    id: 3,
+    text: "Deposit Request",
+    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
+    link: "/dashbord/deposit-request",
+  },
+  {
+    id: 4,
+    text: "Top Up",
+    icon: <Icon className="text-3xl" icon="solar:circle-top-up-broken" />,
+    link: "/dashbord/top-up",
+  },
+  // {
+  //   id: 5,
+  //   text: "Cancel Booking",
+  //   icon: (
+  //     <Icon
+  //       className="text-3xl"
+  //       icon="material-symbols-light:free-cancellation"
+  //     />
+  //   ),
+  //   link: "/dashbord/cancle-booking",
+  // },
+
+  {
+    id: 6,
+    text: "Lone Request",
+    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    link: "/dashbord/lone-request",
+  },
+];
+
 
 const drawerWidth = 240;
 
@@ -172,6 +234,38 @@ export default function RootLayout({
     setOpen(false);
   };
 
+
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state?.user?.user);
+  const userId = JSON.parse(localStorage?.getItem('userId'))
+  const isRole = user?.data?.role ? user?.data?.role : user?.user?.role
+
+  const router = useRouter();
+  React.useEffect(() => {
+    if (!user) {
+      dispatch(getUser(userId))
+    }
+  }, [user]);
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const storedUserId = localStorage.getItem('userId');
+      const parsedUserId = storedUserId ? JSON.parse(storedUserId) : null;
+      const mainId = user?.data?.id ? user?.data?.id : user?.user?.id
+      if (parsedUserId !== mainId) {
+        router.push('/signin');
+      } else {
+        console.log('User IDs match, staying on the current page.');
+      }
+    }, 3000); // 5 seconds delay
+
+    // Clean up the timeout if the component unmounts
+    return () => clearTimeout(timeoutId);
+  }, [user, router]);
+
+
+
+
   return (
     <div>
       {/* <Icon icon="mdi-light:home" /> */}
@@ -207,16 +301,36 @@ export default function RootLayout({
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List>
-            {linkData.map((linkData) => (
-              <Link href={linkData.link} key={linkData.text}>
-                <ListItem>
-                  <ListItemIcon>{linkData.icon}</ListItemIcon>
-                  <ListItemText primary={linkData.text} />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
+
+
+          {
+            isRole === "admin" ? (
+              <List>
+                {linkData?.map((linkData) => (
+                  <Link href={linkData?.link} key={linkData?.text}>
+                    <ListItem>
+                      <ListItemIcon>{linkData?.icon}</ListItemIcon>
+                      <ListItemText primary={linkData?.text} />
+                    </ListItem>
+                  </Link>
+                ))}
+              </List>
+            ) : (
+              <List>
+                {userLinkData?.map((linkData) => (
+                  <Link href={linkData?.link} key={linkData?.text}>
+                    <ListItem>
+                      <ListItemIcon>{linkData?.icon}</ListItemIcon>
+                      <ListItemText primary={linkData?.text} />
+                    </ListItem>
+                  </Link>
+                ))}
+              </List>
+            )
+          }
+
+
+
           <Divider />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/images/logo/onthegoLogo.jpg";
 import { Field, Form, Formik } from "formik";
 import { SigninFormValues } from "../types/formTypes";
@@ -9,10 +9,12 @@ import { signinUser } from "../lib/features/users/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../lib/store/store";
-
+import { useRouter } from "next/navigation";
 // import '../assets/css/style.css'
 
 export default function page() {
+
+  const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user);
   console.log("hooo", user);
@@ -20,9 +22,27 @@ export default function page() {
   const initialValues: SigninFormValues = { credential: "", password: "" };
 
   const handleSubmit = async (values: SigninFormValues) => {
-    dispatch(signinUser(values));
+   
+
+    try {
+      // Dispatch the action to log in the user
+      const response = await  dispatch(signinUser(values));;
+
+      if (!response?.error) {
+        console.log("ress",response);
+        router.push('/dashbord');
+      } else {
+        console.error('Login failed:', response.error);
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+
     console.log(values);
   };
+
+
+
   return (
     <section className="bg-gray-50 ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

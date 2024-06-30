@@ -39,13 +39,26 @@ export const signinUser = createAsyncThunk(
       console.log(response);
       if (response.data) {
         localStorage.setItem("token", response.data.token);
-        // localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('userId', JSON.stringify(response.data.user.id));
       }
-      if(response.data.token){
-        window.location.href = "/dashbord";
-        // redirect('/dashbord')
-      }
+      // if(response.data.token){
+      //   window.location.href = "/dashbord";
+      //   redirect('/dashbord')
+      // }
 
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  "user/getUser",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}user/${id}`);
+      console.log(response);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
@@ -80,6 +93,17 @@ const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(signinUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      }) .addCase(getUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
