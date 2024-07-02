@@ -309,7 +309,7 @@ const handleRoute = (params) => {
           {isRole === "admin" ? (
             <List>
               {linkData?.map((linkData) => (
-                <div  onClick={()=> handleRoute(linkData?.link)}  key={linkData?.text}>
+                <div className="cursor-pointer" onClick={()=> handleRoute(linkData?.link)}  key={linkData?.text}>
                   <ListItem>
                     <ListItemIcon>{linkData?.icon}</ListItemIcon>
                     <ListItemText primary={linkData?.text} />
@@ -320,7 +320,7 @@ const handleRoute = (params) => {
           ) : (
             <List>
               {userLinkData?.map((linkData) => (
-                <div  onClick={()=> handleRoute(linkData?.link)} key={linkData?.text}>
+                <div className="cursor-pointer" onClick={()=> handleRoute(linkData?.link)} key={linkData?.text}>
                   <ListItem>
                     <ListItemIcon>{linkData?.icon}</ListItemIcon>
                     <ListItemText primary={linkData?.text} />

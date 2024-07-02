@@ -23,3 +23,9 @@ export interface CreateBankDetailsFormValues {
   accNo: string;
   branch: string;
 }
+export interface UpdateBankDetailsFormValues {
+  bankName: string;
+  accName: string;
+  accNo: string;
+  branch: string;
+}

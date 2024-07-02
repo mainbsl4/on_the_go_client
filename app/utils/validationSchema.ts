@@ -27,3 +27,9 @@ export const CreateBankDetailsSchema = Yup.object().shape({
   accNo: Yup.string().required("Acc No is required"),
   branch: Yup.string().required("Branch is required"),
 });
+export const UpdateBankDetailsSchema = Yup.object().shape({
+  bankName: Yup.string().required("Bank Name is required"),
+  accName: Yup.string().required("Acc Name is required"),
+  accNo: Yup.string().required("Acc No is required"),
+  branch: Yup.string().required("Branch is required"),
+});

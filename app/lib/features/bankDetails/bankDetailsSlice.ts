@@ -19,25 +19,29 @@ export const createBankDetails = createAsyncThunk(
   "bankDetails/createBankDetails",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}mst_bank_details/create`, data);
+      const response = await axios.post(
+        `${base_url}mst_bank_details/create`,
+        data
+      );
       console.log(response);
-    //   if (response.data) {
-    //     // localStorage.setItem("token", response.data.token);
-    //     // localStorage.setItem('user', JSON.stringify(response.data.user));
-    //   }
+      //   if (response.data) {
+      //     // localStorage.setItem("token", response.data.token);
+      //     // localStorage.setItem('user', JSON.stringify(response.data.user));
+      //   }
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   }
 );
-
 
 export const getBankDetails = createAsyncThunk(
-  'bankDetails/getBankDetails',
+  "bankDetails/getBankDetails",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}mst_bank_details/allBankDetails`);
+      const response = await axios.get(
+        `${base_url}mst_bank_details/allBankDetails`
+      );
       console.log(response);
       return response.data;
     } catch (err: any) {
@@ -46,12 +50,15 @@ export const getBankDetails = createAsyncThunk(
   }
 );
 
-
-export const deleteBankDetail = createAsyncThunk(
-   "bankDetails/deleteBankDetail",
-  async (id, { rejectWithValue }) => {
+export const updateBankDetails = createAsyncThunk(
+  "bankDetails/updateBankDetails",
+  async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${base_url}mst_bank_details/delete/${id}`);
+      const response = await axios.put(
+        `${base_url}mst_bank_details/update/${id}`,
+        data
+      );
+      console.log(response);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
@@ -59,6 +66,19 @@ export const deleteBankDetail = createAsyncThunk(
   }
 );
 
+export const deleteBankDetail = createAsyncThunk(
+  "bankDetails/deleteBankDetail",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `${base_url}mst_bank_details/delete/${id}`
+      );
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 const bankDetailsSlice = createSlice({
   name: "bankDetails",
@@ -77,7 +97,8 @@ const bankDetailsSlice = createSlice({
       .addCase(createBankDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(getBankDetails.pending, (state) => {
+      })
+      .addCase(getBankDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -88,7 +109,20 @@ const bankDetailsSlice = createSlice({
       .addCase(getBankDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(deleteBankDetail.pending, (state) => {
+      })
+      .addCase(updateBankDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateBankDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bankDetails = action.payload;
+      })
+      .addCase(updateBankDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteBankDetail.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -100,7 +134,6 @@ const bankDetailsSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       });
-     
   },
 });
 
