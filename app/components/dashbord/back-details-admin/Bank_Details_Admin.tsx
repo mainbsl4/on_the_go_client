@@ -11,13 +11,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import { CreateBankDetailsSchema } from "../../../utils/validationSchema";
 import { CreateBankDetailsFormValues } from "../../../types/formTypes";
 import { useDispatch } from "react-redux";
-import { createBankDetails } from "../../../lib/features/bankDetails/bankDetailsSlice";
+import { createBankDetails, deleteBankDetail, getBankDetails } from "../../../lib/features/bankDetails/bankDetailsSlice";
+import { RootState } from "../../../lib/store/store";
+import { useSelector } from "react-redux";
 
 //for modal style
 const style = {
@@ -33,6 +35,7 @@ const style = {
 };
 
 export default function Bank_Details_Admin() {
+  const [delId, setDelId] = useState('')
   // for modal
   // fot add modal
   const [openModalForAdd, setOpenModalForAdd] = React.useState(false);
@@ -46,6 +49,10 @@ export default function Bank_Details_Admin() {
   // for delete
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
 
+  const bankDetailsList = useSelector((state: RootState) => state?.bankDetails?.bankDetails?.data);
+
+  const reversedBankDetailsList = bankDetailsList?.slice().reverse();
+  console.log(reversedBankDetailsList);
 
   // for call api data 
   const dispatch = useDispatch();
@@ -58,18 +65,42 @@ export default function Bank_Details_Admin() {
     branch: "",
   };
 
+
+  const actionDataGet = (sec) => {
+    setTimeout(() => {
+      dispatch(getBankDetails());
+    }, sec);
+  }
+
   const handleSubmit = (values: CreateBankDetailsFormValues) => {
     dispatch(createBankDetails(values))
+
+    actionDataGet(700)
     console.log(values);
+    setOpenModalForAdd(false)
   };
 
-  const handleClickOpenModalForDelete = () => {
+  const handleClickOpenModalForDelete = (id) => {
     setOpenModalForDelete(true);
+    setDelId(id)
   };
 
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
   };
+
+
+
+  React.useEffect(() => {
+    dispatch(getBankDetails());
+  }, []);
+
+  const deleteList = (id) => {
+    dispatch(deleteBankDetail(id));
+    actionDataGet(700)
+    setOpenModalForDelete(false)
+  }
+
 
   return (
     <div>
@@ -100,35 +131,40 @@ export default function Bank_Details_Admin() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b ">
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                NCC Bank
-              </td>
-              <td className="px-6 py-4">Airspan Limited</td>
-              <td className="px-6 py-4">0325000050</td>
-              <td className="px-6 py-4">Mirpur Road Branch</td>
-              <td className="px-6 py-4">
-                <Stack direction="row" spacing={1}>
-                  <IconButton
-                    aria-label="edit"
-                    color="info"
-                    onClick={handleOpenModalForEdit}
-                  >
-                    <Icon icon="bxs:edit" />
-                  </IconButton>
-                  <IconButton
-                    aria-label="delete"
-                    color="error"
-                    onClick={handleClickOpenModalForDelete}
-                  >
-                    <Icon icon="mdi:delete-outline" />
-                  </IconButton>
-                </Stack>
-              </td>
-            </tr>
+
+            {reversedBankDetailsList?.map((listItem) => (
+              <tr className="bg-white border-b ">
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                >
+                  {listItem?.bankName}
+                </td>
+                <td className="px-6 py-4">{listItem?.accName}</td>
+                <td className="px-6 py-4">{listItem?.accNo}</td>
+                <td className="px-6 py-4">{listItem?.branch}</td>
+                <td className="px-6 py-4">
+                  <Stack direction="row" spacing={1}>
+                    <IconButton
+                      aria-label="edit"
+                      color="info"
+                      onClick={handleOpenModalForEdit}
+                    >
+                      <Icon icon="bxs:edit" />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      color="error"
+                      onClick={() => handleClickOpenModalForDelete(listItem?.id)}
+                    >
+                      <Icon icon="mdi:delete-outline" />
+                    </IconButton>
+                  </Stack>
+                </td>
+              </tr>
+            ))}
+
+
           </tbody>
         </table>
       </div>
@@ -264,25 +300,25 @@ export default function Bank_Details_Admin() {
                   </Field>
 
                   <Field name="accNo">
-                      <TextField
-                        id="outlined-basic"
-                        label="A/C NO"
-                        variant="outlined"
-                        type="text"
-                        error={touched.accNo && !!errors.accNo}
-                        helperText={touched.accNo && errors.accNo}
-                      />
+                    <TextField
+                      id="outlined-basic"
+                      label="A/C NO"
+                      variant="outlined"
+                      type="text"
+                      error={touched.accNo && !!errors.accNo}
+                      helperText={touched.accNo && errors.accNo}
+                    />
                   </Field>
 
                   <Field name="branch">
-                      <TextField
-                        id="outlined-basic"
-                        label="Branch"
-                        variant="outlined"
-                        type="text"
-                        error={touched.branch && !!errors.branch}
-                        helperText={touched.branch && errors.branch}
-                      />
+                    <TextField
+                      id="outlined-basic"
+                      label="Branch"
+                      variant="outlined"
+                      type="text"
+                      error={touched.branch && !!errors.branch}
+                      helperText={touched.branch && errors.branch}
+                    />
                   </Field>
                 </div>
                 <div className="flex justify-center items-center mt-3">
@@ -314,7 +350,7 @@ export default function Bank_Details_Admin() {
           </DialogTitle>
           <DialogActions>
             <Button
-              onClick={handleCloseModalForDelete}
+              onClick={() => deleteList(delId)}
               variant="contained"
               color="error"
             >

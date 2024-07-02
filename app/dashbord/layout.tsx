@@ -22,11 +22,10 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../lib/store/store";
 import { getUser } from "../lib/features/users/userSlice";
-
+import { useRouter } from "next/navigation";
 const linkData = [
   {
     id: 1,
@@ -139,6 +138,10 @@ const userLinkData = [
     link: "/dashbord/lone-request",
   },
 ];
+
+
+
+
 
 const drawerWidth = 240;
 
@@ -260,6 +263,13 @@ export default function RootLayout({
     }
   }, [user, router]);
 
+  
+
+
+const handleRoute = (params) => {
+  router.push(params);
+}
+
   return (
     <div>
       {/* <Icon icon="mdi-light:home" /> */}
@@ -299,23 +309,23 @@ export default function RootLayout({
           {isRole === "admin" ? (
             <List>
               {linkData?.map((linkData) => (
-                <Link href={linkData?.link} key={linkData?.text}>
+                <div  onClick={()=> handleRoute(linkData?.link)}  key={linkData?.text}>
                   <ListItem>
                     <ListItemIcon>{linkData?.icon}</ListItemIcon>
                     <ListItemText primary={linkData?.text} />
                   </ListItem>
-                </Link>
+                </div>
               ))}
             </List>
           ) : (
             <List>
               {userLinkData?.map((linkData) => (
-                <Link href={linkData?.link} key={linkData?.text}>
+                <div  onClick={()=> handleRoute(linkData?.link)} key={linkData?.text}>
                   <ListItem>
                     <ListItemIcon>{linkData?.icon}</ListItemIcon>
                     <ListItemText primary={linkData?.text} />
                   </ListItem>
-                </Link>
+                </div>
               ))}
             </List>
           )}

@@ -31,40 +31,34 @@ export const createBankDetails = createAsyncThunk(
     }
   }
 );
-// export const signinUser = createAsyncThunk(
-//   "user/signinUser",
-//   async (userData, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(`${base_url}user/login`, userData);
-//       console.log(response);
-//       if (response.data) {
-//         localStorage.setItem("token", response.data.token);
-//         localStorage.setItem('userId', JSON.stringify(response.data.user.id));
-//       }
-//       // if(response.data.token){
-//       //   window.location.href = "/dashbord";
-//       //   redirect('/dashbord')
-//       // }
 
-//       return response.data;
-//     } catch (err: any) {
-//       return rejectWithValue(err.response.data);
-//     }
-//   }
-// );
 
-// export const getUser = createAsyncThunk(
-//   "user/getUser",
-//   async (id, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(`${base_url}user/${id}`);
-//       console.log(response);
-//       return response.data;
-//     } catch (err: any) {
-//       return rejectWithValue(err.response.data);
-//     }
-//   }
-// );
+export const getBankDetails = createAsyncThunk(
+  'bankDetails/getBankDetails',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}mst_bank_details/allBankDetails`);
+      console.log(response);
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+
+export const deleteBankDetail = createAsyncThunk(
+   "bankDetails/deleteBankDetail",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${base_url}mst_bank_details/delete/${id}`);
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 
 const bankDetailsSlice = createSlice({
   name: "bankDetails",
@@ -83,7 +77,29 @@ const bankDetailsSlice = createSlice({
       .addCase(createBankDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      }).addCase(getBankDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
+      .addCase(getBankDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bankDetails = action.payload;
+      })
+      .addCase(getBankDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      }).addCase(deleteBankDetail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteBankDetail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bankDetails = action.payload;
+      })
+      .addCase(deleteBankDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
      
   },
 });
