@@ -13,8 +13,13 @@ export interface SignupFormValues {
   city: string;
 }
 
-
 export interface SigninFormValues {
   credential: string;
   password: string;
+}
+export interface CreateBankDetailsFormValues {
+  bankName: string;
+  accName: string;
+  accNo: string;
+  branch: string;
 }

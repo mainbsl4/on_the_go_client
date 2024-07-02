@@ -46,12 +46,12 @@ const linkData = [
     icon: <Icon className="text-3xl" icon="streamline:task-list" />,
     link: "/dashbord/visa-application-list",
   },
-  {
-    id: 2,
-    text: "Bank Details",
-    icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
-    link: "/dashbord/bank-details",
-  },
+  // {
+  //   id: 2,
+  //   text: "Bank Details Admin",
+  //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
+  //   link: "/dashbord/bank-details-admin",
+  // },
   {
     id: 3,
     text: "Deposit Request",
@@ -97,11 +97,17 @@ const userLinkData = [
     link: "/dashbord/visa-application-list",
   },
   {
-    id: 2,
-    text: "Bank Details",
+    id: 8,
+    text: "Bank Details Admin",
     icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
-    link: "/dashbord/bank-details",
+    link: "/dashbord/bank-details-admin",
   },
+  // {
+  //   id: 2,
+  //   text: "Bank Details",
+  //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
+  //   link: "/dashbord/bank-details",
+  // },
   {
     id: 3,
     text: "Deposit Request",

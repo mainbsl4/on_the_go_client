@@ -20,3 +20,10 @@ export const SigninFormSchema = Yup.object().shape({
   credential: Yup.string().required("Email Or Phone is required"),
   password: Yup.string().required("Password is required"),
 });
+
+export const CreateBankDetailsSchema = Yup.object().shape({
+  bankName: Yup.string().required("Bank Name is required"),
+  accName: Yup.string().required("Acc Name is required"),
+  accNo: Yup.string().required("Acc No is required"),
+  branch: Yup.string().required("Branch is required"),
+});
