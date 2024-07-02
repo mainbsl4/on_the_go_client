@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 // import '../assets/css/style.css'
 
 export default function page() {
-
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user);
@@ -22,26 +21,22 @@ export default function page() {
   const initialValues: SigninFormValues = { credential: "", password: "" };
 
   const handleSubmit = async (values: SigninFormValues) => {
-   
-
     try {
       // Dispatch the action to log in the user
-      const response = await  dispatch(signinUser(values));;
+      const response = await dispatch(signinUser(values));
 
       if (!response?.error) {
-        console.log("ress",response);
-        router.push('/dashbord');
+        console.log("ress", response);
+        router.push("/dashbord");
       } else {
-        console.error('Login failed:', response.error);
+        console.error("Login failed:", response.error);
       }
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     }
 
     console.log(values);
   };
-
-
 
   return (
     <section className="bg-gray-50 ">
