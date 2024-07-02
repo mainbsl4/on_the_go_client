@@ -28,4 +28,15 @@ export interface UpdateBankDetailsFormValues {
   accName: string;
   accNo: string;
   branch: string;
+
+}
+export interface CreateVisaApplyFormValues {
+  givenName: string;
+  surName: string;
+  gender: string;
+  nationality: string;
+  passportNo: string;
+  passExpiryDate: string;
+  dob: string;
+  religion: string;
 }
