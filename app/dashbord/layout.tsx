@@ -154,12 +154,7 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="la:clone-solid" />,
     link: "/dashbord/lone-request",
   },
- 
 ];
-
-
-
-
 
 const drawerWidth = 240;
 
@@ -281,12 +276,9 @@ export default function RootLayout({
     }
   }, [user, router]);
 
-  
-
-
-const handleRoute = (params) => {
-  router.push(params);
-}
+  const handleRoute = (params) => {
+    router.push(params);
+  };
 
   return (
     <div>
@@ -327,7 +319,11 @@ const handleRoute = (params) => {
           {isRole === "admin" ? (
             <List>
               {linkData?.map((linkData) => (
-                <div className="cursor-pointer" onClick={()=> handleRoute(linkData?.link)}  key={linkData?.text}>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => handleRoute(linkData?.link)}
+                  key={linkData?.text}
+                >
                   <ListItem>
                     <ListItemIcon>{linkData?.icon}</ListItemIcon>
                     <ListItemText primary={linkData?.text} />
@@ -338,7 +334,11 @@ const handleRoute = (params) => {
           ) : (
             <List>
               {userLinkData?.map((linkData) => (
-                <div className="cursor-pointer" onClick={()=> handleRoute(linkData?.link)} key={linkData?.text}>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => handleRoute(linkData?.link)}
+                  key={linkData?.text}
+                >
                   <ListItem>
                     <ListItemIcon>{linkData?.icon}</ListItemIcon>
                     <ListItemText primary={linkData?.text} />
