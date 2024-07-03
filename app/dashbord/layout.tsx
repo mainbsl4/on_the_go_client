@@ -90,6 +90,12 @@ const userLinkData = [
     link: "/dashbord/visa-apply",
   },
   {
+    id: 88,
+    text: "Visa Application List Admin",
+    icon: <Icon className="text-3xl" icon="streamline:task-list" />,
+    link: "/dashbord/visa-application-list-admin",
+  },
+  {
     id: 8,
     text: "Visa Application List",
     icon: <Icon className="text-3xl" icon="streamline:task-list" />,
@@ -107,6 +113,12 @@ const userLinkData = [
   //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
   //   link: "/dashbord/bank-details",
   // },
+  {
+    id: 33,
+    text: "Deposit Request Admin",
+    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
+    link: "/dashbord/deposit-request-admin",
+  },
   {
     id: 3,
     text: "Deposit Request",
@@ -130,13 +142,19 @@ const userLinkData = [
   //   ),
   //   link: "/dashbord/cancle-booking",
   // },
-
+  {
+    id: 9,
+    text: "Lone Request Admin",
+    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    link: "/dashbord/lone-request-admin",
+  },
   {
     id: 6,
     text: "Lone Request",
     icon: <Icon className="text-3xl" icon="la:clone-solid" />,
     link: "/dashbord/lone-request",
   },
+ 
 ];
 
 
