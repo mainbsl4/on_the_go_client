@@ -30,6 +30,15 @@ export interface UpdateBankDetailsFormValues {
   branch: string;
 
 }
+
+export interface CreateLoneRequestValues{
+  reqDate: string;
+  settlmentDate: string;
+  amount: number;
+  remarks: string;
+  refNo: string;
+}
+
 export interface CreateVisaApplyFormValues {
   givenName: string;
   surName: string;
