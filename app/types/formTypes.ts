@@ -32,6 +32,7 @@ export interface UpdateBankDetailsFormValues {
 }
 
 export interface CreateLoneRequestValues{
+  userId: string;
   reqDate: string;
   settlmentDate: string;
   amount: number;
@@ -40,6 +41,7 @@ export interface CreateLoneRequestValues{
 }
 
 export interface CreateVisaApplyFormValues {
+  userId: string;
   givenName: string;
   surName: string;
   gender: string;

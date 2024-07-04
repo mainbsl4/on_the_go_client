@@ -13,6 +13,10 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../lib/store/store";
+import { useDispatch } from "react-redux";
+import { getAllLoanReq } from "../../../lib/features/loan/loanSlice";
 
 //for modal style
 const style = {
@@ -32,6 +36,16 @@ const style = {
 };
 
 export default function Lone_request_table() {
+  const dispatch = useDispatch();
+  const loanList = useSelector((state: RootState) => state?.loan?.loan?.data);
+
+console.log(loanList);
+
+
+React.useEffect(() => {
+  dispatch(getAllLoanReq());
+}, []);
+
   // for modal
   // for view modal
   const [openModalForView, setOpenModalForView] = React.useState(false);

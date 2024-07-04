@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Form, Formik, Field, useField, ErrorMessage } from "formik";
@@ -14,6 +14,8 @@ import { Box } from "@mui/material";
 import { CreateVisaApplyFormValues } from "../../../types/formTypes";
 import { CreateVisaApplySchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
+import { createVisaApply } from "../../../lib/features/visaApply/visaApplySlice";
+import { useDispatch } from "react-redux";
 
 const gender = [
   { label: "Male", year: 1994 },
@@ -37,7 +39,32 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Visa_Apply_Form() {
+
+
+  const [filePass, setFilePass] = useState(null);
+  const [filePassDoc, setFilePassDoc] = useState(null);
+  const [fileImage, setFileImage] = useState(null);
+  const dispatch = useDispatch();
+  console.log(filePass);
+  const userId = JSON.parse(localStorage?.getItem('userId'));
+  console.log(userId);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFilePass(selectedFile);
+  };
+  const handleFileChange1 = (event) => {
+    const selectedFile = event.target.files[0];
+    setFilePassDoc(selectedFile);
+  };
+  const handleFileChange2 = (event) => {
+    const selectedFile = event.target.files[0];
+    setFileImage(selectedFile);
+  };
+
+
   const initialValues: CreateVisaApplyFormValues = {
+    userId: userId,
     givenName: "",
     surName: "",
     gender: "",
@@ -46,12 +73,30 @@ export default function Visa_Apply_Form() {
     passExpiryDate: "",
     dob: "",
     religion: "",
+
   };
 
-  const handleSubmit = (values: CreateVisaApplyFormValues) => {
-    console.log(values);
-  };
+  const handleSubmit = async (values: CreateVisaApplyFormValues, { setSubmitting }) => {
+    const formData = new FormData();
+    Object.keys(values).forEach(key => {
+      formData.append(key, values[key]);
+    });
 
+    if (filePass) formData.append('passportPdf', filePass);
+    if (filePassDoc) formData.append('otherDocumentPdf', filePassDoc);
+    if (fileImage) formData.append('image', fileImage);
+
+    try {
+      const response = await dispatch(createVisaApply(formData)).unwrap();
+      console.log(response);
+      // Handle successful response
+    } catch (error) {
+      console.error('API Error:', error);
+      // Handle error response
+    } finally {
+      setSubmitting(false);
+    }
+  };
   return (
     <div className="border p-3">
       <Formik
@@ -240,7 +285,7 @@ export default function Visa_Apply_Form() {
                 startIcon={<Icon icon="ep:upload-filled" />}
               >
                 Upload Passport
-                <VisuallyHiddenInput type="file" />
+                <VisuallyHiddenInput type="file" onChange={handleFileChange} />
               </Button>
               <Button
                 component="label"
@@ -251,7 +296,7 @@ export default function Visa_Apply_Form() {
                 startIcon={<Icon icon="ep:upload-filled" />}
               >
                 Upload Photo
-                <VisuallyHiddenInput type="file" />
+                <VisuallyHiddenInput type="file" onChange={handleFileChange1} />
               </Button>
               <Button
                 component="label"
@@ -262,7 +307,7 @@ export default function Visa_Apply_Form() {
                 startIcon={<Icon icon="ep:upload-filled" />}
               >
                 Others Documents
-                <VisuallyHiddenInput type="file" />
+                <VisuallyHiddenInput type="file" onChange={handleFileChange2} />
               </Button>
             </div>
             <div className="text-center mt-3">

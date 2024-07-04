@@ -4,38 +4,36 @@ import { base_url } from "../../../utils/config";
 // import { redirect } from "next/navigation";
 
 interface UserState {
-  visaApply: any;
+  loan: any;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
-  visaApply: null,
+  loan: null,
   loading: false,
   error: null,
 };
 
-export const createVisaApply = createAsyncThunk(
-  'visaApply/createVisaApply',
+export const createLoanReq = createAsyncThunk(
+  "loan/createLoanReq",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}visa_apply/create`, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(`${base_url}loan_request/create`, data);
+      console.log(response);
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   }
 );
 
-export const getAllVisaApply = createAsyncThunk(
-  "visaApply/getAllVisaApply",
+
+export const getAllLoanReq = createAsyncThunk(
+  "loan/getAllLoanReq",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}visa_apply/all`);
+      const response = await axios.get(`${base_url}loan_request/all`);
       console.log(response);
       return response.data;
     } catch (err: any) {
@@ -47,12 +45,12 @@ export const getAllVisaApply = createAsyncThunk(
 
 
 
-export const updateVisaApplyStatus = createAsyncThunk(
-  "visaApply/updateVisaApplyStatus",
+export const updateLoanStatus = createAsyncThunk(
+  "loan/updateLoanStatus",
   async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${base_url}visa_apply/update-status/${id}`,
+        `${base_url}loan_request/update-status/${id}`,
         data
       );
       console.log(response);
@@ -64,12 +62,12 @@ export const updateVisaApplyStatus = createAsyncThunk(
 );
 
 
-export const deleteVisa = createAsyncThunk(
-  "visaApply/deleteVisa",
+export const deleteLoan = createAsyncThunk(
+  "loan/deleteLoan",
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${base_url}visa_apply/delete/${id}`
+        `${base_url}loan_request/delete/${id}`
       );
       return response.data;
     } catch (err: any) {
@@ -79,54 +77,54 @@ export const deleteVisa = createAsyncThunk(
 );
 
 
-const visaApplySlice = createSlice({
-  name: "visaApply",
+const loanSlice = createSlice({
+  name: "loan",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createVisaApply.pending, (state) => {
+      .addCase(createLoanReq.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(createVisaApply.fulfilled, (state, action) => {
+      .addCase(createLoanReq.fulfilled, (state, action) => {
         state.loading = false;
-        state.visaApply = action.payload;
+        state.loan = action.payload;
       })
-      .addCase(createVisaApply.rejected, (state, action) => {
+      .addCase(createLoanReq.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }) .addCase(getAllVisaApply.pending, (state) => {
+      }) .addCase(getAllLoanReq.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getAllVisaApply.fulfilled, (state, action) => {
+      .addCase(getAllLoanReq.fulfilled, (state, action) => {
         state.loading = false;
-        state.visaApply = action.payload;
+        state.loan = action.payload;
       })
-      .addCase(getAllVisaApply.rejected, (state, action) => {
+      .addCase(getAllLoanReq.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(updateVisaApplyStatus.pending, (state) => {
+      }).addCase(updateLoanStatus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateVisaApplyStatus.fulfilled, (state, action) => {
+      .addCase(updateLoanStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.visaApply = action.payload;
+        state.loan = action.payload;
       })
-      .addCase(updateVisaApplyStatus.rejected, (state, action) => {
+      .addCase(updateLoanStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(deleteVisa.pending, (state) => {
+      }).addCase(deleteLoan.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(deleteVisa.fulfilled, (state, action) => {
+      .addCase(deleteLoan.fulfilled, (state, action) => {
         state.loading = false;
-        state.visaApply = action.payload;
+        state.loan = action.payload;
       })
-      .addCase(deleteVisa.rejected, (state, action) => {
+      .addCase(deleteLoan.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
@@ -134,4 +132,4 @@ const visaApplySlice = createSlice({
   },
 });
 
-export default visaApplySlice.reducer;
+export default loanSlice.reducer;

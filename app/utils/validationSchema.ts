@@ -35,6 +35,7 @@ export const UpdateBankDetailsSchema = Yup.object().shape({
 });
 
 export const CreateLoneRequestSchema = Yup.object().shape({
+  userId:  Yup.string(),
   reqDate: Yup.string().required("Date is required"),
   settlmentDate: Yup.string().required("Settlment Date is required"),
   amount: Yup.number().required("Amount is required"),
@@ -43,6 +44,7 @@ export const CreateLoneRequestSchema = Yup.object().shape({
 })
 
 export const CreateVisaApplySchema = Yup.object().shape({
+  userId:  Yup.string(),
   givenName: Yup.string().required("Given Name is required"),
   surName: Yup.string().required("Sur Name is required"),
   gender: Yup.string().required("Gender No is required"),

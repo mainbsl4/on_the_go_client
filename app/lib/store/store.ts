@@ -3,6 +3,7 @@ import counterReducer from '../features/counter/counterSlice'
 import userReducer from '../features/users/userSlice'
 import bankDetailsReducer from '../features/bankDetails/bankDetailsSlice'
 import visaApplyReducer from '../features/visaApply/visaApplySlice'
+import loanReducer from '../features/loan/loanSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     user: userReducer,
     bankDetails: bankDetailsReducer,
     visaApply: visaApplyReducer,
+    loan: loanReducer,
   }
 })
 

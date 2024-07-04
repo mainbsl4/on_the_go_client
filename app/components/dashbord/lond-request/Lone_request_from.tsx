@@ -14,10 +14,25 @@ import { CreateLoneRequestValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { CreateLoneRequestSchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { createLoanReq, getAllLoanReq } from "../../../lib/features/loan/loanSlice";
+import { RootState } from "../../../lib/store/store";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export default function Lone_request_from() {
+
+  const userId = JSON.parse(localStorage.getItem('userId'));
+  console.log(userId);
+  
+
+  const dispatch = useDispatch();
+
+
+
+
   const initialValues: CreateLoneRequestValues = {
+    userId: userId,
     reqDate: "", // Change to null if reqDate is a Date object
     settlmentDate: "", // Change to null if settlmentDate is a Date object
     amount: 0,
@@ -27,6 +42,8 @@ export default function Lone_request_from() {
 
   const handleSubmit = (values: CreateLoneRequestValues) => {
     console.log(values);
+    dispatch(createLoanReq(values));
+
   };
 
   return (
