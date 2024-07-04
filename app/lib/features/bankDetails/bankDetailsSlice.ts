@@ -42,7 +42,7 @@ export const getBankDetails = createAsyncThunk(
       const response = await axios.get(
         `${base_url}mst_bank_details/allBankDetails`
       );
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
@@ -52,7 +52,7 @@ export const getBankDetails = createAsyncThunk(
 
 export const updateBankDetails = createAsyncThunk(
   "bankDetails/updateBankDetails",
-  async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
+  async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${base_url}mst_bank_details/update/${id}`,

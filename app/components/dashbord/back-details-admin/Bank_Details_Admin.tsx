@@ -13,13 +13,14 @@ import {
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Form, Formik, Field } from "formik";
-import { CreateBankDetailsSchema } from "../../../utils/validationSchema";
+import { CreateBankDetailsSchema, UpdateBankDetailsSchema } from "../../../utils/validationSchema";
 import { CreateBankDetailsFormValues, UpdateBankDetailsFormValues } from "../../../types/formTypes";
 import { useDispatch } from "react-redux";
 import {
   createBankDetails,
   deleteBankDetail,
   getBankDetails,
+  updateBankDetails,
 } from "../../../lib/features/bankDetails/bankDetailsSlice";
 import { RootState } from "../../../lib/store/store";
 import { useSelector } from "react-redux";
@@ -39,7 +40,9 @@ const style = {
 
 export default function Bank_Details_Admin() {
   const [delId, setDelId] = useState("");
-  const [editBankDetails, setEditBankDetails] = useState<UpdateBankDetailsFormValues | null>(null);
+  const [editBankDetails, setEditBankDetails] = useState('');
+  const [updateId, serUpdateId] = useState("");
+  
   
   // for modal
   const [openModalForAdd, setOpenModalForAdd] = useState(false);
@@ -47,8 +50,9 @@ export default function Bank_Details_Admin() {
   const handleCloseModalForAdd = () => setOpenModalForAdd(false);
 
   const [openModalForEdit, setOpenModalForEdit] = useState(false);
-  const handleOpenModalForEdit = (bankDetails: UpdateBankDetailsFormValues) => {
+  const handleOpenModalForEdit = (bankDetails) => {
     setEditBankDetails(bankDetails);
+    serUpdateId(bankDetails?.id)
     setOpenModalForEdit(true);
   };
   const handleCloseModalForEdit = () => {
@@ -72,6 +76,12 @@ export default function Bank_Details_Admin() {
     accNo: "",
     branch: "",
   };
+  const initialValuesUpdate:  UpdateBankDetailsFormValues= {
+    bankName: editBankDetails?.bankName || "",
+    accName: editBankDetails?.accName || "",
+    accNo: editBankDetails?.accNo || "",
+    branch: editBankDetails?.branch || "",
+  };
 
   const actionDataGet = (sec) => {
     setTimeout(() => {
@@ -83,6 +93,11 @@ export default function Bank_Details_Admin() {
     dispatch(createBankDetails(values));
     actionDataGet(700);
     setOpenModalForAdd(false);
+  };
+  const handleSubmitUpdate = (values: UpdateBankDetailsFormValues) => {
+    dispatch(updateBankDetails({id: updateId, data: values}));
+    actionDataGet(700);
+    setOpenModalForEdit(false);
   };
 
   const handleClickOpenModalForDelete = (id) => {
@@ -265,9 +280,10 @@ export default function Bank_Details_Admin() {
           <h2 className="text-2xl mb-2">Edit Bank Informations</h2>
           {editBankDetails && (
             <Formik
-              initialValues={editBankDetails}
-              validationSchema={CreateBankDetailsSchema}
-              onSubmit={handleSubmit}
+              initialValues={initialValuesUpdate}
+              validationSchema={UpdateBankDetailsSchema}
+              onSubmit={handleSubmitUpdate}
+              enableReinitialize
             >
               {({ isSubmitting, touched, errors }) => (
                 <Form>
@@ -282,6 +298,7 @@ export default function Bank_Details_Admin() {
                           type="text"
                           error={touched.bankName && !!errors.bankName}
                           helperText={touched.bankName && errors.bankName}
+                        
                         />
                       )}
                     </Field>
