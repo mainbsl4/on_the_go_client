@@ -11,6 +11,10 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react";
 import { Box } from "@mui/material";
+import { CreateDepositRequestFormValues } from "../../../types/formTypes";
+import { Field, Form, Formik } from "formik";
+import { CreateDepositRequestSchema } from "../../../utils/validationSchema";
+import dayjs from "dayjs";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const top100Films = [
@@ -33,54 +37,130 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Deposit_request_from() {
+  const initialValues: CreateDepositRequestFormValues = {
+    userId: "",
+    dpType: "",
+    date: "",
+    amount: null,
+    bankName: "",
+  };
+
+  const handleSubmit = (values: CreateDepositRequestFormValues) => {
+    console.log(values);
+  };
+
   return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": { m: 2, width: "96%" },
-        width:"50%"
-      }}
-      noValidate
-      autoComplete="off"
-      className="border flex justify-center items-center flex-col"
+    <Formik
+      initialValues={initialValues}
+      validationSchema={CreateDepositRequestSchema}
+      onSubmit={handleSubmit}
     >
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={top100Films}
-        // sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Mode of Deposit" />}
-      />
-    <LocalizationProvider dateAdapter={AdapterDayjs} >
-        <DemoContainer components={["DatePicker"]} >
-          <DatePicker label="Date" sx={{width:"100%"}}/>
-        </DemoContainer>
-      </LocalizationProvider>
-      <TextField
-        id="outlined-basic"
-        label="Amount"
-        variant="outlined"
-        type="number"
-      />
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={top100Films}
-        // sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Choose Bank" />}
-      />
-      <Button
-        component="label"
-        role={undefined}
-        variant="contained"
-        color="info"
-        tabIndex={-1}
-        startIcon={<Icon icon="ep:upload-filled" />}
-      >
-        Upload file
-        <VisuallyHiddenInput type="file" />
-      </Button>
-      <Button variant="contained">Submit</Button>
-    </Box>
+      {({ isSubmitting, touched, errors }) => (
+        <Form className=" w-6/12">
+          <Box
+            className="border grid grid-cols-1 gap-4 p-4"
+          >
+            <Field name="dpType">
+              {({ field, form }) => (
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={top100Films.map((option) => option.label)}
+                  onChange={(event, value) =>
+                    form.setFieldValue(field.name, value)
+                  }
+                  // sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...field}
+                      {...params}
+                      label="Mode of Deposit"
+                      error={touched.dpType && !!errors.dpType}
+                      helperText={touched.dpType && errors.dpType}
+                    />
+                  )}
+                />
+              )}
+            </Field>
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <Field name="date">
+                  {({ field, form }) => (
+                    <DatePicker
+                      {...field}
+                      label="Date"
+                      sx={{ width: "100%" }}
+                      value={field.value ? dayjs(field.value) : null}
+                      onChange={(date) =>
+                        form.setFieldValue(
+                          field.name,
+                          date ? date.format("YYYY-MM-DD") : ""
+                        )
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          error={touched.date && !!errors.date}
+                          helperText={touched.date && errors.date}
+                        />
+                      )}
+                    />
+                  )}
+                </Field>
+              </DemoContainer>
+            </LocalizationProvider>
+
+            <Field name="amount">
+              {({ field }) => (
+                <TextField
+                  {...field}
+                  id="outlined-basic"
+                  label="Amount"
+                  variant="outlined"
+                  type="number"
+                  error={touched.amount && !!errors.amount}
+                  helperText={touched.amount && errors.amount}
+                />
+              )}
+            </Field>
+            <Field name="bankName">
+              {({ field, form }) => (
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={top100Films.map((option) => option.label)}
+                  onChange={(event, value) =>
+                    form.setFieldValue(field.name, value)
+                  }
+                  // sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...field}
+                      {...params}
+                      label="Choose Bank"
+                      error={touched.bankName && !!errors.bankName}
+                      helperText={touched.bankName && errors.bankName}
+                    />
+                  )}
+                />
+              )}
+            </Field>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              color="info"
+              tabIndex={-1}
+              startIcon={<Icon icon="ep:upload-filled" />}
+            >
+              Upload file
+              <VisuallyHiddenInput type="file" />
+            </Button>
+            <Button type="submit" variant="contained" disabled={isSubmitting}>Submit</Button>
+          </Box>
+        </Form>
+      )}
+    </Formik>
   );
 }

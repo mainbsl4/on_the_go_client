@@ -54,3 +54,12 @@ export const CreateVisaApplySchema = Yup.object().shape({
   dob: Yup.string().required("Date of Birth is required"),
   religion: Yup.string().required("Religion is required"),
 });
+
+
+export const CreateDepositRequestSchema = Yup.object().shape({
+  userId:  Yup.string(),
+  dpType: Yup.string().required("Deposite Mode is required"),
+  date: Yup.string().required("Date is required"),
+  amount: Yup.number().required("Amount is required"),
+  bankName: Yup.string().required("Bank Name is required"),
+})

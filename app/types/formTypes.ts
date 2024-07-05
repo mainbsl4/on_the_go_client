@@ -28,10 +28,9 @@ export interface UpdateBankDetailsFormValues {
   accName: string;
   accNo: string;
   branch: string;
-
 }
 
-export interface CreateLoneRequestValues{
+export interface CreateLoneRequestValues {
   userId: string;
   reqDate: string;
   settlmentDate: string;
@@ -50,4 +49,12 @@ export interface CreateVisaApplyFormValues {
   passExpiryDate: string;
   dob: string;
   religion: string;
+}
+
+export interface CreateDepositRequestFormValues {
+  userId: string;
+  dpType: string;
+  date: string;
+  amount: number;
+  bankName: string;
 }
