@@ -15,18 +15,44 @@ const initialState: UserState = {
   error: null,
 };
 
+// export const createDepositReq = createAsyncThunk(
+//   "deposit/createDepositReq",
+//   async (data, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.post(`${base_url}deposit/create`, data);
+//       console.log(response);
+//       return response.data;
+//     } catch (err: any) {
+//       return rejectWithValue(err.response.data);
+//     }
+//   }
+// );
+
+
 export const createDepositReq = createAsyncThunk(
   "deposit/createDepositReq",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}deposit/create`, data);
-      console.log(response);
+      // Log the data to check the type of amount
+      data?.forEach((value, key) => {
+        console.log(key, value);
+      });
+
+      const response = await axios.post(`${base_url}deposit/create`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
-    } catch (err: any) {
+    } catch (err) {
       return rejectWithValue(err.response.data);
     }
   }
 );
+
+
+
+
 
 
 export const getAllDepositReq = createAsyncThunk(
