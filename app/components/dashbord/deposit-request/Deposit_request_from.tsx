@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -15,6 +15,8 @@ import { CreateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { CreateDepositRequestSchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
+import { createDepositReq } from "../../../lib/features/deposit/depositSlice";
+import { useDispatch } from "react-redux";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const top100Films = [
@@ -37,17 +39,80 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Deposit_request_from() {
+  const [file, setFile] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const userId = JSON.parse(localStorage?.getItem('userId'));
+  console.log(userId);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
   const initialValues: CreateDepositRequestFormValues = {
-    userId: "",
+    userId: userId,
     dpType: "",
     date: "",
-    amount: null,
+    amount: 0,
     bankName: "",
   };
 
-  const handleSubmit = (values: CreateDepositRequestFormValues) => {
-    console.log(values);
+  // const handleSubmit = (values: CreateDepositRequestFormValues) => {
+  //   console.log(values);
+  // };
+
+
+  // const handleSubmit = async (values: CreateDepositRequestFormValues, { setSubmitting }) => {
+  //   const formData = new FormData();
+  //   Object.keys(values).forEach(key => {
+  //     const value = key === "amount" ? Number(values[key]) : values[key];
+  //     formData.append(key, value);
+  //   });
+
+  //   if (file) formData.append('slipImage', file);
+
+
+  //   try {
+  //     const response = await dispatch(createDepositReq(formData)).unwrap();
+  //     console.log(response);
+  //     // Handle successful response
+  //   } catch (error) {
+  //     console.error('API Error:', error);
+  //     // Handle error response
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
+
+  const handleSubmit = async (values: CreateDepositRequestFormValues, { setSubmitting }) => {
+    const formData = new FormData();
+    Object.keys(values).forEach(key => {
+      const value = key === "amount" ? Number(values[key]) : values[key];
+      formData.append(key, value.toString()); 
+    });
+  
+    if (file) formData.append('slipImage', file);
+  
+    try {
+      // Log formData to check if amount is correctly converted
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+  
+      const response = await dispatch(createDepositReq(formData)).unwrap();
+      console.log(response);
+      // Handle successful response
+    } catch (error) {
+      console.error('API Error:', error);
+      // Handle error response
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+
 
   return (
     <Formik
@@ -155,7 +220,7 @@ export default function Deposit_request_from() {
               startIcon={<Icon icon="ep:upload-filled" />}
             >
               Upload file
-              <VisuallyHiddenInput type="file" />
+              <VisuallyHiddenInput type="file" onChange={handleFileChange} />
             </Button>
             <Button type="submit" variant="contained" disabled={isSubmitting}>Submit</Button>
           </Box>
