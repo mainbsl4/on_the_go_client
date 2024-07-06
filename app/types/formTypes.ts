@@ -50,6 +50,17 @@ export interface CreateVisaApplyFormValues {
   dob: string;
   religion: string;
 }
+export interface UpdateVisaApplyFormValues {
+  userId: string;
+  givenName: string;
+  surName: string;
+  gender: string;
+  nationality: string;
+  passportNo: string;
+  passExpiryDate: string;
+  dob: string;
+  religion: string;
+}
 
 export interface CreateDepositRequestFormValues {
   userId: string;
