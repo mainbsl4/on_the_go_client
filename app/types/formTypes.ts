@@ -38,6 +38,14 @@ export interface CreateLoneRequestValues {
   remarks: string;
   refNo: string;
 }
+export interface UpdateLoneRequestValues {
+  userId: string;
+  reqDate: string;
+  settlmentDate: string;
+  amount: number;
+  remarks: string;
+  refNo: string;
+}
 
 export interface CreateVisaApplyFormValues {
   userId: string;

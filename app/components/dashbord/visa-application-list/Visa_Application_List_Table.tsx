@@ -330,9 +330,20 @@ export default function Visa_Application_List_Table() {
 
   // for modal
   // for view modal
+  // for select data
+  const [selectedDataForView, setSelectedDataForVie] = React.useState(null);
+
   const [openModalForView, setOpenModalForView] = React.useState(false);
-  const handleOpenModalForView = () => setOpenModalForView(true);
-  const handleCloseModalForView = () => setOpenModalForView(false);
+  // const handleOpenModalForView = () => setOpenModalForView(true);
+  const handleOpenModalForView = (data: any) => {
+    setSelectedDataForVie(data);
+    setOpenModalForView(true);
+  };
+  // const handleCloseModalForView = () => setOpenModalForView(false);
+  const handleCloseModalForView = () => {
+    setSelectedDataForVie(null);
+    setOpenModalForView(false);
+  };
   // for edit modal
   const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
   const handleOpenModalForEdit = () => setOpenModalForEdit(true);
@@ -503,7 +514,9 @@ export default function Visa_Application_List_Table() {
                         <IconButton
                           aria-label="view"
                           color="success"
-                          onClick={handleOpenModalForView}
+                          onClick={() =>
+                            handleOpenModalForView(reversedgetVesaApplyData)
+                          }
                         >
                           <Icon icon="hugeicons:view" />
                         </IconButton>
@@ -526,201 +539,6 @@ export default function Visa_Application_List_Table() {
                   </tr>
                 )
               )}
-              {/* <tr className="bg-white border-b ">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Key
-                </td>
-                <td className="px-6 py-4">date</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">
-                  <Chip label="SUBMITTED" color="default" />
-                </td>
-                <td className="px-6 py-4">
-                  <Stack direction="row" spacing={1}>
-                    <IconButton
-                      aria-label="view"
-                      color="success"
-                      onClick={handleOpenModalForView}
-                    >
-                      <Icon icon="hugeicons:view" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="edit"
-                      color="info"
-                      onClick={handleOpenModalForEdit}
-                    >
-                      <Icon icon="mingcute:edit-line" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      color="error"
-                      onClick={handleClickOpenModalForDelete}
-                    >
-                      <Icon icon="lets-icons:cancel" />
-                    </IconButton>
-                  </Stack>
-                </td>
-              </tr>
-              <tr className="bg-white border-b ">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Key
-                </td>
-                <td className="px-6 py-4">date</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">
-                  <Chip label="CANCELLED" color="warning" />
-                </td>
-                <td className="px-6 py-4">
-                  <Stack direction="row" spacing={1}>
-                    <IconButton
-                      aria-label="view"
-                      color="success"
-                      onClick={handleOpenModalForView}
-                    >
-                      <Icon icon="hugeicons:view" />
-                    </IconButton>
-                  </Stack>
-                </td>
-              </tr>
-              <tr className="bg-white border-b ">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Key
-                </td>
-                <td className="px-6 py-4">date</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">
-                  <Chip label="RECIEVED" color="success" />
-                </td>
-                <td className="px-6 py-4">
-                  <Stack direction="row" spacing={1}>
-                    <IconButton
-                      aria-label="view"
-                      color="success"
-                      onClick={handleOpenModalForView}
-                    >
-                      <Icon icon="hugeicons:view" />
-                    </IconButton>
-             
-                  </Stack>
-                </td>
-              </tr>
-              <tr className="bg-white border-b ">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Key
-                </td>
-                <td className="px-6 py-4">date</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">
-                  <Chip label="APPLIED" color="primary" />
-                </td>
-                <td className="px-6 py-4">
-                  <Stack direction="row" spacing={1}>
-                    <IconButton
-                      aria-label="view"
-                      color="success"
-                      onClick={handleOpenModalForView}
-                    >
-                      <Icon icon="hugeicons:view" />
-                    </IconButton>
-                  </Stack>
-                </td>
-              </tr>
-              <tr className="bg-white border-b ">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Key
-                </td>
-                <td className="px-6 py-4">date</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">
-                  <Chip label="REJECTED" color="error" />
-                </td>
-                <td className="px-6 py-4">
-                  <Stack direction="row" spacing={1}>
-                    <IconButton
-                      aria-label="view"
-                      color="success"
-                      onClick={handleOpenModalForView}
-                    >
-                      <Icon icon="hugeicons:view" />
-                    </IconButton>
-                  </Stack>
-                </td>
-              </tr>
-              <tr className="bg-white border-b ">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Key
-                </td>
-                <td className="px-6 py-4">date</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">1000</td>
-                <td className="px-6 py-4">
-                  <Chip label="APPROVED" color="info" />
-                </td>
-                <td className="px-6 py-4">
-                  <Stack direction="row" spacing={1}>
-                    <IconButton
-                      aria-label="view"
-                      color="success"
-                      onClick={handleOpenModalForView}
-                    >
-                      <Icon icon="hugeicons:view" />
-                    </IconButton>
-                  </Stack>
-                </td>
-              </tr> */}
             </tbody>
           </table>
         </CustomTabPanel>
@@ -1544,69 +1362,71 @@ export default function Visa_Application_List_Table() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div>
+          {selectedDataForView && (
             <div>
-              <div className=" border flex py-2 pl-2">
-                <p>Given Name : </p>
-                <p>Md</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Sur Name : </p>
-                <p>Main</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Gender : </p>
-                <p>Male</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Nationality : </p>
-                <p>Bangladesh</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>DOB : </p>
-                <p>11/12/2004</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Passport Number : </p>
-                <p>A123456</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Passport EXP : </p>
-                <p>11-12-2004</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Religion : </p>
-                <p>Islam</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
-                <Image
-                  className=" w-full rounded-lg h-96"
-                  src={img}
-                  alt="nature image"
-                />
-                <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
-                  Passport
+              <div>
+                <div className=" border flex py-2 pl-2">
+                  <p>Given Name : </p>
+                  <p>{selectedDataForView?.givenName}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Sur Name : </p>
+                  <p>{selectedDataForView?.surName}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Gender : </p>
+                  <p>{selectedDataForView?.gender}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Nationality : </p>
+                  <p>{selectedDataForView?.nationality}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>DOB : </p>
+                  <p>{selectedDataForView?.dob}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Passport Number : </p>
+                  <p>{selectedDataForView?.passportNo}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Passport EXP : </p>
+                  <p>{selectedDataForView?.passExpiryDate}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Religion : </p>
+                  <p>{selectedDataForView?.religion}</p>
                 </div>
               </div>
-              <div className="flex flex-col items-start justify-center gap-2">
-                <Button
-                  variant="contained"
-                  startIcon={<Icon icon="material-symbols:download-sharp" />}
-                >
-                  Download Passport
-                </Button>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={<Icon icon="material-symbols:download-sharp" />}
-                >
-                  Download Other Documents
-                </Button>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
+                  <Image
+                    className=" w-full rounded-lg h-96"
+                    src={img}
+                    alt="nature image"
+                  />
+                  <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
+                    Passport
+                  </div>
+                </div>
+                <div className="flex flex-col items-start justify-center gap-2">
+                  <Button
+                    variant="contained"
+                    startIcon={<Icon icon="material-symbols:download-sharp" />}
+                  >
+                    Download Passport
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<Icon icon="material-symbols:download-sharp" />}
+                  >
+                    Download Other Documents
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </Box>
       </Modal>
 
