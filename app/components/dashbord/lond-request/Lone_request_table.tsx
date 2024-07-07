@@ -12,11 +12,18 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
 import { getAllLoanReq } from "../../../lib/features/loan/loanSlice";
+import { UpdateLoneRequestValues } from "../../../types/formTypes";
+import { UpdateLoneRequestSchema } from "../../../utils/validationSchema";
+import { Field, Form, Formik } from "formik";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import dayjs from "dayjs";
 
 //for modal style
 const style = {
@@ -39,18 +46,26 @@ export default function Lone_request_table() {
   const dispatch = useDispatch();
   const loanList = useSelector((state: RootState) => state?.loan?.loan?.data);
 
-console.log(loanList);
+  console.log("ddd", loanList);
 
-
-React.useEffect(() => {
-  dispatch(getAllLoanReq());
-}, []);
+  React.useEffect(() => {
+    dispatch(getAllLoanReq());
+  }, []);
 
   // for modal
   // for view modal
+  const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
-  const handleOpenModalForView = () => setOpenModalForView(true);
-  const handleCloseModalForView = () => setOpenModalForView(false);
+  // const handleOpenModalForView = () => setOpenModalForView(true);
+  const handleOpenModalForView = (data) => {
+    setSelectedDataForView(data);
+    setOpenModalForView(true);
+  };
+  // const handleCloseModalForView = () => setOpenModalForView(false);
+  const handleCloseModalForView = () => {
+    setSelectedDataForView(null);
+    setOpenModalForView(false);
+  };
   // for edit modal
   const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
   const handleOpenModalForEdit = () => setOpenModalForEdit(true);
@@ -68,38 +83,38 @@ React.useEffect(() => {
     setOpenModalForDelete(false);
   };
 
+  // for validation
+  const initialValues: UpdateLoneRequestValues = {
+    userId: "",
+    reqDate: "", // Change to null if reqDate is a Date object
+    settlmentDate: "", // Change to null if settlmentDate is a Date object
+    amount: 0,
+    remarks: "",
+    refNo: "",
+  };
+
+  const handleSubmit = (values: UpdateLoneRequestValues) => {
+    console.log(values);
+  };
+
   return (
     <div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
             <th scope="col" className="px-6 py-3">
-              SL
+              REQ Date
             </th>
             <th scope="col" className="px-6 py-3">
-              Given Name
+              Settlement Date
             </th>
             <th scope="col" className="px-6 py-3">
-              Sur Name
+              Amount
             </th>
             <th scope="col" className="px-6 py-3">
-              Genger
+              Remarks
             </th>
-            <th scope="col" className="px-6 py-3">
-              Nationlity
-            </th>
-            <th scope="col" className="px-6 py-3">
-              DOB
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Passport NO
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Passport EXP
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Religion
-            </th>
+
             <th scope="col" className="px-6 py-3">
               Status
             </th>
@@ -109,226 +124,57 @@ React.useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b ">
-            <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td>
-            <td className="px-6 py-4">date</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">
-              <Chip label="SUBMITTED" color="default" />
-            </td>
-            <td className="px-6 py-4">
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  aria-label="view"
-                  color="success"
-                  onClick={handleOpenModalForView}
-                >
-                  <Icon icon="hugeicons:view" />
-                </IconButton>
-                <IconButton
-                  aria-label="edit"
-                  color="info"
-                  onClick={handleOpenModalForEdit}
-                >
-                  <Icon icon="mingcute:edit-line" />
-                </IconButton>
-                <IconButton
-                  aria-label="delete"
-                  color="error"
-                  onClick={handleClickOpenModalForDelete}
-                >
-                  <Icon icon="lets-icons:cancel" />
-                </IconButton>
-              </Stack>
-            </td>
-          </tr>
-          <tr className="bg-white border-b ">
-            <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td>
-            <td className="px-6 py-4">date</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">
-              <Chip label="CANCELLED" color="warning" />
-            </td>
-            <td className="px-6 py-4">
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  aria-label="view"
-                  color="success"
-                  onClick={handleOpenModalForView}
-                >
-                  <Icon icon="hugeicons:view" />
-                </IconButton>
-              </Stack>
-            </td>
-          </tr>
-          {/* <tr className="bg-white border-b ">
-      <td
-        scope="row"
-        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-      >
-        Key
-      </td>
-      <td className="px-6 py-4">date</td>
-      <td className="px-6 py-4">1000</td>
-      <td className="px-6 py-4">
-        <Chip label="Pending" color="secondary" />
-      </td>
-      <td className="px-6 py-4">
-        <Stack direction="row" spacing={1}>
-          <IconButton aria-label="edit" color="success">
-            <Icon icon="hugeicons:view" />
-          </IconButton>
-          <IconButton aria-label="delete" color="error">
-            <Icon icon="lets-icons:cancel" />
-          </IconButton>
-        </Stack>
-      </td>
-    </tr> */}
-          <tr className="bg-white border-b ">
-            <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td>
-            <td className="px-6 py-4">date</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">
-              <Chip label="RECIEVED" color="success" />
-            </td>
-            <td className="px-6 py-4">
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  aria-label="view"
-                  color="success"
-                  onClick={handleOpenModalForView}
-                >
-                  <Icon icon="hugeicons:view" />
-                </IconButton>
-                {/* <IconButton aria-label="delete" color="error">
-            <Icon icon="lets-icons:cancel" />
-          </IconButton> */}
-              </Stack>
-            </td>
-          </tr>
-          <tr className="bg-white border-b ">
-            <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td>
-            <td className="px-6 py-4">date</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">
-              <Chip label="APPLIED" color="primary" />
-            </td>
-            <td className="px-6 py-4">
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  aria-label="view"
-                  color="success"
-                  onClick={handleOpenModalForView}
-                >
-                  <Icon icon="hugeicons:view" />
-                </IconButton>
-              </Stack>
-            </td>
-          </tr>
-          <tr className="bg-white border-b ">
-            <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td>
-            <td className="px-6 py-4">date</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">
-              <Chip label="REJECTED" color="error" />
-            </td>
-            <td className="px-6 py-4">
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  aria-label="view"
-                  color="success"
-                  onClick={handleOpenModalForView}
-                >
-                  <Icon icon="hugeicons:view" />
-                </IconButton>
-              </Stack>
-            </td>
-          </tr>
-          <tr className="bg-white border-b ">
-            <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td>
-            <td className="px-6 py-4">date</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">1000</td>
-            <td className="px-6 py-4">
-              <Chip label="APPROVED" color="info" />
-            </td>
-            <td className="px-6 py-4">
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  aria-label="view"
-                  color="success"
-                  onClick={handleOpenModalForView}
-                >
-                  <Icon icon="hugeicons:view" />
-                </IconButton>
-              </Stack>
-            </td>
-          </tr>
+          {loanList?.map((loanList) => (
+            <tr className="bg-white border-b " key={loanList.id}>
+              <td className="px-6 py-4">{loanList.reqDate}</td>
+              <td className="px-6 py-4">{loanList.settlmentDate}</td>
+              <td className="px-6 py-4">{loanList.amount}</td>
+              <td className="px-6 py-4">{loanList.remarks}</td>
+
+              <td className="px-6 py-4">
+                {loanList?.isApproved === "SUBMITTED" ? (
+                  <Chip label="SUBMITTED" color="default" />
+                ) : loanList?.isApproved === "CANCELLED" ? (
+                  <Chip label="CANCELLED" color="warning" />
+                ) : loanList?.isApproved === "RECEIVED" ? (
+                  <Chip label="RECEIVED" color="success" />
+                ) : loanList?.isApproved === "APPLIED" ? (
+                  <Chip label="APPLIED" color="primary" />
+                ) : loanList?.isApproved === "APPROVED" ? (
+                  <Chip label="APPROVED" color="info" />
+                ) : loanList?.isApproved === "REJECTED" ? (
+                  <Chip label="REJECTED" color="error" />
+                ) : (
+                  <Chip label="REJECTED" color="error" />
+                )}
+              </td>
+              <td className="px-6 py-4">
+                <Stack direction="row" spacing={1}>
+                  <IconButton
+                    aria-label="view"
+                    color="success"
+                    onClick={() => handleOpenModalForView(loanList)}
+                  >
+                    <Icon icon="hugeicons:view" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="edit"
+                    color="info"
+                    onClick={handleOpenModalForEdit}
+                  >
+                    <Icon icon="mingcute:edit-line" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={handleClickOpenModalForDelete}
+                  >
+                    <Icon icon="lets-icons:cancel" />
+                  </IconButton>
+                </Stack>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       {/* for view modal  */}
@@ -339,69 +185,52 @@ React.useEffect(() => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div>
+          {selectedDataForView && (
             <div>
               <div className=" border flex py-2 pl-2">
-                <p>Given Name : </p>
-                <p>Md</p>
+                <p>Request Date : </p>
+                <p>
+                  {dayjs(selectedDataForView?.reqDate).format("DD/MM/YYYY")}
+                </p>
               </div>
               <div className=" border flex py-2 pl-2 mt-1">
-                <p>Sur Name : </p>
-                <p>Main</p>
+                <p>Settlement Date : </p>
+                <p>
+                  {dayjs(selectedDataForView?.settlmentDate).format(
+                    "DD/MM/YYYY"
+                  )}
+                </p>
               </div>
               <div className=" border flex py-2 pl-2 mt-1">
-                <p>Gender : </p>
-                <p>Male</p>
+                <p>Amount : </p>
+                <p>{selectedDataForView?.amount}</p>
               </div>
               <div className=" border flex py-2 pl-2 mt-1">
-                <p>Nationality : </p>
-                <p>Bangladesh</p>
+                <p>Remark : </p>
+                <p>{selectedDataForView?.remarks}</p>
               </div>
               <div className=" border flex py-2 pl-2 mt-1">
-                <p>DOB : </p>
-                <p>11/12/2004</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Passport Number : </p>
-                <p>A123456</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Passport EXP : </p>
-                <p>11-12-2004</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Religion : </p>
-                <p>Islam</p>
+                <p>Status : </p>
+                <p>
+                  {selectedDataForView?.isApproved === "SUBMITTED" ? (
+                    <Chip label="SUBMITTED" color="default" />
+                  ) : selectedDataForView?.isApproved === "CANCELLED" ? (
+                    <Chip label="CANCELLED" color="warning" />
+                  ) : selectedDataForView?.isApproved === "RECEIVED" ? (
+                    <Chip label="RECEIVED" color="success" />
+                  ) : selectedDataForView?.isApproved === "APPLIED" ? (
+                    <Chip label="APPLIED" color="primary" />
+                  ) : selectedDataForView?.isApproved === "APPROVED" ? (
+                    <Chip label="APPROVED" color="info" />
+                  ) : selectedDataForView?.isApproved === "REJECTED" ? (
+                    <Chip label="REJECTED" color="error" />
+                  ) : (
+                    <Chip label="REJECTED" color="error" />
+                  )}
+                </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
-                {/* <Image
-                  className=" w-full rounded-lg h-96"
-                  src={img}
-                  alt="nature image"
-                /> */}
-                <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
-                  Passport
-                </div>
-              </div>
-              <div className="flex flex-col items-start justify-center gap-2">
-                <Button
-                  variant="contained"
-                  startIcon={<Icon icon="material-symbols:download-sharp" />}
-                >
-                  Download Passport
-                </Button>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={<Icon icon="material-symbols:download-sharp" />}
-                >
-                  Download Other Documents
-                </Button>
-              </div>
-            </div>
-          </div>
+          )}
         </Box>
       </Modal>
       {/* for edit modal  */}
@@ -414,72 +243,145 @@ React.useEffect(() => {
         <Box sx={style}>
           <h2 className="text-2xl">Edit Informations</h2>
 
-          <div className="grid grid-cols-2 gap-2">
-            <TextField
-              id="outlined-basic"
-              label="Given Name"
-              variant="outlined"
-              type="text"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Sir Name"
-              variant="outlined"
-              type="email"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Genter"
-              variant="outlined"
-              type="text"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Nationality"
-              variant="outlined"
-              type="text"
-            />
-            <TextField
-              id="outlined-basic"
-              label="DOB"
-              variant="outlined"
-              type="date"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Passport Number"
-              variant="outlined"
-              type="text"
-              defaultValue="Hello World"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Relegion"
-              variant="outlined"
-              type="text"
-            />
-            <Button
-              variant="contained"
-              startIcon={<Icon icon="material-symbols:upload" />}
-            >
-              Update Passport
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<Icon icon="material-symbols:upload" />}
-            >
-              Update Photo
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<Icon icon="material-symbols:upload" />}
-            >
-              Update Other Document
-            </Button>
-          </div>
-          <div className="flex justify-center mt-4">
-            <Button variant="contained">Update</Button>
-          </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={UpdateLoneRequestSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting, touched, errors, setFieldValue }) => (
+              <Form>
+                <div className="grid grid-cols-1 gap-2">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer
+                      components={["DatePicker"]}
+                      sx={{ padding: "0px" }}
+                    >
+                      <Field name="reqDate">
+                        {({ field }) => (
+                          <DatePicker
+                            {...field}
+                            label="Request Date"
+                            value={field.value ? dayjs(field.value) : null}
+                            onChange={(date) =>
+                              setFieldValue(
+                                "reqDate",
+                                date ? date.format("YYYY-MM-DD") : ""
+                              )
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                error={touched.reqDate && !!errors.reqDate}
+                                helperText={touched.reqDate && errors.reqDate}
+                                sx={{ width: "100%" }}
+                              />
+                            )}
+                          />
+                        )}
+                      </Field>
+                    </DemoContainer>
+                  </LocalizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer
+                      components={["DatePicker"]}
+                      sx={{ padding: "0px" }}
+                    >
+                      <Field name="settlmentDate">
+                        {({ field }) => (
+                          <DatePicker
+                            {...field}
+                            label="Settlement Date"
+                            value={field.value ? dayjs(field.value) : null}
+                            onChange={(date) =>
+                              setFieldValue(
+                                "settlmentDate",
+                                date ? date.format("YYYY-MM-DD") : ""
+                              )
+                            }
+                            error={
+                              touched.settlmentDate && !!errors.settlmentDate
+                            }
+                            helperText={
+                              touched.settlmentDate && errors.settlmentDate
+                            }
+                            sx={{ width: "100%" }}
+                          />
+                        )}
+                      </Field>
+                    </DemoContainer>
+                  </LocalizationProvider>
+                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer
+                  components={["DatePicker"]}
+                  sx={{ padding: "0px" }}
+                >
+                  <Field name="settlmentDate">
+                  {({ field }) => (
+                  <DatePicker
+                   {...field}
+                    label="Settlement Date"
+                    value={field.value}
+                    onChange={(date) => setFieldValue("settlmentDate", date)}
+                    error={touched.settlmentDate && !!errors.settlmentDate}
+                    helperText={touched.settlmentDate && errors.settlmentDate}
+                    sx={{ width: "100%" }} />
+                )}
+                  </Field>
+                </DemoContainer>
+              </LocalizationProvider> */}
+                  <Field name="amount">
+                    {({ field }) => (
+                      <TextField
+                        {...field}
+                        id="outlined-basic"
+                        label="Amount"
+                        variant="outlined"
+                        type="number"
+                        error={touched.amount && !!errors.amount}
+                        helperText={touched.amount && errors.amount}
+                      />
+                    )}
+                  </Field>
+                  <Field name="remarks">
+                    {({ field }) => (
+                      <TextField
+                        {...field}
+                        id="outlined-basic"
+                        label="Remarks (Optional)"
+                        variant="outlined"
+                        type="text"
+                        error={touched.remarks && !!errors.remarks}
+                        helperText={touched.remarks && errors.remarks}
+                      />
+                    )}
+                  </Field>
+                  <Field name="refNo">
+                    {({ field }) => (
+                      <TextField
+                        {...field}
+                        id="outlined-basic"
+                        label="Reference Number"
+                        variant="outlined"
+                        type="tel"
+                        error={touched.refNo && !!errors.refNo}
+                        helperText={touched.refNo && errors.refNo}
+                      />
+                    )}
+                  </Field>
+                </div>
+                <div className="text-center mt-3">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ width: "100px" }}
+                    disabled={isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </Modal>
       {/* for cancle  */}

@@ -35,16 +35,25 @@ export const UpdateBankDetailsSchema = Yup.object().shape({
 });
 
 export const CreateLoneRequestSchema = Yup.object().shape({
-  userId:  Yup.string(),
+  userId: Yup.string(),
   reqDate: Yup.string().required("Date is required"),
   settlmentDate: Yup.string().required("Settlment Date is required"),
   amount: Yup.number().required("Amount is required"),
   remarks: Yup.string().required("Remark is required"),
-  refNo: Yup.string().required("Reg NO is required")
-})
+  refNo: Yup.string().required("Reg NO is required"),
+});
+
+export const UpdateLoneRequestSchema = Yup.object().shape({
+  userId: Yup.string(),
+  reqDate: Yup.string().required("Date is required"),
+  settlmentDate: Yup.string().required("Settlment Date is required"),
+  amount: Yup.number().required("Amount is required"),
+  remarks: Yup.string().required("Remark is required"),
+  refNo: Yup.string().required("Reg NO is required"),
+});
 
 export const CreateVisaApplySchema = Yup.object().shape({
-  userId:  Yup.string(),
+  userId: Yup.string(),
   givenName: Yup.string().required("Given Name is required"),
   surName: Yup.string().required("Sur Name is required"),
   gender: Yup.string().required("Gender No is required"),
@@ -55,7 +64,7 @@ export const CreateVisaApplySchema = Yup.object().shape({
   religion: Yup.string().required("Religion is required"),
 });
 export const UpdateVisaApplySchema = Yup.object().shape({
-  userId:  Yup.string(),
+  userId: Yup.string(),
   givenName: Yup.string().required("Given Name is required"),
   surName: Yup.string().required("Sur Name is required"),
   gender: Yup.string().required("Gender No is required"),
@@ -66,11 +75,10 @@ export const UpdateVisaApplySchema = Yup.object().shape({
   religion: Yup.string().required("Religion is required"),
 });
 
-
 export const CreateDepositRequestSchema = Yup.object().shape({
-  userId:  Yup.string(),
+  userId: Yup.string(),
   dpType: Yup.string().required("Deposite Mode is required"),
   date: Yup.string().required("Date is required"),
   amount: Yup.number().required("Amount is required"),
   bankName: Yup.string().required("Bank Name is required"),
-})
+});
