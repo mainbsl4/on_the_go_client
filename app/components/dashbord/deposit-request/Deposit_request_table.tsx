@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
+import { deleteDeposit, getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
 import { UpdateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { UpdateDepositRequestSchema } from "../../../utils/validationSchema";
@@ -53,6 +53,7 @@ const top100Films = [
 export default function Deposit_request_table() {
   // for modal
   // for view modal
+  const [idForDelete, setIdForDelete] = useState(null)
   const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
   // const handleOpenModalForView = () => setOpenModalForView(true);
@@ -65,6 +66,13 @@ export default function Deposit_request_table() {
     setSelectedDataForView(null);
     setOpenModalForView(false);
   };
+
+  const actionDataGet = (sec) => {
+    setTimeout(() => {
+      dispatch(getAllDepositReq());
+    }, sec);
+  };
+
 
   // for edit modal
   const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
@@ -85,10 +93,16 @@ export default function Deposit_request_table() {
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
 
-  const handleClickOpenModalForDelete = () => {
+  const handleClickOpenModalForDelete = (id) => {
+    setIdForDelete(id)
     setOpenModalForDelete(true);
   };
 
+  const handleForDelete = () => {
+    dispatch(deleteDeposit(idForDelete))
+    setOpenModalForDelete(false);
+    actionDataGet(700)
+  };
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
   };
@@ -197,7 +211,7 @@ export default function Deposit_request_table() {
                   <IconButton
                     aria-label="delete"
                     color="error"
-                    onClick={handleClickOpenModalForDelete}
+                    onClick={()=>handleClickOpenModalForDelete(getDepositRequestData?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
                   </IconButton>
@@ -415,7 +429,7 @@ export default function Deposit_request_table() {
         </DialogContent> */}
           <DialogActions>
             <Button
-              onClick={handleCloseModalForDelete}
+              onClick={handleForDelete}
               variant="contained"
               color="error"
             >
