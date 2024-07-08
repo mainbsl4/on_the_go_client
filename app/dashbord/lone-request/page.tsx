@@ -8,7 +8,7 @@ export default function page() {
       <div className="flex justify-center items-center mb-4">
       <Lone_request_from />
       </div>
-      <Lone_request_table/>
+      {/* <Lone_request_table/> */}
     </div>
   );
 }

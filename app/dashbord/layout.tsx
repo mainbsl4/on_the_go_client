@@ -127,6 +127,12 @@ const userLinkData = [
     link: "/dashbord/deposit-request",
   },
   {
+    id: 33,
+    text: "Deposit Request List",
+    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
+    link: "/dashbord/deposit-request-list",
+  },
+  {
     id: 4,
     text: "Top Up",
     icon: <Icon className="text-3xl" icon="solar:circle-top-up-broken" />,
@@ -155,9 +161,15 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="la:clone-solid" />,
     link: "/dashbord/lone-request",
   },
+  {
+    id: 66,
+    text: "Lone Request List",
+    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    link: "/dashbord/lone-request-list",
+  },
 ];
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
