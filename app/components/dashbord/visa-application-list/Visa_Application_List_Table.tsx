@@ -31,7 +31,10 @@ import { UpdateVisaApplySchema } from "../../../utils/validationSchema";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { deleteVisa, getAllVisaApply } from "../../../lib/features/visaApply/visaApplySlice";
+import {
+  deleteVisa,
+  getAllVisaApply,
+} from "../../../lib/features/visaApply/visaApplySlice";
 
 const gender = [
   { label: "Male" },
@@ -346,16 +349,26 @@ export default function Visa_Application_List_Table() {
     setOpenModalForView(false);
   };
   // for edit modal
+  const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
+
   const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
-  const handleOpenModalForEdit = () => setOpenModalForEdit(true);
-  const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
+  const handleOpenModalForEdit = (data: any) => {
+    setOpenModalForEdit(true);
+    setSelectedDataForEdit(data);
+  };
+  // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  const handleCloseModalForEdit = () => {
+    setOpenModalForEdit(false);
+    setSelectedDataForEdit(null);
+  };
 
   // for cancle modal
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
   const [idForDelete, setIdForDelete] = React.useState(null);
 
-  const handleClickOpenModalForDelete = (id:any) => {
+  const handleClickOpenModalForDelete = (id: any) => {
     setOpenModalForDelete(true);
     setIdForDelete(id);
   };
@@ -364,26 +377,22 @@ export default function Visa_Application_List_Table() {
     setOpenModalForDelete(false);
   };
 
-
   const actionDataGet = (sec) => {
     setTimeout(() => {
       dispatch(getAllVisaApply());
     }, sec);
   };
 
-
-
   const handleDataDelete = () => {
     dispatch(deleteVisa(idForDelete));
     setOpenModalForDelete(false);
-    actionDataGet(500)
+    actionDataGet(500);
   };
 
   // get data
   const getVesaApplyData = useSelector(
     (state: RootState) => state?.visaApply?.visaApply?.data
   );
- 
 
   React.useEffect(() => {
     dispatch(getAllVisaApply());
@@ -391,19 +400,19 @@ export default function Visa_Application_List_Table() {
 
   const reversedgetVesaApplyData = getVesaApplyData?.slice().reverse();
 
-  console.log(reversedgetVesaApplyData);
+  console.log("ddd", reversedgetVesaApplyData);
 
   // formik validation
   const initialValues: UpdateVisaApplyFormValues = {
     userId: "",
-    givenName: "",
-    surName: "",
-    gender: "",
-    nationality: "",
-    passportNo: "",
-    passExpiryDate: "",
-    dob: "",
-    religion: "",
+    givenName: selectedDataForEdit?.givenName || "",
+    surName: selectedDataForEdit?.surName || "",
+    gender: selectedDataForEdit?.gender || "",
+    nationality: selectedDataForEdit?.nationality || "",
+    passportNo: selectedDataForEdit?.passportNo || "",
+    passExpiryDate: selectedDataForEdit?.passExpiryDate || "",
+    dob: selectedDataForEdit?.dob || "",
+    religion: selectedDataForEdit?.religion || "",
   };
 
   const handleSubmit = (values: UpdateVisaApplyFormValues) => {
@@ -542,14 +551,20 @@ export default function Visa_Application_List_Table() {
                         <IconButton
                           aria-label="edit"
                           color="info"
-                          onClick={handleOpenModalForEdit}
+                          onClick={() =>
+                            handleOpenModalForEdit(reversedgetVesaApplyData)
+                          }
                         >
                           <Icon icon="mingcute:edit-line" />
                         </IconButton>
                         <IconButton
                           aria-label="delete"
                           color="error"
-                          onClick={() => handleClickOpenModalForDelete(reversedgetVesaApplyData?.id)}
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
                         >
                           <Icon icon="lets-icons:cancel" />
                         </IconButton>
@@ -1423,7 +1438,7 @@ export default function Visa_Application_List_Table() {
                     className=" w-full rounded-lg h-96"
                     width={100}
                     height={100}
-                    src={selectedDataForView?.passportPdf}
+                    src={selectedDataForView?.image}
                     alt="nature image"
                   />
                   <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
@@ -1435,7 +1450,12 @@ export default function Visa_Application_List_Table() {
                     variant="contained"
                     startIcon={<Icon icon="material-symbols:download-sharp" />}
                   >
-                    Download Passport
+                    <a
+                      href="https://res.cloudinary.com/db7ovrkki/image/upload/v1720440973/p2sc2lwtvr8jhjdt0wus.jpg"
+                      download
+                    >
+                      Download Passport
+                    </a>
                   </Button>
                   <Button
                     variant="contained"
@@ -1452,6 +1472,7 @@ export default function Visa_Application_List_Table() {
       </Modal>
 
       {/* for edit modal  */}
+
       <Modal
         open={openModalForEdit}
         onClose={handleCloseModalForEdit}
@@ -1460,99 +1481,106 @@ export default function Visa_Application_List_Table() {
       >
         <Box sx={style}>
           <h2 className="text-2xl">Edit Informations</h2>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={UpdateVisaApplySchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting, touched, errors, setFieldValue }) => (
-              <Form>
-                <div className="grid grid-cols-2 gap-2">
-                  <Field name="givenName">
-                    {({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Given Name"
-                        variant="outlined"
-                        type="text"
-                        error={touched.givenName && !!errors.givenName}
-                        helperText={touched.givenName && errors.givenName}
-                      />
-                    )}
-                  </Field>
-                  <Field name="surName">
-                    {({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Sur Name"
-                        variant="outlined"
-                        type="text"
-                        error={touched.surName && !!errors.surName}
-                        helperText={touched.surName && errors.surName}
-                      />
-                    )}
-                  </Field>
-                  <Field name="gender">
-                    {({ field, form }) => (
-                      <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={gender.map((option) => option.label)}
-                        onChange={(event, value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            {...field}
-                            {...params}
-                            label="Select Gender"
-                            error={touched.gender && !!errors.gender}
-                            helperText={touched.gender && errors.gender}
-                          />
-                        )}
-                      />
-                    )}
-                  </Field>
-                  <Field name="nationality">
-                    {({ field, form }) => (
-                      <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={nationality.map((option) => option.label)}
-                        onChange={(event, value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            {...field}
-                            {...params}
-                            label="Select Nationality"
-                            error={touched.nationality && !!errors.nationality}
-                            helperText={
-                              touched.nationality && errors.nationality
-                            }
-                          />
-                        )}
-                      />
-                    )}
-                  </Field>
-                  <Field name="passportNo">
-                    {({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Passport Number"
-                        variant="outlined"
-                        type="text"
-                        error={touched.passportNo && !!errors.passportNo}
-                        helperText={touched.passportNo && errors.passportNo}
-                      />
-                    )}
-                  </Field>
+          {selectedDataForEdit && (
+            <Formik
+              initialValues={initialValues}
+              validationSchema={UpdateVisaApplySchema}
+              onSubmit={handleSubmit}
+              enableReinitialize
+            >
+              {({ isSubmitting, touched, errors, setFieldValue }) => (
+                <Form>
+                  <div className="grid grid-cols-2 gap-2">
+                    {/* <div>
+                      {selectedDataForEdit?.givenName}
+                    </div> */}
+                    <Field name="givenName">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Given Name"
+                          variant="outlined"
+                          type="text"
+                          error={touched.givenName && !!errors.givenName}
+                          helperText={touched.givenName && errors.givenName}
+                        />
+                      )}
+                    </Field>
+                    <Field name="surName">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Sur Name"
+                          variant="outlined"
+                          type="text"
+                          error={touched.surName && !!errors.surName}
+                          helperText={touched.surName && errors.surName}
+                        />
+                      )}
+                    </Field>
+                    <Field name="gender">
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={gender.map((option) => option.label)}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              label="Select Gender"
+                              error={touched.gender && !!errors.gender}
+                              helperText={touched.gender && errors.gender}
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
+                    <Field name="nationality">
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={nationality.map((option) => option.label)}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              label="Select Nationality"
+                              error={
+                                touched.nationality && !!errors.nationality
+                              }
+                              helperText={
+                                touched.nationality && errors.nationality
+                              }
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
+                    <Field name="passportNo">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Passport Number"
+                          variant="outlined"
+                          type="text"
+                          error={touched.passportNo && !!errors.passportNo}
+                          helperText={touched.passportNo && errors.passportNo}
+                        />
+                      )}
+                    </Field>
 
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer
                       components={["DatePicker"]}
                       sx={{ padding: "0px" }}
@@ -1588,37 +1616,38 @@ export default function Visa_Application_List_Table() {
                     </DemoContainer>
                   </LocalizationProvider> */}
 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer
-                      components={["DatePicker"]}
-                      sx={{ padding: "0px" }}
-                    >
-                      <Field name="passExpiryDate">
-                        {({ field, form }) => (
-                          <DatePicker
-                            {...field}
-                            label="Passport Expiry Date"
-                            value={field.value ? dayjs(field.value) : null}
-                            onChange={(date) =>
-                              form.setFieldValue(
-                                field.name,
-                                date ? date.format("YYYY-MM-DD") : ""
-                              )
-                            }
-                            textFieldProps={{
-                              error:
-                                touched.passExpiryDate &&
-                                !!errors.passExpiryDate,
-                              helperText:
-                                touched.passExpiryDate && errors.passExpiryDate,
-                            }}
-                          />
-                        )}
-                      </Field>
-                    </DemoContainer>
-                  </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer
+                        components={["DatePicker"]}
+                        sx={{ padding: "0px" }}
+                      >
+                        <Field name="passExpiryDate">
+                          {({ field, form }) => (
+                            <DatePicker
+                              {...field}
+                              label="Passport Expiry Date"
+                              value={field.value ? dayjs(field.value) : null}
+                              onChange={(date) =>
+                                form.setFieldValue(
+                                  field.name,
+                                  date ? date.format("YYYY-MM-DD") : ""
+                                )
+                              }
+                              textFieldProps={{
+                                error:
+                                  touched.passExpiryDate &&
+                                  !!errors.passExpiryDate,
+                                helperText:
+                                  touched.passExpiryDate &&
+                                  errors.passExpiryDate,
+                              }}
+                            />
+                          )}
+                        </Field>
+                      </DemoContainer>
+                    </LocalizationProvider>
 
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer
                       components={["DatePicker"]}
                       sx={{ padding: "0px" }}
@@ -1648,85 +1677,86 @@ export default function Visa_Application_List_Table() {
                     </DemoContainer>
                   </LocalizationProvider> */}
 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer
-                      components={["DatePicker"]}
-                      sx={{ padding: "0px" }}
-                    >
-                      <Field name="dob">
-                        {({ field, form }) => (
-                          <DatePicker
-                            {...field}
-                            label="DOB"
-                            value={field.value ? dayjs(field.value) : null}
-                            onChange={(date) =>
-                              form.setFieldValue(
-                                field.name,
-                                date ? date.format("YYYY-MM-DD") : ""
-                              )
-                            }
-                            textFieldProps={{
-                              error: touched.dob && !!errors.dob,
-                              helperText: touched.dob && errors.dob,
-                            }}
-                          />
-                        )}
-                      </Field>
-                    </DemoContainer>
-                  </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer
+                        components={["DatePicker"]}
+                        sx={{ padding: "0px" }}
+                      >
+                        <Field name="dob">
+                          {({ field, form }) => (
+                            <DatePicker
+                              {...field}
+                              label="DOB"
+                              value={field.value ? dayjs(field.value) : null}
+                              onChange={(date) =>
+                                form.setFieldValue(
+                                  field.name,
+                                  date ? date.format("YYYY-MM-DD") : ""
+                                )
+                              }
+                              textFieldProps={{
+                                error: touched.dob && !!errors.dob,
+                                helperText: touched.dob && errors.dob,
+                              }}
+                            />
+                          )}
+                        </Field>
+                      </DemoContainer>
+                    </LocalizationProvider>
 
-                  <Field name="religion">
-                    {({ field, form }) => (
-                      <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={religion.map((option) => option.label)}
-                        onChange={(event, value) =>
-                          form.setFieldValue(field.name, value)
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            {...field}
-                            label="Select Religion"
-                            error={touched.religion && !!errors.religion}
-                            helperText={touched.religion && errors.religion}
-                          />
-                        )}
-                      />
-                    )}
-                  </Field>
-                  <Button
-                    variant="contained"
-                    startIcon={<Icon icon="material-symbols:upload" />}
-                  >
-                    Update Passport
-                  </Button>
-                  <Button
-                    variant="contained"
-                    startIcon={<Icon icon="material-symbols:upload" />}
-                  >
-                    Update Photo
-                  </Button>
-                  <Button
-                    variant="contained"
-                    startIcon={<Icon icon="material-symbols:upload" />}
-                  >
-                    Update Other Document
-                  </Button>
-                </div>
-                <div className="flex justify-center mt-4">
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    Update
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                    <Field name="religion">
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={religion.map((option) => option.label)}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              {...field}
+                              label="Select Religion"
+                              error={touched.religion && !!errors.religion}
+                              helperText={touched.religion && errors.religion}
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:upload" />}
+                    >
+                      Update Passport
+                    </Button>
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:upload" />}
+                    >
+                      Update Photo
+                    </Button>
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:upload" />}
+                    >
+                      Update Other Document
+                    </Button>
+                  </div>
+                  <div className="flex justify-center mt-4">
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Update
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
         </Box>
       </Modal>
 
