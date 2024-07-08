@@ -4,6 +4,7 @@ import userReducer from '../features/users/userSlice'
 import bankDetailsReducer from '../features/bankDetails/bankDetailsSlice'
 import visaApplyReducer from '../features/visaApply/visaApplySlice'
 import loanReducer from '../features/loan/loanSlice'
+import uploadReducer from '../features/upload/uploadSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     bankDetails: bankDetailsReducer,
     visaApply: visaApplyReducer,
     loan: loanReducer,
+    upload: uploadReducer,
   }
 })
 

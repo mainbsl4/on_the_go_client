@@ -31,7 +31,7 @@ import { UpdateVisaApplySchema } from "../../../utils/validationSchema";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { getAllVisaApply } from "../../../lib/features/visaApply/visaApplySlice";
+import { deleteVisa, getAllVisaApply } from "../../../lib/features/visaApply/visaApplySlice";
 
 const gender = [
   { label: "Male" },
@@ -323,6 +323,7 @@ function a11yProps(index: number) {
 
 export default function Visa_Application_List_Table() {
   const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -352,24 +353,42 @@ export default function Visa_Application_List_Table() {
   // for cancle modal
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
+  const [idForDelete, setIdForDelete] = React.useState(null);
 
-  const handleClickOpenModalForDelete = () => {
+  const handleClickOpenModalForDelete = (id:any) => {
     setOpenModalForDelete(true);
+    setIdForDelete(id);
   };
 
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
   };
 
+
+  const actionDataGet = (sec) => {
+    setTimeout(() => {
+      dispatch(getAllVisaApply());
+    }, sec);
+  };
+
+
+
+  const handleDataDelete = () => {
+    dispatch(deleteVisa(idForDelete));
+    setOpenModalForDelete(false);
+    actionDataGet(500)
+  };
+
   // get data
   const getVesaApplyData = useSelector(
     (state: RootState) => state?.visaApply?.visaApply?.data
   );
-  const dispatch = useDispatch();
+ 
 
   React.useEffect(() => {
     dispatch(getAllVisaApply());
   }, []);
+
   const reversedgetVesaApplyData = getVesaApplyData?.slice().reverse();
 
   console.log(reversedgetVesaApplyData);
@@ -530,7 +549,7 @@ export default function Visa_Application_List_Table() {
                         <IconButton
                           aria-label="delete"
                           color="error"
-                          onClick={handleClickOpenModalForDelete}
+                          onClick={() => handleClickOpenModalForDelete(reversedgetVesaApplyData?.id)}
                         >
                           <Icon icon="lets-icons:cancel" />
                         </IconButton>
@@ -1402,7 +1421,9 @@ export default function Visa_Application_List_Table() {
                 <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
                   <Image
                     className=" w-full rounded-lg h-96"
-                    src={img}
+                    width={100}
+                    height={100}
+                    src={selectedDataForView?.passportPdf}
                     alt="nature image"
                   />
                   <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
@@ -1728,7 +1749,7 @@ export default function Visa_Application_List_Table() {
         </DialogContent> */}
           <DialogActions>
             <Button
-              onClick={handleCloseModalForDelete}
+              onClick={handleDataDelete}
               variant="contained"
               color="error"
             >
