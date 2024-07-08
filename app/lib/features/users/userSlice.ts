@@ -38,8 +38,10 @@ export const signinUser = createAsyncThunk(
       const response = await axios.post(`${base_url}user/login`, userData);
       console.log(response);
       if (response.data) {
-        localStorage.setItem("token", response.data.token);
         localStorage.setItem('userId', JSON.stringify(response.data.user.id));
+        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; 
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("tokenExpiration", expirationTime.toString());
       }
       // if(response.data.token){
       //   window.location.href = "/dashbord";

@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../lib/store/store";
 import { getUser } from "../lib/features/users/userSlice";
 import { useRouter } from "next/navigation";
+import { manageToken } from "../utils/config";
 const linkData = [
   {
     id: 1,
@@ -279,6 +280,8 @@ export default function RootLayout({
   const handleRoute = (params) => {
     router.push(params);
   };
+  const storedToken = localStorage.getItem("token");
+  manageToken(storedToken)
 
   return (
     <div>
