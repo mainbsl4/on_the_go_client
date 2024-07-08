@@ -1,37 +1,85 @@
-"use client"
-import { Icon } from '@iconify/react'
-import { Box, Button, Chip, Dialog, DialogActions, DialogTitle, IconButton, Modal, Stack, TextField } from '@mui/material'
-import React from 'react'
-
+"use client";
+import { Icon } from "@iconify/react";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  IconButton,
+  Modal,
+  Stack,
+  TextField,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../lib/store/store";
+import { useDispatch } from "react-redux";
+import { getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
+import { UpdateDepositRequestFormValues } from "../../../types/formTypes";
+import { Field, Form, Formik } from "formik";
+import { UpdateDepositRequestSchema } from "../../../utils/validationSchema";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import dayjs from "dayjs";
 
 //for modal style
 const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 800,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-    // display:"grid",
-    // gridTemplateColumns: "40% 40%",
-    // justifyContent:"space-between",
-    // gridGap:"5px"
-  };
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 800,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  // display:"grid",
+  // gridTemplateColumns: "40% 40%",
+  // justifyContent:"space-between",
+  // gridGap:"5px"
+};
+
+// dropdown datas
+const top100Films = [
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+  { label: "The Godfather: Part II", year: 1974 },
+];
 
 export default function Deposit_request_table() {
-
-      // for modal
+  // for modal
   // for view modal
+  const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
-  const handleOpenModalForView = () => setOpenModalForView(true);
-  const handleCloseModalForView = () => setOpenModalForView(false);
+  // const handleOpenModalForView = () => setOpenModalForView(true);
+  const handleOpenModalForView = (data) => {
+    setSelectedDataForView(data);
+    setOpenModalForView(true);
+  };
+  // const handleCloseModalForView = () => setOpenModalForView(false);
+  const handleCloseModalForView = () => {
+    setSelectedDataForView(null);
+    setOpenModalForView(false);
+  };
+
   // for edit modal
+  const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
+
   const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
-  const handleOpenModalForEdit = () => setOpenModalForEdit(true);
-  const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
+  const handleOpenModalForEdit = (data: any) => {
+    setOpenModalForEdit(true);
+    setSelectedDataForEdit(data);
+  };
+  // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  const handleCloseModalForEdit = () => {
+    setOpenModalForEdit(false);
+    setSelectedDataForEdit(null);
+  };
 
   // for cancle modal
 
@@ -45,342 +93,182 @@ export default function Deposit_request_table() {
     setOpenModalForDelete(false);
   };
 
+  // get data
+  const getDepositRequestData = useSelector(
+    (state: RootState) => state?.deposit?.deposit?.data
+  );
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllDepositReq());
+  }, []);
+  console.log("cccc", getDepositRequestData);
+
+  // edit from validation
+
+  const initialValues: UpdateDepositRequestFormValues = {
+    userId: "",
+    dpType: selectedDataForEdit?.dpType || "",
+    date: dayjs(selectedDataForEdit?.date).format("YYYY-MM-DD"),
+    amount: selectedDataForEdit?.amount || 0,
+    bankName: selectedDataForEdit?.bankName || "",
+  };
+
+  const handleSubmit = (values: UpdateDepositRequestFormValues) => {
+    console.log(values);
+  };
+
   return (
-    <div>         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-    <thead className="text-xs text-gray-700 uppercase bg-gray-200">
-      <tr>
-        <th scope="col" className="px-6 py-3">
-          SL
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Given Name
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Sur Name
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Genger
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Nationlity
-        </th>
-        <th scope="col" className="px-6 py-3">
-          DOB
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Passport NO
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Passport EXP
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Religion
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Status
-        </th>
-        <th scope="col" className="px-6 py-3">
-          Action
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr className="bg-white border-b ">
-        <td
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-        >
-          Key
-        </td>
-        <td className="px-6 py-4">date</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">
-          <Chip label="SUBMITTED" color="default" />
-        </td>
-        <td className="px-6 py-4">
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="view"
-              color="success"
-              onClick={handleOpenModalForView}
+    <div>
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+          <tr>
+            <th scope="col" className="px-6 py-3">
+              MOD
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Date
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Amount
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Bank
+            </th>
+
+            <th scope="col" className="px-6 py-3">
+              Status
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {getDepositRequestData?.map((getDepositRequestData) => (
+            <tr className="bg-white border-b " key={getDepositRequestData.id}>
+              {/* <td
+              scope="row"
+              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
             >
-              <Icon icon="hugeicons:view" />
-            </IconButton>
-            <IconButton
-              aria-label="edit"
-              color="info"
-              onClick={handleOpenModalForEdit}
-            >
-              <Icon icon="mingcute:edit-line" />
-            </IconButton>
-            <IconButton
-              aria-label="delete"
-              color="error"
-              onClick={handleClickOpenModalForDelete}
-            >
-              <Icon icon="lets-icons:cancel" />
-            </IconButton>
-          </Stack>
-        </td>
-      </tr>
-      <tr className="bg-white border-b ">
-        <td
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-        >
-          Key
-        </td>
-        <td className="px-6 py-4">date</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">
-          <Chip label="CANCELLED" color="warning" />
-        </td>
-        <td className="px-6 py-4">
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="view"
-              color="success"
-              onClick={handleOpenModalForView}
-            >
-              <Icon icon="hugeicons:view" />
-            </IconButton>
-          </Stack>
-        </td>
-      </tr>
-      {/* <tr className="bg-white border-b ">
-      <td
-        scope="row"
-        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-      >
-        Key
-      </td>
-      <td className="px-6 py-4">date</td>
-      <td className="px-6 py-4">1000</td>
-      <td className="px-6 py-4">
-        <Chip label="Pending" color="secondary" />
-      </td>
-      <td className="px-6 py-4">
-        <Stack direction="row" spacing={1}>
-          <IconButton aria-label="edit" color="success">
-            <Icon icon="hugeicons:view" />
-          </IconButton>
-          <IconButton aria-label="delete" color="error">
-            <Icon icon="lets-icons:cancel" />
-          </IconButton>
-        </Stack>
-      </td>
-    </tr> */}
-      <tr className="bg-white border-b ">
-        <td
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-        >
-          Key
-        </td>
-        <td className="px-6 py-4">date</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">
-          <Chip label="RECIEVED" color="success" />
-        </td>
-        <td className="px-6 py-4">
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="view"
-              color="success"
-              onClick={handleOpenModalForView}
-            >
-              <Icon icon="hugeicons:view" />
-            </IconButton>
-            {/* <IconButton aria-label="delete" color="error">
-            <Icon icon="lets-icons:cancel" />
-          </IconButton> */}
-          </Stack>
-        </td>
-      </tr>
-      <tr className="bg-white border-b ">
-        <td
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-        >
-          Key
-        </td>
-        <td className="px-6 py-4">date</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">
-          <Chip label="APPLIED" color="primary" />
-        </td>
-        <td className="px-6 py-4">
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="view"
-              color="success"
-              onClick={handleOpenModalForView}
-            >
-              <Icon icon="hugeicons:view" />
-            </IconButton>
-          </Stack>
-        </td>
-      </tr>
-      <tr className="bg-white border-b ">
-        <td
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-        >
-          Key
-        </td>
-        <td className="px-6 py-4">date</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">
-          <Chip label="REJECTED" color="error" />
-        </td>
-        <td className="px-6 py-4">
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="view"
-              color="success"
-              onClick={handleOpenModalForView}
-            >
-              <Icon icon="hugeicons:view" />
-            </IconButton>
-          </Stack>
-        </td>
-      </tr>
-      <tr className="bg-white border-b ">
-        <td
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-        >
-          Key
-        </td>
-        <td className="px-6 py-4">date</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">1000</td>
-        <td className="px-6 py-4">
-          <Chip label="APPROVED" color="info" />
-        </td>
-        <td className="px-6 py-4">
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              aria-label="view"
-              color="success"
-              onClick={handleOpenModalForView}
-            >
-              <Icon icon="hugeicons:view" />
-            </IconButton>
-          </Stack>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-        {/* for view modal  */}
-        <Modal
+              Key
+            </td> */}
+              <td className="px-6 py-4">{getDepositRequestData?.dpType}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.date}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.bankName}</td>
+              <td className="px-6 py-4">
+                {getDepositRequestData?.isApproved === "SUBMITTED" ? (
+                  <Chip label="SUBMITTED" color="default" />
+                ) : getDepositRequestData?.isApproved === "CANCELLED" ? (
+                  <Chip label="CANCELLED" color="warning" />
+                ) : getDepositRequestData?.isApproved === "RECEIVED" ? (
+                  <Chip label="RECEIVED" color="success" />
+                ) : getDepositRequestData?.isApproved === "APPLIED" ? (
+                  <Chip label="APPLIED" color="primary" />
+                ) : getDepositRequestData?.isApproved === "APPROVED" ? (
+                  <Chip label="APPROVED" color="info" />
+                ) : getDepositRequestData?.isApproved === "REJECTED" ? (
+                  <Chip label="REJECTED" color="error" />
+                ) : (
+                  <Chip label="REJECTED" color="error" />
+                )}
+              </td>
+              <td className="px-6 py-4">
+                <Stack direction="row" spacing={1}>
+                  <IconButton
+                    aria-label="view"
+                    color="success"
+                    onClick={() =>
+                      handleOpenModalForView(getDepositRequestData)
+                    }
+                  >
+                    <Icon icon="hugeicons:view" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="edit"
+                    color="info"
+                    onClick={() =>
+                      handleOpenModalForEdit(getDepositRequestData)
+                    }
+                  >
+                    <Icon icon="mingcute:edit-line" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={handleClickOpenModalForDelete}
+                  >
+                    <Icon icon="lets-icons:cancel" />
+                  </IconButton>
+                </Stack>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {/* for view modal  */}
+      <Modal
         open={openModalForView}
         onClose={handleCloseModalForView}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div>
+          {selectedDataForView && (
             <div>
-              <div className=" border flex py-2 pl-2">
-                <p>Given Name : </p>
-                <p>Md</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Sur Name : </p>
-                <p>Main</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Gender : </p>
-                <p>Male</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Nationality : </p>
-                <p>Bangladesh</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>DOB : </p>
-                <p>11/12/2004</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Passport Number : </p>
-                <p>A123456</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Passport EXP : </p>
-                <p>11-12-2004</p>
-              </div>
-              <div className=" border flex py-2 pl-2 mt-1">
-                <p>Religion : </p>
-                <p>Islam</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
-                {/* <Image
-                  className=" w-full rounded-lg h-96"
-                  src={img}
-                  alt="nature image"
-                /> */}
-                <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
-                  Passport
+              <div>
+                <div className=" border flex py-2 pl-2">
+                  <p>Mode Of Deposite : </p>
+                  <p>{selectedDataForView?.dpType}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Date : </p>
+                  <p>{selectedDataForView?.date}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Amount : </p>
+                  <p>{selectedDataForView?.amount}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Bank : </p>
+                  <p>{selectedDataForView?.bankName}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Status : </p>
+                  <p>
+                    {selectedDataForView?.isApproved === "SUBMITTED" ? (
+                      <Chip label="SUBMITTED" color="default" />
+                    ) : selectedDataForView?.isApproved === "CANCELLED" ? (
+                      <Chip label="CANCELLED" color="warning" />
+                    ) : selectedDataForView?.isApproved === "RECEIVED" ? (
+                      <Chip label="RECEIVED" color="success" />
+                    ) : selectedDataForView?.isApproved === "APPLIED" ? (
+                      <Chip label="APPLIED" color="primary" />
+                    ) : selectedDataForView?.isApproved === "APPROVED" ? (
+                      <Chip label="APPROVED" color="info" />
+                    ) : selectedDataForView?.isApproved === "REJECTED" ? (
+                      <Chip label="REJECTED" color="error" />
+                    ) : (
+                      <Chip label="REJECTED" color="error" />
+                    )}
+                  </p>
                 </div>
               </div>
-              <div className="flex flex-col items-start justify-center gap-2">
-                <Button
-                  variant="contained"
-                  startIcon={<Icon icon="material-symbols:download-sharp" />}
-                >
-                  Download Passport
-                </Button>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={<Icon icon="material-symbols:download-sharp" />}
-                >
-                  Download Other Documents
-                </Button>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col items-start justify-center gap-2">
+                  <Button
+                    variant="contained"
+                    startIcon={<Icon icon="material-symbols:download-sharp" />}
+                  >
+                    Document
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </Box>
       </Modal>
-
       {/* for edit modal  */}
       <Modal
         open={openModalForEdit}
@@ -390,78 +278,126 @@ export default function Deposit_request_table() {
       >
         <Box sx={style}>
           <h2 className="text-2xl">Edit Informations</h2>
+          {selectedDataForEdit && (
+            <Formik
+              initialValues={initialValues}
+              validationSchema={UpdateDepositRequestSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting, touched, errors }) => (
+                <Form >
+                  <Box className="border grid grid-cols-1 gap-4 p-4">
+                    <Field name="dpType">
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={top100Films.map((option) => option.label)}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          // sx={{ width: 300 }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              label="Mode of Deposit"
+                              error={touched.dpType && !!errors.dpType}
+                              helperText={touched.dpType && errors.dpType}
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
 
-          <div className="grid grid-cols-2 gap-2">
-            <TextField
-              id="outlined-basic"
-              label="Given Name"
-              variant="outlined"
-              type="text"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Sir Name"
-              variant="outlined"
-              type="email"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Genter"
-              variant="outlined"
-              type="text"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Nationality"
-              variant="outlined"
-              type="text"
-            />
-            <TextField
-              id="outlined-basic"
-              label="DOB"
-              variant="outlined"
-              type="date"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Passport Number"
-              variant="outlined"
-              type="text"
-              defaultValue="Hello World"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Relegion"
-              variant="outlined"
-              type="text"
-            />
-            <Button
-              variant="contained"
-              startIcon={<Icon icon="material-symbols:upload" />}
-            >
-              Update Passport
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<Icon icon="material-symbols:upload" />}
-            >
-              Update Photo
-            </Button>
-            <Button
-              variant="contained"
-              startIcon={<Icon icon="material-symbols:upload" />}
-            >
-              Update Other Document
-            </Button>
-          </div>
-          <div className="flex justify-center mt-4">
-            <Button variant="contained">Update</Button>
-          </div>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={["DatePicker"]}>
+                        <Field name="date">
+                          {({ field, form }) => (
+                            <DatePicker
+                              {...field}
+                              label="Date"
+                              sx={{ width: "100%" }}
+                              value={field.value ? dayjs(field.value) : null}
+                              onChange={(date) =>
+                                form.setFieldValue(
+                                  field.name,
+                                  date ? date.format("YYYY-MM-DD") : ""
+                                )
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  error={touched.date && !!errors.date}
+                                  helperText={touched.date && errors.date}
+                                />
+                              )}
+                            />
+                          )}
+                        </Field>
+                      </DemoContainer>
+                    </LocalizationProvider>
+
+                    <Field name="amount">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Amount"
+                          variant="outlined"
+                          type="number"
+                          error={touched.amount && !!errors.amount}
+                          helperText={touched.amount && errors.amount}
+                        />
+                      )}
+                    </Field>
+                    <Field name="bankName">
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={top100Films.map((option) => option.label)}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          // sx={{ width: 300 }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              label="Choose Bank"
+                              error={touched.bankName && !!errors.bankName}
+                              helperText={touched.bankName && errors.bankName}
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
+                    <Button
+                      component="label"
+                      role={undefined}
+                      variant="contained"
+                      color="info"
+                      tabIndex={-1}
+                      startIcon={<Icon icon="ep:upload-filled" />}
+                    >
+                      Upload file
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      disabled={isSubmitting}
+                    >
+                      Submit
+                    </Button>
+                  </Box>
+                </Form>
+              )}
+            </Formik>
+          )}
         </Box>
       </Modal>
-
       {/* for cancle  */}
-
       <React.Fragment>
         <Dialog
           open={openModalForDelete}
@@ -496,6 +432,6 @@ export default function Deposit_request_table() {
           </DialogActions>
         </Dialog>
       </React.Fragment>
-  </div>
-  )
+    </div>
+  );
 }

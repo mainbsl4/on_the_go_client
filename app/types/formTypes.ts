@@ -77,3 +77,10 @@ export interface CreateDepositRequestFormValues {
   amount: number;
   bankName: string;
 }
+export interface UpdateDepositRequestFormValues {
+  userId: string;
+  dpType: string;
+  date: string;
+  amount: number;
+  bankName: string;
+}
