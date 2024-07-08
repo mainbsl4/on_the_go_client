@@ -63,6 +63,21 @@ export const updateVisaApplyStatus = createAsyncThunk(
   }
 );
 
+export const updateVisaApply = createAsyncThunk(
+  'visaApply/updateVisaApply',
+  async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${base_url}visa_apply/update/${id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const deleteVisa = createAsyncThunk(
   "visaApply/deleteVisa",
@@ -116,6 +131,17 @@ const visaApplySlice = createSlice({
         state.visaApply = action.payload;
       })
       .addCase(updateVisaApplyStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      }).addCase(updateVisaApply.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateVisaApply.fulfilled, (state, action) => {
+        state.loading = false;
+        state.visaApply = action.payload;
+      })
+      .addCase(updateVisaApply.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       }).addCase(deleteVisa.pending, (state) => {

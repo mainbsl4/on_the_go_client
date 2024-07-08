@@ -3,6 +3,7 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import {
   Autocomplete,
   Button,
@@ -34,7 +35,9 @@ import { useDispatch } from "react-redux";
 import {
   deleteVisa,
   getAllVisaApply,
+  updateVisaApply,
 } from "../../../lib/features/visaApply/visaApplySlice";
+import { uploadDocImage, uploadImg, uploadPassImage } from "../../../lib/features/upload/uploadSlice";
 
 const gender = [
   { label: "Male" },
@@ -278,6 +281,17 @@ const religion = [
   { label: "Falun Gong" },
 ];
 
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+});
+
 //for modal style
 const style = {
   position: "absolute" as "absolute",
@@ -328,6 +342,9 @@ export default function Visa_Application_List_Table() {
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
 
+
+
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -368,6 +385,8 @@ export default function Visa_Application_List_Table() {
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
   const [idForDelete, setIdForDelete] = React.useState(null);
 
+
+
   const handleClickOpenModalForDelete = (id: any) => {
     setOpenModalForDelete(true);
     setIdForDelete(id);
@@ -404,7 +423,7 @@ export default function Visa_Application_List_Table() {
 
   // formik validation
   const initialValues: UpdateVisaApplyFormValues = {
-    userId: "",
+    userId: selectedDataForEdit?.userId,
     givenName: selectedDataForEdit?.givenName || "",
     surName: selectedDataForEdit?.surName || "",
     gender: selectedDataForEdit?.gender || "",
@@ -414,10 +433,70 @@ export default function Visa_Application_List_Table() {
     dob: selectedDataForEdit?.dob || "",
     religion: selectedDataForEdit?.religion || "",
   };
+  const handleSubmit = async (values: UpdateVisaApplyFormValues, { setSubmitting }) => {
+    const formData = new FormData();
+    Object.keys(values).forEach(key => {
+      formData.append(key, values[key]);
+    });
 
-  const handleSubmit = (values: UpdateVisaApplyFormValues) => {
-    console.log("update values", values);
+    if (imgPass) formData.append('passportPdf', imgPass);
+    if (imgDoc) formData.append('otherDocumentPdf', imgDoc);
+    if (img) formData.append('image', img);
+
+    try {
+      const response = await dispatch(updateVisaApply({id: selectedDataForEdit?.id, data: formData})).unwrap();
+      console.log(response);
+      // Handle successful response
+    } catch (error) {
+      console.error('API Error:', error);
+      // Handle error response
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+
+  const imgPassState = useSelector((state: RootState) => state?.upload?.uploadPass);
+  const imgDocState = useSelector((state: RootState) => state?.upload?.uploadDoc);
+  const imgState = useSelector((state: RootState) => state?.upload?.uploadImg);
+
+  let imgPass = '';
+  let imgDoc = ''
+  let img = ''
+  if (imgPassState && imgPassState.length > 0) {
+    imgPass = imgPassState[0].url ? imgPassState[0].url : electedDataForEdit?.passportPdf; 
+  }
+  if (imgDocState && imgDocState.length > 0) {
+    imgDoc = imgDocState[0].url ? imgDocState[0].url : electedDataForEdit?.otherDocumentPdf; 
+  }
+  if (imgState && imgState.length > 0) {
+    img = imgState[0].url ? imgState[0].url : electedDataForEdit?.image; 
+  }
+  
+ 
+
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      dispatch(uploadPassImage(selectedFile));
+    }
+  };
+  const handleFileChange1 = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      dispatch(uploadImg(selectedFile));
+    }
+  };
+  const handleFileChange2 = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      dispatch(uploadDocImage(selectedFile));
+    }
+  };
+
+
+
 
   return (
     <div>
@@ -1730,18 +1809,21 @@ export default function Visa_Application_List_Table() {
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Passport
+                      <VisuallyHiddenInput type="file" onChange={handleFileChange} />
                     </Button>
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Photo
+                      <VisuallyHiddenInput type="file" onChange={handleFileChange1} />
                     </Button>
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Other Document
+                      <VisuallyHiddenInput type="file" onChange={handleFileChange2} />
                     </Button>
                   </div>
                   <div className="flex justify-center mt-4">
