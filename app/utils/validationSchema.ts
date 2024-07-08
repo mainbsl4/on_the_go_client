@@ -82,3 +82,11 @@ export const CreateDepositRequestSchema = Yup.object().shape({
   amount: Yup.number().required("Amount is required"),
   bankName: Yup.string().required("Bank Name is required"),
 });
+
+export const UpdateDepositRequestSchema = Yup.object().shape({
+  userId: Yup.string(),
+  dpType: Yup.string().required("Deposite Mode is required"),
+  date: Yup.string().required("Date is required"),
+  amount: Yup.number().required("Amount is required"),
+  bankName: Yup.string().required("Bank Name is required"),
+});
