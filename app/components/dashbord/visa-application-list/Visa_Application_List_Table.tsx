@@ -444,7 +444,7 @@ export default function Visa_Application_List_Table() {
     if (img) formData.append('image', img);
 
     try {
-      const response = await dispatch(updateVisaApply({id: selectedDataForEdit?.id, data: formData})).unwrap();
+      const response = await dispatch(updateVisaApply({ id: selectedDataForEdit?.id, data: formData })).unwrap();
       console.log(response);
       // Handle successful response
     } catch (error) {
@@ -464,16 +464,16 @@ export default function Visa_Application_List_Table() {
   let imgDoc = ''
   let img = ''
   if (imgPassState && imgPassState.length > 0) {
-    imgPass = imgPassState[0].url ? imgPassState[0].url : electedDataForEdit?.passportPdf; 
+    imgPass = imgPassState[0].url ? imgPassState[0].url : electedDataForEdit?.passportPdf;
   }
   if (imgDocState && imgDocState.length > 0) {
-    imgDoc = imgDocState[0].url ? imgDocState[0].url : electedDataForEdit?.otherDocumentPdf; 
+    imgDoc = imgDocState[0].url ? imgDocState[0].url : electedDataForEdit?.otherDocumentPdf;
   }
   if (imgState && imgState.length > 0) {
-    img = imgState[0].url ? imgState[0].url : electedDataForEdit?.image; 
+    img = imgState[0].url ? imgState[0].url : electedDataForEdit?.image;
   }
-  
- 
+
+
 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -627,26 +627,37 @@ export default function Visa_Application_List_Table() {
                         >
                           <Icon icon="hugeicons:view" />
                         </IconButton>
-                        <IconButton
-                          aria-label="edit"
-                          color="info"
-                          onClick={() =>
-                            handleOpenModalForEdit(reversedgetVesaApplyData)
-                          }
-                        >
-                          <Icon icon="mingcute:edit-line" />
-                        </IconButton>
-                        <IconButton
-                          aria-label="delete"
-                          color="error"
-                          onClick={() =>
-                            handleClickOpenModalForDelete(
-                              reversedgetVesaApplyData?.id
-                            )
-                          }
-                        >
-                          <Icon icon="lets-icons:cancel" />
-                        </IconButton>
+                     
+
+                        {
+                          reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                            <IconButton
+                            aria-label="edit"
+                            color="info"
+                            onClick={() =>
+                              handleOpenModalForEdit(reversedgetVesaApplyData)
+                            }
+                          >
+                            <Icon icon="mingcute:edit-line" />
+                          </IconButton>
+                          )
+                        }
+                        {
+                          reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                            <IconButton
+                              aria-label="delete"
+                              color="error"
+                              onClick={() =>
+                                handleClickOpenModalForDelete(
+                                  reversedgetVesaApplyData?.id
+                                )
+                              }
+                            >
+                              <Icon icon="lets-icons:cancel" />
+                            </IconButton>
+                          )
+                        }
+
                       </Stack>
                     </td>
                   </tr>
@@ -737,7 +748,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -874,7 +885,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1008,7 +1019,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1142,7 +1153,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1276,7 +1287,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1410,7 +1421,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
