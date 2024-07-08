@@ -67,9 +67,20 @@ export default function Lone_request_table() {
     setOpenModalForView(false);
   };
   // for edit modal
+  
+  const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
+
   const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
-  const handleOpenModalForEdit = () => setOpenModalForEdit(true);
-  const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
+  const handleOpenModalForEdit = (data: any) => {
+    setOpenModalForEdit(true);
+    setSelectedDataForEdit(data);
+  };
+  // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  const handleCloseModalForEdit = () => {
+    setOpenModalForEdit(false);
+    setSelectedDataForEdit(null);
+  };
 
   // for cancle modal
 
@@ -86,11 +97,11 @@ export default function Lone_request_table() {
   // for validation
   const initialValues: UpdateLoneRequestValues = {
     userId: "",
-    reqDate: "", // Change to null if reqDate is a Date object
-    settlmentDate: "", // Change to null if settlmentDate is a Date object
-    amount: 0,
-    remarks: "",
-    refNo: "",
+    reqDate: selectedDataForEdit?.reqDate || "",
+    settlmentDate: selectedDataForEdit?.settlmentDate || "",
+    amount: selectedDataForEdit?.amount || 0,
+    remarks: selectedDataForEdit?.remarks || "",
+    refNo: selectedDataForEdit?.refNo || "",
   };
 
   const handleSubmit = (values: UpdateLoneRequestValues) => {
@@ -160,7 +171,9 @@ export default function Lone_request_table() {
                   <IconButton
                     aria-label="edit"
                     color="info"
-                    onClick={handleOpenModalForEdit}
+                    onClick={() =>
+                      handleOpenModalForEdit(loanList)
+                    }
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton>
@@ -242,6 +255,7 @@ export default function Lone_request_table() {
       >
         <Box sx={style}>
           <h2 className="text-2xl">Edit Informations</h2>
+          {selectedDataForEdit && (
 
           <Formik
             initialValues={initialValues}
@@ -382,7 +396,9 @@ export default function Lone_request_table() {
               </Form>
             )}
           </Formik>
+      )}
         </Box>
+
       </Modal>
       {/* for cancle  */}
       <React.Fragment>
