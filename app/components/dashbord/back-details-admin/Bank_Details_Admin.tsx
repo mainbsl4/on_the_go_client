@@ -22,7 +22,7 @@ import {
   getBankDetails,
   updateBankDetails,
 } from "../../../lib/features/bankDetails/bankDetailsSlice";
-import { RootState } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useSelector } from "react-redux";
 
 //for modal style
@@ -68,7 +68,7 @@ export default function Bank_Details_Admin() {
 
   const reversedBankDetailsList = bankDetailsList?.slice().reverse();
 
-  const dispatch = useDispatch();
+  const dispatch : AppDispatch = useDispatch();
 
   const initialValues: CreateBankDetailsFormValues = {
     bankName: "",
