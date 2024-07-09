@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { createLoanReq, getAllLoanReq } from "../../../lib/features/loan/loanSlice";
-import { RootState } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export default function Lone_request_from() {
@@ -26,7 +26,7 @@ export default function Lone_request_from() {
   console.log(userId);
   
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
 
 

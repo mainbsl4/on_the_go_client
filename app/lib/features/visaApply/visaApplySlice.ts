@@ -81,7 +81,7 @@ export const updateVisaApply = createAsyncThunk(
 
 export const deleteVisa = createAsyncThunk(
   "visaApply/deleteVisa",
-  async (id, { rejectWithValue }) => {
+  async (id: any, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
         `${base_url}visa_apply/delete/${id}`

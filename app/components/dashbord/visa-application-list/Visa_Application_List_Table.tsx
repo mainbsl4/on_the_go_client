@@ -30,7 +30,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { UpdateVisaApplySchema } from "../../../utils/validationSchema";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
 import {
   deleteVisa,
@@ -340,7 +340,7 @@ function a11yProps(index: number) {
 
 export default function Visa_Application_List_Table() {
   const [value, setValue] = React.useState(0);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
 
 
@@ -396,7 +396,7 @@ export default function Visa_Application_List_Table() {
     setOpenModalForDelete(false);
   };
 
-  const actionDataGet = (sec) => {
+  const actionDataGet = (sec: number) => {
     setTimeout(() => {
       dispatch(getAllVisaApply());
     }, sec);
@@ -464,13 +464,13 @@ export default function Visa_Application_List_Table() {
   let imgDoc = ''
   let img = ''
   if (imgPassState && imgPassState.length > 0) {
-    imgPass = imgPassState[0].url ? imgPassState[0].url : electedDataForEdit?.passportPdf;
+    imgPass = imgPassState[0].url ? imgPassState[0].url : selectedDataForEdit?.passportPdf;
   }
   if (imgDocState && imgDocState.length > 0) {
-    imgDoc = imgDocState[0].url ? imgDocState[0].url : electedDataForEdit?.otherDocumentPdf;
+    imgDoc = imgDocState[0].url ? imgDocState[0].url : selectedDataForEdit?.otherDocumentPdf;
   }
   if (imgState && imgState.length > 0) {
-    img = imgState[0].url ? imgState[0].url : electedDataForEdit?.image;
+    img = imgState[0].url ? imgState[0].url : selectedDataForEdit?.image;
   }
 
 

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
 import { deleteLoan, getAllLoanReq, updateLoan } from "../../../lib/features/loan/loanSlice";
 import { UpdateLoneRequestValues } from "../../../types/formTypes";
@@ -43,7 +43,7 @@ const style = {
 };
 
 export default function Lone_request_table() {
-  const dispatch = useDispatch();
+  const dispatch : AppDispatch = useDispatch();
   const loanListAll = useSelector((state: RootState) => state?.loan?.loan?.data);
   const loanList = loanListAll?.slice().reverse();
 
@@ -101,7 +101,7 @@ export default function Lone_request_table() {
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
 
-  const handleClickOpenModalForDelete = (id) => {
+  const handleClickOpenModalForDelete = (id:any) => {
     setIdForDelete(id)
     setOpenModalForDelete(true);
   };
