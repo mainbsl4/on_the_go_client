@@ -16,12 +16,12 @@ const initialState: UserState = {
 };
 
 export const createVisaApply = createAsyncThunk(
-  'visaApply/createVisaApply',
-  async (data, { rejectWithValue }) => {
+  "visaApply/createVisaApply",
+  async (data: any, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}visa_apply/create`, data, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       return response.data;
@@ -44,9 +44,6 @@ export const getAllVisaApply = createAsyncThunk(
   }
 );
 
-
-
-
 export const updateVisaApplyStatus = createAsyncThunk(
   "visaApply/updateVisaApplyStatus",
   async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
@@ -64,14 +61,18 @@ export const updateVisaApplyStatus = createAsyncThunk(
 );
 
 export const updateVisaApply = createAsyncThunk(
-  'visaApply/updateVisaApply',
+  "visaApply/updateVisaApply",
   async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${base_url}visa_apply/update/${id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axios.put(
+        `${base_url}visa_apply/update/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -81,18 +82,15 @@ export const updateVisaApply = createAsyncThunk(
 
 export const deleteVisa = createAsyncThunk(
   "visaApply/deleteVisa",
-  async (id, { rejectWithValue }) => {
+  async (id: any, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `${base_url}visa_apply/delete/${id}`
-      );
+      const response = await axios.delete(`${base_url}visa_apply/delete/${id}`);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   }
 );
-
 
 const visaApplySlice = createSlice({
   name: "visaApply",
@@ -111,7 +109,8 @@ const visaApplySlice = createSlice({
       .addCase(createVisaApply.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }) .addCase(getAllVisaApply.pending, (state) => {
+      })
+      .addCase(getAllVisaApply.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -122,7 +121,8 @@ const visaApplySlice = createSlice({
       .addCase(getAllVisaApply.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(updateVisaApplyStatus.pending, (state) => {
+      })
+      .addCase(updateVisaApplyStatus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -133,7 +133,8 @@ const visaApplySlice = createSlice({
       .addCase(updateVisaApplyStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(updateVisaApply.pending, (state) => {
+      })
+      .addCase(updateVisaApply.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -144,7 +145,8 @@ const visaApplySlice = createSlice({
       .addCase(updateVisaApply.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(deleteVisa.pending, (state) => {
+      })
+      .addCase(deleteVisa.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -155,8 +157,7 @@ const visaApplySlice = createSlice({
       .addCase(deleteVisa.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-     
+      });
   },
 });
 

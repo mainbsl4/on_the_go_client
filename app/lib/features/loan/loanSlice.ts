@@ -17,7 +17,7 @@ const initialState: UserState = {
 
 export const createLoanReq = createAsyncThunk(
   "loan/createLoanReq",
-  async (data, { rejectWithValue }) => {
+  async (data: any, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}loan_request/create`, data);
       console.log(response);
@@ -79,7 +79,7 @@ export const updateLoan = createAsyncThunk(
 
 export const deleteLoan = createAsyncThunk(
   "loan/deleteLoan",
-  async (id, { rejectWithValue }) => {
+  async (id: any, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
         `${base_url}loan_request/delete/${id}`
@@ -109,7 +109,7 @@ const loanSlice = createSlice({
       .addCase(createLoanReq.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }) .addCase(getAllLoanReq.pending, (state) => {
+      }).addCase(getAllLoanReq.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -143,7 +143,7 @@ const loanSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-     
+
       .addCase(updateLoan.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -156,7 +156,7 @@ const loanSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-     
+
   },
 });
 

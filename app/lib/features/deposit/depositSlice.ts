@@ -28,10 +28,9 @@ const initialState: UserState = {
 //   }
 // );
 
-
 export const createDepositReq = createAsyncThunk(
   "deposit/createDepositReq",
-  async (data, { rejectWithValue }) => {
+  async (data: any, { rejectWithValue }) => {
     try {
       // Log the data to check the type of amount
       data?.forEach((value, key) => {
@@ -40,7 +39,7 @@ export const createDepositReq = createAsyncThunk(
 
       const response = await axios.post(`${base_url}deposit/create`, data, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       return response.data;
@@ -49,11 +48,6 @@ export const createDepositReq = createAsyncThunk(
     }
   }
 );
-
-
-
-
-
 
 export const getAllDepositReq = createAsyncThunk(
   "deposit/getAllLoanReq",
@@ -67,9 +61,6 @@ export const getAllDepositReq = createAsyncThunk(
     }
   }
 );
-
-
-
 
 export const updateDepositStatus = createAsyncThunk(
   "deposit/updateLoanStatus",
@@ -87,21 +78,17 @@ export const updateDepositStatus = createAsyncThunk(
   }
 );
 
-
 export const deleteDeposit = createAsyncThunk(
   "deposit/deleteLoan",
-  async (id, { rejectWithValue }) => {
+  async (id: any, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `${base_url}deposit/delete/${id}`
-      );
+      const response = await axios.delete(`${base_url}deposit/delete/${id}`);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   }
 );
-
 
 const depositSlice = createSlice({
   name: "deposit",
@@ -120,7 +107,8 @@ const depositSlice = createSlice({
       .addCase(createDepositReq.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }) .addCase(getAllDepositReq.pending, (state) => {
+      })
+      .addCase(getAllDepositReq.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -131,7 +119,8 @@ const depositSlice = createSlice({
       .addCase(getAllDepositReq.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(updateDepositStatus.pending, (state) => {
+      })
+      .addCase(updateDepositStatus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -142,7 +131,8 @@ const depositSlice = createSlice({
       .addCase(updateDepositStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(deleteDeposit.pending, (state) => {
+      })
+      .addCase(deleteDeposit.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -153,8 +143,7 @@ const depositSlice = createSlice({
       .addCase(deleteDeposit.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      })
-     
+      });
   },
 });
 

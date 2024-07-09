@@ -16,9 +16,13 @@ import { CreateVisaApplySchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
 import { createVisaApply } from "../../../lib/features/visaApply/visaApplySlice";
 import { useDispatch } from "react-redux";
-import { uploadDocImage, uploadImg, uploadPassImage } from "../../../lib/features/upload/uploadSlice";
+import {
+  uploadDocImage,
+  uploadImg,
+  uploadPassImage,
+} from "../../../lib/features/upload/uploadSlice";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
 
 const gender = [
   { label: "Male" },
@@ -41,7 +45,7 @@ const gender = [
   { label: "Neutrois" },
   { label: "Polygender" },
   { label: "Third Gender" },
-  { label: "Questioning" }
+  { label: "Questioning" },
 ];
 const nationality = [
   { label: "Afghan" },
@@ -274,35 +278,34 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Visa_Apply_Form() {
-
-
   const [filePass, setFilePass] = useState(null);
   const [filePassDoc, setFilePassDoc] = useState(null);
   const [fileImage, setFileImage] = useState(null);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   console.log(filePass);
-  const userId = JSON.parse(localStorage?.getItem('userId'));
+  const userId = JSON.parse(localStorage?.getItem("userId"));
   console.log(userId);
 
-  const imgPassState = useSelector((state: RootState) => state?.upload?.uploadPass);
-  const imgDocState = useSelector((state: RootState) => state?.upload?.uploadDoc);
+  const imgPassState = useSelector(
+    (state: RootState) => state?.upload?.uploadPass
+  );
+  const imgDocState = useSelector(
+    (state: RootState) => state?.upload?.uploadDoc
+  );
   const imgState = useSelector((state: RootState) => state?.upload?.uploadImg);
 
-  let imgPass = '';
-  let imgDoc = ''
-  let img = ''
+  let imgPass = "";
+  let imgDoc = "";
+  let img = "";
   if (imgPassState && imgPassState.length > 0) {
-    imgPass = imgPassState[0].url; 
+    imgPass = imgPassState[0].url;
   }
   if (imgDocState && imgDocState.length > 0) {
-    imgDoc = imgDocState[0].url; 
+    imgDoc = imgDocState[0].url;
   }
   if (imgState && imgState.length > 0) {
-    img = imgState[0].url; 
+    img = imgState[0].url;
   }
-  
- 
-  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -323,7 +326,6 @@ export default function Visa_Apply_Form() {
     }
   };
 
-
   const initialValues: CreateVisaApplyFormValues = {
     userId: userId,
     givenName: "",
@@ -334,25 +336,27 @@ export default function Visa_Apply_Form() {
     passExpiryDate: "",
     dob: "",
     religion: "",
-
   };
 
-  const handleSubmit = async (values: CreateVisaApplyFormValues, { setSubmitting }) => {
+  const handleSubmit = async (
+    values: CreateVisaApplyFormValues,
+    { setSubmitting }
+  ) => {
     const formData = new FormData();
-    Object.keys(values).forEach(key => {
+    Object.keys(values).forEach((key) => {
       formData.append(key, values[key]);
     });
 
-    if (imgPass) formData.append('passportPdf', imgPass);
-    if (imgDoc) formData.append('otherDocumentPdf', imgDoc);
-    if (img) formData.append('image', img);
+    if (imgPass) formData.append("passportPdf", imgPass);
+    if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
+    if (img) formData.append("image", img);
 
     try {
       const response = await dispatch(createVisaApply(formData)).unwrap();
       console.log(response);
       // Handle successful response
     } catch (error) {
-      console.error('API Error:', error);
+      console.error("API Error:", error);
       // Handle error response
     } finally {
       setSubmitting(false);
