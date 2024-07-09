@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { getAllLoanReq } from "../../../lib/features/loan/loanSlice";
+import { deleteLoan, getAllLoanReq, updateLoan } from "../../../lib/features/loan/loanSlice";
 import { UpdateLoneRequestValues } from "../../../types/formTypes";
 import { UpdateLoneRequestSchema } from "../../../utils/validationSchema";
 import { Field, Form, Formik } from "formik";
@@ -44,7 +44,8 @@ const style = {
 
 export default function Lone_request_table() {
   const dispatch = useDispatch();
-  const loanList = useSelector((state: RootState) => state?.loan?.loan?.data);
+  const loanListAll = useSelector((state: RootState) => state?.loan?.loan?.data);
+  const loanList = loanListAll?.slice().reverse();
 
   console.log("ddd", loanList);
 
@@ -52,8 +53,21 @@ export default function Lone_request_table() {
     dispatch(getAllLoanReq());
   }, []);
 
+  const actionDataGet = (sec) => {
+    setTimeout(() => {
+      dispatch(getAllLoanReq());
+    }, sec);
+  };
+
+
+
+
   // for modal
   // for view modal
+  const [idForDelete, setIdForDelete] = useState(null)
+  const [updateId, setUpdateId] = useState(null)
+  console.log(updateId);
+  
   const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
   // const handleOpenModalForView = () => setOpenModalForView(true);
@@ -74,6 +88,7 @@ export default function Lone_request_table() {
   // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
   const handleOpenModalForEdit = (data: any) => {
     setOpenModalForEdit(true);
+    setUpdateId(data?.id)
     setSelectedDataForEdit(data);
   };
   // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
@@ -86,10 +101,17 @@ export default function Lone_request_table() {
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
 
-  const handleClickOpenModalForDelete = () => {
+  const handleClickOpenModalForDelete = (id) => {
+    setIdForDelete(id)
     setOpenModalForDelete(true);
   };
 
+  const handleForDelete = () => {
+    dispatch(deleteLoan(idForDelete))
+    setOpenModalForDelete(false);
+    actionDataGet(700)
+
+  };
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
   };
@@ -105,8 +127,15 @@ export default function Lone_request_table() {
   };
 
   const handleSubmit = (values: UpdateLoneRequestValues) => {
-    console.log(values);
+    dispatch(updateLoan({id: updateId, data: values}))
+    actionDataGet(700);
+    setOpenModalForEdit(false);
   };
+
+
+
+
+
 
   return (
     <div>
@@ -180,7 +209,7 @@ export default function Lone_request_table() {
                   <IconButton
                     aria-label="delete"
                     color="error"
-                    onClick={handleClickOpenModalForDelete}
+                    onClick={()=>handleClickOpenModalForDelete(loanList?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
                   </IconButton>
@@ -418,7 +447,7 @@ export default function Lone_request_table() {
         </DialogContent> */}
           <DialogActions>
             <Button
-              onClick={handleCloseModalForDelete}
+              onClick={handleForDelete}
               variant="contained"
               color="error"
             >

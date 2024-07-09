@@ -43,8 +43,6 @@ export const getAllLoanReq = createAsyncThunk(
 );
 
 
-
-
 export const updateLoanStatus = createAsyncThunk(
   "loan/updateLoanStatus",
   async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
@@ -60,6 +58,23 @@ export const updateLoanStatus = createAsyncThunk(
     }
   }
 );
+
+export const updateLoan = createAsyncThunk(
+  "loan/updateLoan",
+  async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${base_url}loan_request/update/${id}`,
+        data
+      );
+      console.log(response);
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 
 
 export const deleteLoan = createAsyncThunk(
@@ -125,6 +140,19 @@ const loanSlice = createSlice({
         state.loan = action.payload;
       })
       .addCase(deleteLoan.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+     
+      .addCase(updateLoan.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateLoan.fulfilled, (state, action) => {
+        state.loading = false;
+        state.loan = action.payload;
+      })
+      .addCase(updateLoan.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
