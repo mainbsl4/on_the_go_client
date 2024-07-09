@@ -8,13 +8,18 @@ import { SigninFormSchema } from "../utils/validationSchema";
 import { signinUser } from "../lib/features/users/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { RootState } from "../lib/store/store";
+import { AppDispatch, RootState } from "../lib/store/store";
 import { useRouter } from "next/navigation";
 // import '../assets/css/style.css'
 
+
+interface SigninResponse {
+  error?: string;
+}
+
 export default function page() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user);
   console.log("hooo", user);
 
@@ -24,7 +29,7 @@ export default function page() {
   const handleSubmit = async (values: SigninFormValues) => {
     try {
       // Dispatch the action to log in the user
-      const response = await dispatch(signinUser(values));
+      const response = await dispatch(signinUser(values)) as SigninResponse;
 
       if (!response?.error) {
         console.log("ress", response);

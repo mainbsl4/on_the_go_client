@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { registerUser } from "../lib/features/users/userSlice";
 import Link from "next/link";
+import { AppDispatch } from "../lib/store/store";
 
 export default function page() {
   // for acceptTerms
@@ -16,7 +17,7 @@ export default function page() {
   const [errorTerms, setErrorTerms] = React.useState(false);
 
   // const count = useSelector((state: RootState) => state?.counter.value);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const initialValues: SignupFormValues = {
     userName: "",

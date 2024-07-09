@@ -17,7 +17,7 @@ const initialState: UserState = {
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData: any, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}user/register`, userData);
       console.log(response);
@@ -33,7 +33,7 @@ export const registerUser = createAsyncThunk(
 );
 export const signinUser = createAsyncThunk(
   "user/signinUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData: any, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}user/login`, userData);
       console.log(response);
