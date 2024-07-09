@@ -47,8 +47,6 @@ export default function Lone_request_table() {
   const loanListAll = useSelector((state: RootState) => state?.loan?.loan?.data);
   const loanList = loanListAll?.slice().reverse();
 
-  console.log("ddd", loanList);
-
   React.useEffect(() => {
     dispatch(getAllLoanReq());
   }, []);
@@ -66,7 +64,6 @@ export default function Lone_request_table() {
   // for view modal
   const [idForDelete, setIdForDelete] = useState(null)
   const [updateId, setUpdateId] = useState(null)
-  console.log(updateId);
   
   const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);

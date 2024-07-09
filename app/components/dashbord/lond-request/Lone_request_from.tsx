@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -21,9 +21,13 @@ import { AppDispatch, RootState } from "../../../lib/store/store";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export default function Lone_request_from() {
-
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  console.log(userId);
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userIdFromLocalStorage = JSON.parse(localStorage?.getItem('userId'));
+      setUserId(userIdFromLocalStorage);
+    }
+  }, []);
   
 
   const dispatch: AppDispatch = useDispatch();
@@ -41,9 +45,7 @@ export default function Lone_request_from() {
   };
 
   const handleSubmit = (values: CreateLoneRequestValues) => {
-    console.log(values);
     dispatch(createLoanReq(values));
-
   };
 
   return (

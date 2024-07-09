@@ -256,18 +256,18 @@ export default function RootLayout({
     setOpen(false);
   };
 
-  const dispatch : AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user?.user);
   const isRole = user?.data?.role ? user?.data?.role : user?.user?.role;
 
   const router = useRouter();
+
   React.useEffect(() => {
-    const userId =
-      typeof window !== "undefined"
-        ? JSON.parse(localStorage?.getItem("userId"))
-        : null;
-    if (!user && userId) {
-      dispatch(getUser(userId));
+    if (typeof window !== "undefined") {
+      const userId = JSON.parse(localStorage?.getItem("userId"));
+      if (!user && userId) {
+        dispatch(getUser(userId));
+      }
     }
   }, [user, dispatch]);
 
@@ -292,8 +292,13 @@ export default function RootLayout({
   const handleRoute = (params) => {
     router.push(params);
   };
-  const storedToken = localStorage.getItem("token");
-  manageToken(storedToken)
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("token");
+      manageToken(storedToken);
+    }
+  }, []);
 
   return (
     <div>
