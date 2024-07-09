@@ -307,6 +307,9 @@ export default function Visa_Apply_Form() {
     img = imgState[0].url;
   }
 
+  console.log(img);
+  
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {

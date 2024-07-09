@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { deleteDeposit, getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
+import { deleteDeposit, getAllDepositReq, updateDeposit } from "../../../lib/features/deposit/depositSlice";
 import { UpdateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { UpdateDepositRequestSchema } from "../../../utils/validationSchema";
@@ -101,6 +101,14 @@ export default function Deposit_request_table() {
   const dispatch: AppDispatch = useDispatch();
 
 
+  const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
+  console.log(imgState);
+  let img = ""
+  if (imgState && imgState?.length > 0) {
+    img = imgState[0]?.url;
+  }
+  console.log(img);
+
   const handleForDelete = () => {
     dispatch(deleteDeposit(idForDelete))
     setOpenModalForDelete(false);
@@ -111,28 +119,53 @@ export default function Deposit_request_table() {
   };
 
   // get data
-  const getDepositRequestData = useSelector(
+  const depositRequestData = useSelector(
     (state: RootState) => state?.deposit?.deposit?.data
   );
 
   useEffect(() => {
     dispatch(getAllDepositReq());
   }, []);
+
+const getDepositRequestData = depositRequestData?.slice().reverse();
   console.log("cccc", getDepositRequestData);
 
   // edit from validation
 
   const initialValues: UpdateDepositRequestFormValues = {
-    userId: "",
+    userId: selectedDataForEdit?.userId,
     dpType: selectedDataForEdit?.dpType || "",
     date: dayjs(selectedDataForEdit?.date).format("YYYY-MM-DD"),
     amount: selectedDataForEdit?.amount || 0,
     bankName: selectedDataForEdit?.bankName || "",
   };
 
-  const handleSubmit = (values: UpdateDepositRequestFormValues) => {
-    console.log(values);
+
+  const handleSubmit = async (values: UpdateDepositRequestFormValues, { setSubmitting }) => {
+    const formData = new FormData();
+    Object.keys(values).forEach(key => {
+      formData.append(key, values[key]);
+    });
+
+    if (img){
+      formData.append("slipImage", img);
+    } else{
+      formData.append("slipImage", selectedDataForEdit?.slipImage);
+    }
+
+    try {
+      const response = await dispatch(updateDeposit({ id: selectedDataForEdit?.id, data: formData })).unwrap();
+      console.log(response);
+      // Handle successful response
+    } catch (error) {
+      console.error('API Error:', error);
+      // Handle error response
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+
 
   return (
     <div>

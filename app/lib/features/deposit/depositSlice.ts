@@ -3,13 +3,13 @@ import axios from "axios";
 import { base_url } from "../../../utils/config";
 // import { redirect } from "next/navigation";
 
-interface UserState {
+interface DepositState {
   deposit: any;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: DepositState = {
   deposit: null,
   loading: false,
   error: null,
@@ -39,7 +39,7 @@ export const createDepositReq = createAsyncThunk(
 
       const response = await axios.post(`${base_url}deposit/create`, data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
       return response.data;
@@ -63,7 +63,7 @@ export const getAllDepositReq = createAsyncThunk(
 );
 
 export const updateDepositStatus = createAsyncThunk(
-  "deposit/updateLoanStatus",
+  "deposit/updateDepositStatus",
   async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
@@ -77,6 +77,30 @@ export const updateDepositStatus = createAsyncThunk(
     }
   }
 );
+
+
+export const updateDeposit = createAsyncThunk(
+  "deposit/updateDeposit",
+  async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${base_url}deposit/update/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+
+
 
 export const deleteDeposit = createAsyncThunk(
   "deposit/deleteLoan",
@@ -141,6 +165,18 @@ const depositSlice = createSlice({
         state.deposit = action.payload;
       })
       .addCase(deleteDeposit.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateDeposit.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateDeposit.fulfilled, (state, action) => {
+        state.loading = false;
+        state.deposit = action.payload;
+      })
+      .addCase(updateDeposit.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

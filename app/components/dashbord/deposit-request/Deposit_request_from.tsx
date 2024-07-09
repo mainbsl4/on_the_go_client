@@ -17,7 +17,9 @@ import { CreateDepositRequestSchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
 import { createDepositReq } from "../../../lib/features/deposit/depositSlice";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
+import { uploadSlipImg } from "../../../lib/features/upload/uploadSlice";
+import { useSelector } from "react-redux";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const top100Films = [
@@ -43,13 +45,21 @@ export default function Deposit_request_from() {
   const [file, setFile] = useState(null);
 
   const dispatch: AppDispatch = useDispatch();
-
+  const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
+  console.log(imgState);
+  let img = ""
+  if (imgState && imgState?.length > 0) {
+    img = imgState[0]?.url;
+  }
+  console.log(img);
   const userId = JSON.parse(localStorage?.getItem("userId"));
   console.log(userId);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    if (selectedFile) {
+      dispatch(uploadSlipImg(selectedFile));
+    }
   };
 
   const initialValues: CreateDepositRequestFormValues = {
@@ -61,7 +71,7 @@ export default function Deposit_request_from() {
   };
 
   // const handleSubmit = (values: CreateDepositRequestFormValues) => {
-  //   console.log(values);
+  //   dispatch(createDepositReq(values))
   // };
 
   // const handleSubmit = async (values: CreateDepositRequestFormValues, { setSubmitting }) => {
@@ -95,7 +105,7 @@ export default function Deposit_request_from() {
       formData.append(key, value.toString());
     });
 
-    if (file) formData.append("slipImage", file);
+    if (img) formData.append("slipImage", img);
 
     try {
       // Log formData to check if amount is correctly converted

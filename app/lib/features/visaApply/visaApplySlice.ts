@@ -21,7 +21,7 @@ export const createVisaApply = createAsyncThunk(
     try {
       const response = await axios.post(`${base_url}visa_apply/create`, data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
       return response.data;
