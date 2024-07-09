@@ -102,12 +102,10 @@ export default function Deposit_request_table() {
 
 
   const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
-  console.log(imgState);
   let img = ""
   if (imgState && imgState?.length > 0) {
     img = imgState[0]?.url;
   }
-  console.log(img);
 
   const handleForDelete = () => {
     dispatch(deleteDeposit(idForDelete))
@@ -128,7 +126,7 @@ export default function Deposit_request_table() {
   }, []);
 
 const getDepositRequestData = depositRequestData?.slice().reverse();
-  console.log("cccc", getDepositRequestData);
+
 
   // edit from validation
 
@@ -155,7 +153,6 @@ const getDepositRequestData = depositRequestData?.slice().reverse();
 
     try {
       const response = await dispatch(updateDeposit({ id: selectedDataForEdit?.id, data: formData })).unwrap();
-      console.log(response);
       // Handle successful response
     } catch (error) {
       console.error('API Error:', error);

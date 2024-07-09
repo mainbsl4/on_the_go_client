@@ -419,8 +419,6 @@ export default function Visa_Application_List_Table() {
 
   const reversedgetVesaApplyData = getVesaApplyData?.slice().reverse();
 
-  console.log("ddd", reversedgetVesaApplyData);
-
   // formik validation
   const initialValues: UpdateVisaApplyFormValues = {
     userId: selectedDataForEdit?.userId,
@@ -445,7 +443,6 @@ export default function Visa_Application_List_Table() {
 
     try {
       const response = await dispatch(updateVisaApply({ id: selectedDataForEdit?.id, data: formData })).unwrap();
-      console.log(response);
       // Handle successful response
     } catch (error) {
       console.error('API Error:', error);

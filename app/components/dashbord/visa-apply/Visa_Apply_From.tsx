@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Form, Formik, Field, useField, ErrorMessage } from "formik";
@@ -281,10 +281,14 @@ export default function Visa_Apply_Form() {
   const [filePass, setFilePass] = useState(null);
   const [filePassDoc, setFilePassDoc] = useState(null);
   const [fileImage, setFileImage] = useState(null);
+  const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
-  console.log(filePass);
-  const userId = JSON.parse(localStorage?.getItem("userId"));
-  console.log(userId);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userIdFromLocalStorage = JSON.parse(localStorage?.getItem('userId'));
+      setUserId(userIdFromLocalStorage);
+    }
+  }, []);
 
   const imgPassState = useSelector(
     (state: RootState) => state?.upload?.uploadPass
@@ -307,8 +311,7 @@ export default function Visa_Apply_Form() {
     img = imgState[0].url;
   }
 
-  console.log(img);
-  
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -356,7 +359,6 @@ export default function Visa_Apply_Form() {
 
     try {
       const response = await dispatch(createVisaApply(formData)).unwrap();
-      console.log(response);
       // Handle successful response
     } catch (error) {
       console.error("API Error:", error);

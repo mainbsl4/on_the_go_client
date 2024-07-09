@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -43,17 +43,22 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function Deposit_request_from() {
   const [file, setFile] = useState(null);
-
+  const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
   const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
-  console.log(imgState);
+
   let img = ""
   if (imgState && imgState?.length > 0) {
     img = imgState[0]?.url;
   }
-  console.log(img);
-  const userId = JSON.parse(localStorage?.getItem("userId"));
-  console.log(userId);
+
+ 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userIdFromLocalStorage = JSON.parse(localStorage?.getItem('userId'));
+      setUserId(userIdFromLocalStorage);
+    }
+  }, []);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -109,12 +114,9 @@ export default function Deposit_request_from() {
 
     try {
       // Log formData to check if amount is correctly converted
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
 
       const response = await dispatch(createDepositReq(formData)).unwrap();
-      console.log(response);
+     
       // Handle successful response
     } catch (error) {
       console.error("API Error:", error);
