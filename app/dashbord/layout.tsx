@@ -23,7 +23,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../lib/store/store";
+import { AppDispatch, RootState } from "../lib/store/store";
 import { getUser } from "../lib/features/users/userSlice";
 import { useRouter } from "next/navigation";
 import { manageToken } from "../utils/config";
@@ -256,7 +256,7 @@ export default function RootLayout({
     setOpen(false);
   };
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user?.user);
   const isRole = user?.data?.role ? user?.data?.role : user?.user?.role;
 
@@ -293,7 +293,7 @@ export default function RootLayout({
     router.push(params);
   };
   const storedToken = localStorage.getItem("token");
-  manageToken(storedToken)
+  manageToken(storedToken);
 
   return (
     <div>
