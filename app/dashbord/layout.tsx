@@ -245,60 +245,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const theme = useTheme();
-  // const [open, setOpen] = React.useState(true);
-
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
-
-  // const dispatch: AppDispatch = useDispatch();
-  // const user = useSelector((state: RootState) => state?.user?.user);
-  // const isRole = user?.data?.role ? user?.data?.role : user?.user?.role;
-
-  // const router = useRouter();
-  // React.useEffect(() => {
-  //   const userId =
-  //     typeof window !== "undefined"
-  //       ? JSON.parse(localStorage?.getItem("userId"))
-  //       : null;
-  //   if (!user && userId) {
-  //     dispatch(getUser(userId));
-  //   }
-  // }, [user, dispatch]);
-
-  // React.useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const timeoutId = setTimeout(() => {
-  //       const storedUserId = localStorage.getItem("userId");
-  //       const parsedUserId = storedUserId ? JSON.parse(storedUserId) : null;
-  //       const mainId = user?.data?.id ? user?.data?.id : user?.user?.id;
-  //       if (parsedUserId !== mainId) {
-  //         router.push("/signin");
-  //       } else {
-  //         console.log("User IDs match, staying on the current page.");
-  //       }
-  //     }, 3000); // 3 seconds delay
-
-  //     // Clean up the timeout if the component unmounts
-  //     return () => clearTimeout(timeoutId);
-  //   }
-  // }, [user, router]);
-
-  // const handleRoute = (params) => {
-  //   router.push(params);
-  // };
-  // const storedToken = localStorage.getItem("token");
-  // manageToken(storedToken);
-
-
-
-
-const theme = useTheme();
+  const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
@@ -309,7 +256,7 @@ const theme = useTheme();
     setOpen(false);
   };
 
-  const dispatch : AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user?.user);
   const isRole = user?.data?.role ? user?.data?.role : user?.user?.role;
 
@@ -352,16 +299,6 @@ const theme = useTheme();
       manageToken(storedToken);
     }
   }, []);
-
-
-
-
-
-
-
-
-
-
 
   return (
     <div>
