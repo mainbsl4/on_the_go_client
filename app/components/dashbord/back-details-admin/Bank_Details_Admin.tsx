@@ -76,11 +76,29 @@ export default function Bank_Details_Admin() {
     accNo: "",
     branch: "",
   };
-  const initialValuesUpdate:  UpdateBankDetailsFormValues= {
-    bankName: editBankDetails?.bankName || "",
-    accName: editBankDetails?.accName || "",
-    accNo: editBankDetails?.accNo || "",
-    branch: editBankDetails?.branch || "",
+
+  interface BankDetails {
+    bankName: string;
+    accName: string;
+    accNo: string;
+    branch: string;
+  }
+
+  function isBankDetails(obj: any): obj is BankDetails {
+    return (
+      obj &&
+      typeof obj.bankName === 'string' &&
+      typeof obj.accName === 'string' &&
+      typeof obj.accNo === 'string' &&
+      typeof obj.branch === 'string'
+    );
+  }
+  
+  const initialValuesUpdate: UpdateBankDetailsFormValues = {
+    bankName: isBankDetails(editBankDetails) ? editBankDetails.bankName : "",
+    accName: isBankDetails(editBankDetails) ? editBankDetails.accName : "",
+    accNo: isBankDetails(editBankDetails) ? editBankDetails.accNo : "",
+    branch: isBankDetails(editBankDetails) ? editBankDetails.branch : "",
   };
 
   const actionDataGet = (sec) => {
