@@ -85,6 +85,12 @@ const linkData = [
 ];
 const userLinkData = [
   {
+    id: 1,
+    text: "Users",
+    icon: <Icon className="text-3xl" icon="ph:users" />,
+    link: "/dashbord/users",
+  },
+  {
     id: 7,
     text: "Visa Apply",
     icon: <Icon className="text-3xl" icon="codicon:git-stash-apply" />,

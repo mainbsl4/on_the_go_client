@@ -15,12 +15,16 @@ import { Icon } from "@iconify/react";
 // for modals
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Modal, TextField } from "@mui/material";
+import { Chip, Modal, TextField } from "@mui/material";
 // for delete
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import { AppDispatch, RootState } from "../../../lib/store/store";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getUsers } from "../../../lib/features/users/userSlice";
 
 //for modal style
 const style = {
@@ -108,6 +112,7 @@ function createData(
   return { name, phone, email, company, cuntry, address, action };
 }
 
+
 const rows = [
   createData(
     "John Doe",
@@ -147,13 +152,25 @@ export default function Users_table() {
 
   // for modal
   // fot view modal
-  const [openModalForView, setOpenModalForView] = React.useState(false);
-  const handleOpenModalForView = () => setOpenModalForView(true);
-  const handleCloseModalForView = () => setOpenModalForView(false);
+  // const [idForDelete, setIdForDelete] = React.useState(null)
+  // const [updateId, setUpdateId] = React.useState(null)
+  
+  // const [selectedDataForView, setSelectedDataForView] = React.useState(null);
+  // const [openModalForView, setOpenModalForView] = React.useState(false);
+  // // const handleOpenModalForView = () => setOpenModalForView(true);
+  // const handleOpenModalForView = (data) => {
+  //   setSelectedDataForView(data);
+  //   setOpenModalForView(true);
+  // };
+  // // const handleCloseModalForView = () => setOpenModalForView(false);
+  // const handleCloseModalForView = () => {
+  //   setSelectedDataForView(null);
+  //   setOpenModalForView(false);
+  // };
   // fot edit modal
-  const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
-  const handleOpenModalForEdit = () => setOpenModalForEdit(true);
-  const handleCloseModalForEdit = () => setOpenModalForEdit(false);
+  // const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
+  // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
+  // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
 
   // for delete
 
@@ -166,6 +183,19 @@ export default function Users_table() {
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
   };
+
+
+
+  // get api 
+
+  const getAllUsers = useSelector((state: RootState) => state?.user?.user?.data);
+const dispatch: AppDispatch = useDispatch();
+
+React.useEffect(()=>{
+  dispatch(getUsers())
+
+}, [getAllUsers])
+console.log('main', getAllUsers);
 
   return (
     <div>
@@ -208,17 +238,17 @@ export default function Users_table() {
                                 <IconButton
                                   aria-label="view"
                                   color="success"
-                                  onClick={handleOpenModalForView}
+                                  // onClick={() => handleOpenModalForView(columns)}
                                 >
                                   <Icon icon="hugeicons:view" />
                                 </IconButton>
-                                <IconButton
+                                {/* <IconButton
                                   aria-label="edit"
                                   color="info"
                                   onClick={handleOpenModalForEdit}
                                 >
                                   <Icon icon="mingcute:edit-line" />
-                                </IconButton>
+                                </IconButton> */}
                                 <IconButton
                                   aria-label="delete"
                                   color="error"
@@ -253,24 +283,12 @@ export default function Users_table() {
       </Paper>
 
 {/* for view  */}
-      <Modal
-        open={openModalForView}
-        onClose={handleCloseModalForView}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a VIEW modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal>
-
       
-      <Modal
+
+
+
+    {/* for edit    */}
+      {/* <Modal
         open={openModalForEdit}
         onClose={handleCloseModalForEdit}
         aria-labelledby="modal-modal-title"
@@ -321,7 +339,7 @@ export default function Users_table() {
           <Button variant="contained" color="primary" type="submit">Update</Button>
           </div>
         </Box>
-      </Modal>
+      </Modal> */}
 
       {/* for delete  */}
 
