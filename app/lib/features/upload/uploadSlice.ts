@@ -7,6 +7,7 @@ interface UploadState {
     uploadPass: any;
     uploadDoc: any;
     uploadImg: any;
+    uploadSlip: any;
     loading: boolean;
     error: string | null;
 }
@@ -15,6 +16,7 @@ const initialState: UploadState = {
     uploadPass: null,
     uploadDoc: null,
     uploadImg: null,
+    uploadSlip: null,
     loading: false,
     error: null,
 };
@@ -89,6 +91,29 @@ export const uploadImg = createAsyncThunk(
         }
     }
 );
+export const uploadSlipImg = createAsyncThunk(
+    "upload/uploadSlipImg",
+    async (file: File, { rejectWithValue }) => {
+        try {
+            const formData = new FormData();
+            formData.append("images", file);
+
+            const response = await axios.post(
+                `${base_url}upload/deposit-img`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 
 
 const uploadSlice = createSlice({
@@ -130,6 +155,18 @@ const uploadSlice = createSlice({
                 state.uploadImg = action.payload;
             })
             .addCase(uploadImg.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(uploadSlipImg.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(uploadSlipImg.fulfilled, (state, action) => {
+                state.loading = false;
+                state.uploadSlip = action.payload;
+            })
+            .addCase(uploadSlipImg.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
