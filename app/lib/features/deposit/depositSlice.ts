@@ -90,7 +90,7 @@ export const updateDepositStatus = createAsyncThunk(
 
 export const deleteDeposit = createAsyncThunk(
   "deposit/deleteLoan",
-  async (id, { rejectWithValue }) => {
+  async (id:any, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
         `${base_url}deposit/delete/${id}`

@@ -101,24 +101,40 @@ export default function Bank_Details_Admin() {
     branch: isBankDetails(editBankDetails) ? editBankDetails.branch : "",
   };
 
-  const actionDataGet = (sec) => {
+  const actionDataGet = (sec: number) => {
     setTimeout(() => {
       dispatch(getBankDetails());
     }, sec);
   };
+
+  interface CreateBankDetailsFormValues {
+    bankName: string;
+    accName: string;
+    accNo: string;
+    branch: string;
+    }
 
   const handleSubmit = (values: CreateBankDetailsFormValues) => {
     dispatch(createBankDetails(values));
     actionDataGet(700);
     setOpenModalForAdd(false);
   };
+
+
+  // interface UpdateBankDetailsFormValues {
+  //   bankName: string;
+  //   accName: string;
+  //   accNo: string;
+  //   branch: string;
+  
+  // }
   const handleSubmitUpdate = (values: UpdateBankDetailsFormValues) => {
     dispatch(updateBankDetails({id: updateId, data: values}));
     actionDataGet(700);
     setOpenModalForEdit(false);
   };
 
-  const handleClickOpenModalForDelete = (id) => {
+  const handleClickOpenModalForDelete = (id: any) => {
     setOpenModalForDelete(true);
     setDelId(id);
   };
@@ -131,7 +147,7 @@ export default function Bank_Details_Admin() {
     dispatch(getBankDetails());
   }, [dispatch]);
 
-  const deleteList = (id) => {
+  const deleteList = (id: any) => {
     dispatch(deleteBankDetail(id));
     actionDataGet(700);
     setOpenModalForDelete(false);

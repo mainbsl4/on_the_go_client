@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../lib/store/store";
+import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
 import { deleteDeposit, getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
 import { UpdateDepositRequestFormValues } from "../../../types/formTypes";
@@ -98,6 +98,9 @@ export default function Deposit_request_table() {
     setOpenModalForDelete(true);
   };
 
+  const dispatch: AppDispatch = useDispatch();
+
+
   const handleForDelete = () => {
     dispatch(deleteDeposit(idForDelete))
     setOpenModalForDelete(false);
@@ -112,7 +115,6 @@ export default function Deposit_request_table() {
     (state: RootState) => state?.deposit?.deposit?.data
   );
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllDepositReq());
   }, []);

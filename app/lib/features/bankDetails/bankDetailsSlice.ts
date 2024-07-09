@@ -17,7 +17,7 @@ const initialState: UserState = {
 
 export const createBankDetails = createAsyncThunk(
   "bankDetails/createBankDetails",
-  async (data, { rejectWithValue }) => {
+  async (data:any, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${base_url}mst_bank_details/create`,
@@ -68,7 +68,7 @@ export const updateBankDetails = createAsyncThunk(
 
 export const deleteBankDetail = createAsyncThunk(
   "bankDetails/deleteBankDetail",
-  async (id, { rejectWithValue }) => {
+  async (id:any, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
         `${base_url}mst_bank_details/delete/${id}`
