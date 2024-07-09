@@ -38,8 +38,8 @@ export const signinUser = createAsyncThunk(
       const response = await axios.post(`${base_url}user/login`, userData);
       console.log(response);
       if (response.data) {
-        localStorage.setItem('userId', JSON.stringify(response.data.user.id));
-        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000; 
+        localStorage.setItem("userId", JSON.stringify(response.data.user.id));
+        const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("tokenExpiration", expirationTime.toString());
       }
@@ -57,7 +57,7 @@ export const signinUser = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async (id, { rejectWithValue }) => {
+  async (id: any, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}user/${id}`);
       console.log(response);
@@ -93,16 +93,11 @@ export const approveUser = createAsyncThunk(
   }
 );
 
-
-
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${base_url}user/update/${id}`,
-        data
-      );
+      const response = await axios.put(`${base_url}user/update/${id}`, data);
       console.log(response);
       return response.data;
     } catch (err: any) {
@@ -111,22 +106,17 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `${base_url}user/delete/${id}`
-      );
+      const response = await axios.delete(`${base_url}user/delete/${id}`);
       return response.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   }
 );
-
-
 
 const userSlice = createSlice({
   name: "user",
@@ -157,7 +147,8 @@ const userSlice = createSlice({
       .addCase(signinUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }) .addCase(getUser.pending, (state) => {
+      })
+      .addCase(getUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -168,7 +159,8 @@ const userSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(getUsers.pending, (state) => {
+      })
+      .addCase(getUsers.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -179,7 +171,8 @@ const userSlice = createSlice({
       .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(approveUser.pending, (state) => {
+      })
+      .addCase(approveUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -190,7 +183,8 @@ const userSlice = createSlice({
       .addCase(approveUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(updateUser.pending, (state) => {
+      })
+      .addCase(updateUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -201,7 +195,8 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }).addCase(deleteUser.pending, (state) => {
+      })
+      .addCase(deleteUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
