@@ -69,6 +69,7 @@ export const getUser = createAsyncThunk(
     }
   }
 );
+
 export const getUsers = createAsyncThunk(
   "user/getUsers",
   async (_, { rejectWithValue }) => {

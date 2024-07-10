@@ -37,7 +37,11 @@ import {
   getAllVisaApply,
   updateVisaApply,
 } from "../../../lib/features/visaApply/visaApplySlice";
-import { uploadDocImage, uploadImg, uploadPassImage } from "../../../lib/features/upload/uploadSlice";
+import {
+  uploadDocImage,
+  uploadImg,
+  uploadPassImage,
+} from "../../../lib/features/upload/uploadSlice";
 
 const gender = [
   { label: "Male" },
@@ -342,9 +346,6 @@ export default function Visa_Application_List_Table() {
   const [value, setValue] = React.useState(0);
   const dispatch: AppDispatch = useDispatch();
 
-
-
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -384,8 +385,6 @@ export default function Visa_Application_List_Table() {
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
   const [idForDelete, setIdForDelete] = React.useState(null);
-
-
 
   const handleClickOpenModalForDelete = (id: any) => {
     setOpenModalForDelete(true);
@@ -431,47 +430,56 @@ export default function Visa_Application_List_Table() {
     dob: selectedDataForEdit?.dob || "",
     religion: selectedDataForEdit?.religion || "",
   };
-  const handleSubmit = async (values: UpdateVisaApplyFormValues, { setSubmitting }) => {
+  const handleSubmit = async (
+    values: UpdateVisaApplyFormValues,
+    { setSubmitting }
+  ) => {
     const formData = new FormData();
-    Object.keys(values).forEach(key => {
+    Object.keys(values).forEach((key) => {
       formData.append(key, values[key]);
     });
 
-    if (imgPass) formData.append('passportPdf', imgPass);
-    if (imgDoc) formData.append('otherDocumentPdf', imgDoc);
-    if (img) formData.append('image', img);
+    if (imgPass) formData.append("passportPdf", imgPass);
+    if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
+    if (img) formData.append("image", img);
 
     try {
-      const response = await dispatch(updateVisaApply({ id: selectedDataForEdit?.id, data: formData })).unwrap();
+      const response = await dispatch(
+        updateVisaApply({ id: selectedDataForEdit?.id, data: formData })
+      ).unwrap();
       // Handle successful response
     } catch (error) {
-      console.error('API Error:', error);
+      console.error("API Error:", error);
       // Handle error response
     } finally {
       setSubmitting(false);
     }
   };
 
-
-  const imgPassState = useSelector((state: RootState) => state?.upload?.uploadPass);
-  const imgDocState = useSelector((state: RootState) => state?.upload?.uploadDoc);
+  const imgPassState = useSelector(
+    (state: RootState) => state?.upload?.uploadPass
+  );
+  const imgDocState = useSelector(
+    (state: RootState) => state?.upload?.uploadDoc
+  );
   const imgState = useSelector((state: RootState) => state?.upload?.uploadImg);
 
-  let imgPass = '';
-  let imgDoc = ''
-  let img = ''
+  let imgPass = "";
+  let imgDoc = "";
+  let img = "";
   if (imgPassState && imgPassState.length > 0) {
-    imgPass = imgPassState[0].url ? imgPassState[0].url : selectedDataForEdit?.passportPdf;
+    imgPass = imgPassState[0].url
+      ? imgPassState[0].url
+      : selectedDataForEdit?.passportPdf;
   }
   if (imgDocState && imgDocState.length > 0) {
-    imgDoc = imgDocState[0].url ? imgDocState[0].url : selectedDataForEdit?.otherDocumentPdf;
+    imgDoc = imgDocState[0].url
+      ? imgDocState[0].url
+      : selectedDataForEdit?.otherDocumentPdf;
   }
   if (imgState && imgState.length > 0) {
     img = imgState[0].url ? imgState[0].url : selectedDataForEdit?.image;
   }
-
-
-
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -491,9 +499,6 @@ export default function Visa_Application_List_Table() {
       dispatch(uploadDocImage(selectedFile));
     }
   };
-
-
-
 
   return (
     <div>
@@ -624,11 +629,10 @@ export default function Visa_Application_List_Table() {
                         >
                           <Icon icon="hugeicons:view" />
                         </IconButton>
-                     
 
-                        {
-                          reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
-                            <IconButton
+                        {reversedgetVesaApplyData?.isApproved ===
+                          "SUBMITTED" && (
+                          <IconButton
                             aria-label="edit"
                             color="info"
                             onClick={() =>
@@ -637,24 +641,21 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="mingcute:edit-line" />
                           </IconButton>
-                          )
-                        }
-                        {
-                          reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={() =>
-                                handleClickOpenModalForDelete(
-                                  reversedgetVesaApplyData?.id
-                                )
-                              }
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton>
-                          )
-                        }
-
+                        )}
+                        {reversedgetVesaApplyData?.isApproved ===
+                          "SUBMITTED" && (
+                          <IconButton
+                            aria-label="delete"
+                            color="error"
+                            onClick={() =>
+                              handleClickOpenModalForDelete(
+                                reversedgetVesaApplyData?.id
+                              )
+                            }
+                          >
+                            <Icon icon="lets-icons:cancel" />
+                          </IconButton>
+                        )}
                       </Stack>
                     </td>
                   </tr>
@@ -745,7 +746,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                            "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -882,7 +883,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                            "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1016,7 +1017,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                            "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1150,7 +1151,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                            "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1284,7 +1285,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                            "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1418,7 +1419,7 @@ export default function Visa_Application_List_Table() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                            "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1817,21 +1818,30 @@ export default function Visa_Application_List_Table() {
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Passport
-                      <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={handleFileChange}
+                      />
                     </Button>
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Photo
-                      <VisuallyHiddenInput type="file" onChange={handleFileChange1} />
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={handleFileChange1}
+                      />
                     </Button>
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Other Document
-                      <VisuallyHiddenInput type="file" onChange={handleFileChange2} />
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={handleFileChange2}
+                      />
                     </Button>
                   </div>
                   <div className="flex justify-center mt-4">
