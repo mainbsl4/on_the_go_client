@@ -16,7 +16,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { deleteLoan, getAllLoanReq, updateLoan } from "../../../lib/features/loan/loanSlice";
+import {
+  deleteLoan,
+  getAllLoanReq,
+  updateLoan,
+} from "../../../lib/features/loan/loanSlice";
 import { UpdateLoneRequestValues } from "../../../types/formTypes";
 import { UpdateLoneRequestSchema } from "../../../utils/validationSchema";
 import { Field, Form, Formik } from "formik";
@@ -43,8 +47,10 @@ const style = {
 };
 
 export default function Lone_request_table() {
-  const dispatch : AppDispatch = useDispatch();
-  const loanListAll = useSelector((state: RootState) => state?.loan?.loan?.data);
+  const dispatch: AppDispatch = useDispatch();
+  const loanListAll = useSelector(
+    (state: RootState) => state?.loan?.loan?.data
+  );
   const loanList = loanListAll?.slice().reverse();
 
   React.useEffect(() => {
@@ -57,14 +63,11 @@ export default function Lone_request_table() {
     }, sec);
   };
 
-
-
-
   // for modal
   // for view modal
-  const [idForDelete, setIdForDelete] = useState(null)
-  const [updateId, setUpdateId] = useState(null)
-  
+  const [idForDelete, setIdForDelete] = useState(null);
+  const [updateId, setUpdateId] = useState(null);
+
   const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
   // const handleOpenModalForView = () => setOpenModalForView(true);
@@ -78,14 +81,14 @@ export default function Lone_request_table() {
     setOpenModalForView(false);
   };
   // for edit modal
-  
+
   const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
 
   const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
   // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
   const handleOpenModalForEdit = (data: any) => {
     setOpenModalForEdit(true);
-    setUpdateId(data?.id)
+    setUpdateId(data?.id);
     setSelectedDataForEdit(data);
   };
   // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
@@ -98,16 +101,15 @@ export default function Lone_request_table() {
 
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
 
-  const handleClickOpenModalForDelete = (id:any) => {
-    setIdForDelete(id)
+  const handleClickOpenModalForDelete = (id: any) => {
+    setIdForDelete(id);
     setOpenModalForDelete(true);
   };
 
   const handleForDelete = () => {
-    dispatch(deleteLoan(idForDelete))
+    dispatch(deleteLoan(idForDelete));
     setOpenModalForDelete(false);
-    actionDataGet(700)
-
+    actionDataGet(700);
   };
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
@@ -124,15 +126,10 @@ export default function Lone_request_table() {
   };
 
   const handleSubmit = (values: UpdateLoneRequestValues) => {
-    dispatch(updateLoan({id: updateId, data: values}))
+    dispatch(updateLoan({ id: updateId, data: values }));
     actionDataGet(700);
     setOpenModalForEdit(false);
   };
-
-
-
-
-
 
   return (
     <div>
@@ -197,16 +194,14 @@ export default function Lone_request_table() {
                   <IconButton
                     aria-label="edit"
                     color="info"
-                    onClick={() =>
-                      handleOpenModalForEdit(loanList)
-                    }
+                    onClick={() => handleOpenModalForEdit(loanList)}
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton>
                   <IconButton
                     aria-label="delete"
                     color="error"
-                    onClick={()=>handleClickOpenModalForDelete(loanList?.id)}
+                    onClick={() => handleClickOpenModalForDelete(loanList?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
                   </IconButton>
@@ -282,75 +277,74 @@ export default function Lone_request_table() {
         <Box sx={style}>
           <h2 className="text-2xl">Edit Informations</h2>
           {selectedDataForEdit && (
-
-          <Formik
-            initialValues={initialValues}
-            validationSchema={UpdateLoneRequestSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting, touched, errors, setFieldValue }) => (
-              <Form>
-                <div className="grid grid-cols-1 gap-2">
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer
-                      components={["DatePicker"]}
-                      sx={{ padding: "0px" }}
-                    >
-                      <Field name="reqDate">
-                        {({ field }) => (
-                          <DatePicker
-                            {...field}
-                            label="Request Date"
-                            value={field.value ? dayjs(field.value) : null}
-                            onChange={(date) =>
-                              setFieldValue(
-                                "reqDate",
-                                date ? date.format("YYYY-MM-DD") : ""
-                              )
-                            }
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                error={touched.reqDate && !!errors.reqDate}
-                                helperText={touched.reqDate && errors.reqDate}
-                                sx={{ width: "100%" }}
-                              />
-                            )}
-                          />
-                        )}
-                      </Field>
-                    </DemoContainer>
-                  </LocalizationProvider>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer
-                      components={["DatePicker"]}
-                      sx={{ padding: "0px" }}
-                    >
-                      <Field name="settlmentDate">
-                        {({ field }) => (
-                          <DatePicker
-                            {...field}
-                            label="Settlement Date"
-                            value={field.value ? dayjs(field.value) : null}
-                            onChange={(date) =>
-                              setFieldValue(
-                                "settlmentDate",
-                                date ? date.format("YYYY-MM-DD") : ""
-                              )
-                            }
-                            error={
-                              touched.settlmentDate && !!errors.settlmentDate
-                            }
-                            helperText={
-                              touched.settlmentDate && errors.settlmentDate
-                            }
-                            sx={{ width: "100%" }}
-                          />
-                        )}
-                      </Field>
-                    </DemoContainer>
-                  </LocalizationProvider>
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={UpdateLoneRequestSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting, touched, errors, setFieldValue }) => (
+                <Form>
+                  <div className="grid grid-cols-1 gap-2">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer
+                        components={["DatePicker"]}
+                        sx={{ padding: "0px" }}
+                      >
+                        <Field name="reqDate">
+                          {({ field }) => (
+                            <DatePicker
+                              {...field}
+                              label="Request Date"
+                              value={field.value ? dayjs(field.value) : null}
+                              onChange={(date) =>
+                                setFieldValue(
+                                  "reqDate",
+                                  date ? date.format("YYYY-MM-DD") : ""
+                                )
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  error={touched.reqDate && !!errors.reqDate}
+                                  helperText={touched.reqDate && errors.reqDate}
+                                  sx={{ width: "100%" }}
+                                />
+                              )}
+                            />
+                          )}
+                        </Field>
+                      </DemoContainer>
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer
+                        components={["DatePicker"]}
+                        sx={{ padding: "0px" }}
+                      >
+                        <Field name="settlmentDate">
+                          {({ field }) => (
+                            <DatePicker
+                              {...field}
+                              label="Settlement Date"
+                              value={field.value ? dayjs(field.value) : null}
+                              onChange={(date) =>
+                                setFieldValue(
+                                  "settlmentDate",
+                                  date ? date.format("YYYY-MM-DD") : ""
+                                )
+                              }
+                              error={
+                                touched.settlmentDate && !!errors.settlmentDate
+                              }
+                              helperText={
+                                touched.settlmentDate && errors.settlmentDate
+                              }
+                              sx={{ width: "100%" }}
+                            />
+                          )}
+                        </Field>
+                      </DemoContainer>
+                    </LocalizationProvider>
+                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer
                   components={["DatePicker"]}
                   sx={{ padding: "0px" }}
@@ -369,62 +363,61 @@ export default function Lone_request_table() {
                   </Field>
                 </DemoContainer>
               </LocalizationProvider> */}
-                  <Field name="amount">
-                    {({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Amount"
-                        variant="outlined"
-                        type="number"
-                        error={touched.amount && !!errors.amount}
-                        helperText={touched.amount && errors.amount}
-                      />
-                    )}
-                  </Field>
-                  <Field name="remarks">
-                    {({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Remarks (Optional)"
-                        variant="outlined"
-                        type="text"
-                        error={touched.remarks && !!errors.remarks}
-                        helperText={touched.remarks && errors.remarks}
-                      />
-                    )}
-                  </Field>
-                  <Field name="refNo">
-                    {({ field }) => (
-                      <TextField
-                        {...field}
-                        id="outlined-basic"
-                        label="Reference Number"
-                        variant="outlined"
-                        type="tel"
-                        error={touched.refNo && !!errors.refNo}
-                        helperText={touched.refNo && errors.refNo}
-                      />
-                    )}
-                  </Field>
-                </div>
-                <div className="text-center mt-3">
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ width: "100px" }}
-                    disabled={isSubmitting}
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-      )}
+                    <Field name="amount">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Amount"
+                          variant="outlined"
+                          type="number"
+                          error={touched.amount && !!errors.amount}
+                          helperText={touched.amount && errors.amount}
+                        />
+                      )}
+                    </Field>
+                    <Field name="remarks">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Remarks (Optional)"
+                          variant="outlined"
+                          type="text"
+                          error={touched.remarks && !!errors.remarks}
+                          helperText={touched.remarks && errors.remarks}
+                        />
+                      )}
+                    </Field>
+                    <Field name="refNo">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Reference Number"
+                          variant="outlined"
+                          type="tel"
+                          error={touched.refNo && !!errors.refNo}
+                          helperText={touched.refNo && errors.refNo}
+                        />
+                      )}
+                    </Field>
+                  </div>
+                  <div className="text-center mt-3">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{ width: "100px" }}
+                      disabled={isSubmitting}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
         </Box>
-
       </Modal>
       {/* for cancle  */}
       <React.Fragment>
@@ -443,11 +436,7 @@ export default function Lone_request_table() {
           </DialogContentText>
         </DialogContent> */}
           <DialogActions>
-            <Button
-              onClick={handleForDelete}
-              variant="contained"
-              color="error"
-            >
+            <Button onClick={handleForDelete} variant="contained" color="error">
               YES
             </Button>
             <Button

@@ -5,12 +5,14 @@ import { base_url } from "../../../utils/config";
 
 interface UserState {
   user: any;
+  users: any;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
   user: null,
+  users: null,
   loading: false,
   error: null,
 };
@@ -167,7 +169,7 @@ const userSlice = createSlice({
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.users = action.payload;
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
