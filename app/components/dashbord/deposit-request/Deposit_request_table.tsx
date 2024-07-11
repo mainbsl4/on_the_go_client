@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogTitle,
@@ -17,7 +18,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
-import { deleteDeposit, getAllDepositReq, updateDeposit } from "../../../lib/features/deposit/depositSlice";
+import {
+  deleteDeposit,
+  getAllDepositReq,
+  updateDeposit,
+} from "../../../lib/features/deposit/depositSlice";
 import { UpdateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { UpdateDepositRequestSchema } from "../../../utils/validationSchema";
@@ -53,7 +58,7 @@ const top100Films = [
 export default function Deposit_request_table() {
   // for modal
   // for view modal
-  const [idForDelete, setIdForDelete] = useState(null)
+  const [idForDelete, setIdForDelete] = useState(null);
   const [selectedDataForView, setSelectedDataForView] = useState(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
   // const handleOpenModalForView = () => setOpenModalForView(true);
@@ -72,7 +77,6 @@ export default function Deposit_request_table() {
       dispatch(getAllDepositReq());
     }, sec);
   };
-
 
   // for edit modal
   const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
@@ -94,23 +98,22 @@ export default function Deposit_request_table() {
   const [openModalForDelete, setOpenModalForDelete] = React.useState(false);
 
   const handleClickOpenModalForDelete = (id) => {
-    setIdForDelete(id)
+    setIdForDelete(id);
     setOpenModalForDelete(true);
   };
 
   const dispatch: AppDispatch = useDispatch();
 
-
   const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
-  let img = ""
+  let img = "";
   if (imgState && imgState?.length > 0) {
     img = imgState[0]?.url;
   }
 
   const handleForDelete = () => {
-    dispatch(deleteDeposit(idForDelete))
+    dispatch(deleteDeposit(idForDelete));
     setOpenModalForDelete(false);
-    actionDataGet(700)
+    actionDataGet(700);
   };
   const handleCloseModalForDelete = () => {
     setOpenModalForDelete(false);
@@ -120,13 +123,15 @@ export default function Deposit_request_table() {
   const depositRequestData = useSelector(
     (state: RootState) => state?.deposit?.deposit?.data
   );
+  const loading = useSelector((state: RootState) => state?.deposit?.loading);
+
+  console.log("loading", loading);
 
   useEffect(() => {
     dispatch(getAllDepositReq());
   }, []);
 
-const getDepositRequestData = depositRequestData?.slice().reverse();
-
+  const getDepositRequestData = depositRequestData?.slice().reverse();
 
   // edit from validation
 
@@ -138,33 +143,39 @@ const getDepositRequestData = depositRequestData?.slice().reverse();
     bankName: selectedDataForEdit?.bankName || "",
   };
 
-
-  const handleSubmit = async (values: UpdateDepositRequestFormValues, { setSubmitting }) => {
+  const handleSubmit = async (
+    values: UpdateDepositRequestFormValues,
+    { setSubmitting }
+  ) => {
     const formData = new FormData();
-    Object.keys(values).forEach(key => {
+    Object.keys(values).forEach((key) => {
       formData.append(key, values[key]);
     });
 
-    if (img){
+    if (img) {
       formData.append("slipImage", img);
-    } else{
+    } else {
       formData.append("slipImage", selectedDataForEdit?.slipImage);
     }
 
     try {
-      const response = await dispatch(updateDeposit({ id: selectedDataForEdit?.id, data: formData })).unwrap();
+      const response = await dispatch(
+        updateDeposit({ id: selectedDataForEdit?.id, data: formData })
+      ).unwrap();
       // Handle successful response
     } catch (error) {
-      console.error('API Error:', error);
+      console.error("API Error:", error);
       // Handle error response
     } finally {
       setSubmitting(false);
     }
   };
 
-
-
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
@@ -194,11 +205,11 @@ const getDepositRequestData = depositRequestData?.slice().reverse();
           {getDepositRequestData?.map((getDepositRequestData) => (
             <tr className="bg-white border-b " key={getDepositRequestData.id}>
               {/* <td
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-            >
-              Key
-            </td> */}
+            scope="row"
+            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+          >
+            Key
+          </td> */}
               <td className="px-6 py-4">{getDepositRequestData?.dpType}</td>
               <td className="px-6 py-4">{getDepositRequestData?.date}</td>
               <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
@@ -243,7 +254,9 @@ const getDepositRequestData = depositRequestData?.slice().reverse();
                   <IconButton
                     aria-label="delete"
                     color="error"
-                    onClick={()=>handleClickOpenModalForDelete(getDepositRequestData?.id)}
+                    onClick={() =>
+                      handleClickOpenModalForDelete(getDepositRequestData?.id)
+                    }
                   >
                     <Icon icon="lets-icons:cancel" />
                   </IconButton>
@@ -331,7 +344,7 @@ const getDepositRequestData = depositRequestData?.slice().reverse();
               onSubmit={handleSubmit}
             >
               {({ isSubmitting, touched, errors }) => (
-                <Form >
+                <Form>
                   <Box className="border grid grid-cols-1 gap-4 p-4">
                     <Field name="dpType">
                       {({ field, form }) => (
@@ -455,16 +468,12 @@ const getDepositRequestData = depositRequestData?.slice().reverse();
             {"Are you sure to cancel it"}
           </DialogTitle>
           {/* <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            
-          </DialogContentText>
-        </DialogContent> */}
+        <DialogContentText id="alert-dialog-description">
+          
+        </DialogContentText>
+      </DialogContent> */}
           <DialogActions>
-            <Button
-              onClick={handleForDelete}
-              variant="contained"
-              color="error"
-            >
+            <Button onClick={handleForDelete} variant="contained" color="error">
               YES
             </Button>
             <Button

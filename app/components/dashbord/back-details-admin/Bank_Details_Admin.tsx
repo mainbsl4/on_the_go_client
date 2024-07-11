@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogTitle,
@@ -13,8 +14,14 @@ import {
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Form, Formik, Field } from "formik";
-import { CreateBankDetailsSchema, UpdateBankDetailsSchema } from "../../../utils/validationSchema";
-import { CreateBankDetailsFormValues, UpdateBankDetailsFormValues } from "../../../types/formTypes";
+import {
+  CreateBankDetailsSchema,
+  UpdateBankDetailsSchema,
+} from "../../../utils/validationSchema";
+import {
+  CreateBankDetailsFormValues,
+  UpdateBankDetailsFormValues,
+} from "../../../types/formTypes";
 import { useDispatch } from "react-redux";
 import {
   createBankDetails,
@@ -40,10 +47,9 @@ const style = {
 
 export default function Bank_Details_Admin() {
   const [delId, setDelId] = useState("");
-  const [editBankDetails, setEditBankDetails] = useState('');
+  const [editBankDetails, setEditBankDetails] = useState("");
   const [updateId, serUpdateId] = useState("");
-  
-  
+
   // for modal
   const [openModalForAdd, setOpenModalForAdd] = useState(false);
   const handleOpenModalForAdd = () => setOpenModalForAdd(true);
@@ -52,7 +58,7 @@ export default function Bank_Details_Admin() {
   const [openModalForEdit, setOpenModalForEdit] = useState(false);
   const handleOpenModalForEdit = (bankDetails) => {
     setEditBankDetails(bankDetails);
-    serUpdateId(bankDetails?.id)
+    serUpdateId(bankDetails?.id);
     setOpenModalForEdit(true);
   };
   const handleCloseModalForEdit = () => {
@@ -62,13 +68,17 @@ export default function Bank_Details_Admin() {
 
   const [openModalForDelete, setOpenModalForDelete] = useState(false);
 
+  const loading = useSelector(
+    (state: RootState) => state?.bankDetails?.loading
+  );
+
   const bankDetailsList = useSelector(
     (state: RootState) => state?.bankDetails?.bankDetails?.data
   );
 
   const reversedBankDetailsList = bankDetailsList?.slice().reverse();
 
-  const dispatch : AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const initialValues: CreateBankDetailsFormValues = {
     bankName: "",
@@ -87,13 +97,13 @@ export default function Bank_Details_Admin() {
   function isBankDetails(obj: any): obj is BankDetails {
     return (
       obj &&
-      typeof obj.bankName === 'string' &&
-      typeof obj.accName === 'string' &&
-      typeof obj.accNo === 'string' &&
-      typeof obj.branch === 'string'
+      typeof obj.bankName === "string" &&
+      typeof obj.accName === "string" &&
+      typeof obj.accNo === "string" &&
+      typeof obj.branch === "string"
     );
   }
-  
+
   const initialValuesUpdate: UpdateBankDetailsFormValues = {
     bankName: isBankDetails(editBankDetails) ? editBankDetails.bankName : "",
     accName: isBankDetails(editBankDetails) ? editBankDetails.accName : "",
@@ -112,7 +122,7 @@ export default function Bank_Details_Admin() {
     accName: string;
     accNo: string;
     branch: string;
-    }
+  }
 
   const handleSubmit = (values: CreateBankDetailsFormValues) => {
     dispatch(createBankDetails(values));
@@ -120,16 +130,15 @@ export default function Bank_Details_Admin() {
     setOpenModalForAdd(false);
   };
 
-
   // interface UpdateBankDetailsFormValues {
   //   bankName: string;
   //   accName: string;
   //   accNo: string;
   //   branch: string;
-  
+
   // }
   const handleSubmitUpdate = (values: UpdateBankDetailsFormValues) => {
-    dispatch(updateBankDetails({id: updateId, data: values}));
+    dispatch(updateBankDetails({ id: updateId, data: values }));
     actionDataGet(700);
     setOpenModalForEdit(false);
   };
@@ -153,7 +162,11 @@ export default function Bank_Details_Admin() {
     setOpenModalForDelete(false);
   };
 
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div>
       <div className="text-right mb-3">
         <Button variant="contained" onClick={handleOpenModalForAdd}>
@@ -332,7 +345,6 @@ export default function Bank_Details_Admin() {
                           type="text"
                           error={touched.bankName && !!errors.bankName}
                           helperText={touched.bankName && errors.bankName}
-                        
                         />
                       )}
                     </Field>

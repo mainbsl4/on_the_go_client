@@ -10,12 +10,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { CreateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { CreateDepositRequestSchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
-import { createDepositReq } from "../../../lib/features/deposit/depositSlice";
+import { createDepositReq, getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { uploadSlipImg } from "../../../lib/features/upload/uploadSlice";
@@ -46,18 +46,23 @@ export default function Deposit_request_from() {
   const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
   const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
+  // for loading define
+  const loading = useSelector((state: RootState) => state?.deposit?.loading);
 
-  let img = ""
+  let img = "";
   if (imgState && imgState?.length > 0) {
     img = imgState[0]?.url;
   }
 
- 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userIdFromLocalStorage = JSON.parse(localStorage?.getItem('userId'));
+    if (typeof window !== "undefined") {
+      const userIdFromLocalStorage = JSON.parse(
+        localStorage?.getItem("userId")
+      );
       setUserId(userIdFromLocalStorage);
     }
+
+    // dispatch(getAllDepositReq())
   }, []);
 
   const handleFileChange = (event) => {
@@ -116,7 +121,7 @@ export default function Deposit_request_from() {
       // Log formData to check if amount is correctly converted
 
       const response = await dispatch(createDepositReq(formData)).unwrap();
-     
+
       // Handle successful response
     } catch (error) {
       console.error("API Error:", error);
@@ -126,7 +131,11 @@ export default function Deposit_request_from() {
     }
   };
 
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <Formik
       initialValues={initialValues}
       validationSchema={CreateDepositRequestSchema}
