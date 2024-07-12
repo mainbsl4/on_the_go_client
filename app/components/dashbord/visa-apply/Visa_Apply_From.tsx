@@ -10,7 +10,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { CreateVisaApplyFormValues } from "../../../types/formTypes";
 import { CreateVisaApplySchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
@@ -281,14 +281,31 @@ export default function Visa_Apply_Form() {
   const [filePass, setFilePass] = useState(null);
   const [filePassDoc, setFilePassDoc] = useState(null);
   const [fileImage, setFileImage] = useState(null);
+  // loading
+  const [loading, setLoading] = useState(true);
+
   const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userIdFromLocalStorage = JSON.parse(localStorage?.getItem('userId'));
+    if (typeof window !== "undefined") {
+      const userIdFromLocalStorage = JSON.parse(
+        localStorage?.getItem("userId")
+      );
       setUserId(userIdFromLocalStorage);
     }
+
+    // loading
+    // Simulate a loading period
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 seconds loading period
+
+    // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
+
+  // loading function
+  // useEffect(() => {}, []);
 
   const imgPassState = useSelector(
     (state: RootState) => state?.upload?.uploadPass
@@ -310,8 +327,6 @@ export default function Visa_Apply_Form() {
   if (imgState && imgState.length > 0) {
     img = imgState[0].url;
   }
-
-
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -367,7 +382,11 @@ export default function Visa_Apply_Form() {
       setSubmitting(false);
     }
   };
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div className="border p-3">
       <Formik
         initialValues={initialValues}

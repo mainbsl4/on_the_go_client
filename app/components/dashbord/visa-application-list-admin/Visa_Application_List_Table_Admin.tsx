@@ -8,6 +8,7 @@ import {
   Autocomplete,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogTitle,
@@ -412,6 +413,9 @@ export default function Visa_Application_List_Table_Admin() {
     (state: RootState) => state?.visaApply?.visaApply?.data
   );
 
+  // loading
+  const loading = useSelector((state: RootState) => state?.visaApply?.loading);
+
   React.useEffect(() => {
     dispatch(getAllVisaApply());
   }, []);
@@ -500,7 +504,11 @@ export default function Visa_Application_List_Table_Admin() {
     }
   };
 
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

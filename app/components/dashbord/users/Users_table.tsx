@@ -4,10 +4,19 @@ import * as React from "react";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getUsers } from "../../../lib/features/users/userSlice";
+import { approveUser, getUsers } from "../../../lib/features/users/userSlice";
 import DataGridTable from "../../table/DataGridTable";
-import { Box, Chip, IconButton, Modal, Stack } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Chip,
+  IconButton,
+  Modal,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Icon } from "@iconify/react";
+import CircularProgress from '@mui/material/CircularProgress';
 
 // for modal style
 const style = {
@@ -22,8 +31,25 @@ const style = {
   p: 4,
 };
 
+const ApproveStatus = [
+  {
+    label: "Approve",
+    value: true,
+  },
+  // {
+  //   label: "Reject",
+  //   value: false,
+  // },
+];
 export default function Users_table() {
+  // for user status
+  const [id, setId] = React.useState(null)
+  
   // get api
+  const loading = useSelector(
+    (state: RootState) => state?.user?.loading
+  );
+  
   const getAllUsers = useSelector(
     (state: RootState) => state?.user?.users?.data
   );
@@ -34,17 +60,29 @@ export default function Users_table() {
   }, [dispatch]);
 
   console.log("fffff", getAllUsers);
+
+  // get data from dropdown
   
+  const handleChange = (event, newValue) => {
+    if (newValue?.value === true) {
+      dispatch(approveUser(id));
+      // console.log("id", id);
+      // console.log(newValue?.value);
+    }
+  };
+
   // for modal
   // for view modal
-  const [selectedDataForView, setSelectedDataForView] = React.useState<any>(null);
+  const [selectedDataForView, setSelectedDataForView] =
+    React.useState<any>(null);
   const [openModalForView, setOpenModalForView] = React.useState(false);
-  
+
   const handleOpenModalForView = (data: any) => {
     setSelectedDataForView(data);
     setOpenModalForView(true);
+    setId(data?.id);
   };
-  
+
   const handleCloseModalForView = () => {
     setSelectedDataForView(null);
     setOpenModalForView(false);
@@ -57,18 +95,19 @@ export default function Users_table() {
     { field: "companyName", headerName: "Company", width: 150 },
     { field: "country", headerName: "Country", width: 150 },
     { field: "bisunessAdd", headerName: "Address", width: 150 },
-    { field: "isApproved", headerName: "Address", width: 150,
-      renderCell: (params: any) => (
-        // <Chip size="small" label={params.row.isApproved? "Approved" : "Pending"} />
+    {
+      field: "isApproved",
+      headerName: "Address",
+      width: 150,
+      renderCell: (params: any) =>
         params?.row?.isApproved === true ? (
           <Chip label="APPROVED" color="info" />
         ) : params.row.isApproved === false ? (
-          <Chip label="REJECTED" color="error" />
+          <Chip label="PENDING" color="error" />
         ) : (
           <Chip label="REJECTED" color="error" />
-        )
-      ),
-     },
+        ),
+    },
     {
       field: "action",
       headerName: "Action",
@@ -91,7 +130,13 @@ export default function Users_table() {
 
   return (
     <div>
-      <DataGridTable rows={rows} columns={columns} />
+       {loading ? (
+        <div className="flex justify-center items-center h-[90vh]">
+          <CircularProgress />
+        </div>
+      ) : (
+        <DataGridTable rows={rows} columns={columns} />
+      )}
 
       {/* for view modal */}
       <Modal
@@ -107,7 +152,7 @@ export default function Users_table() {
                 <p>Name: </p>
                 <p>{selectedDataForView?.userName}</p>
               </div>
-           
+
               <div className="border flex py-2 pl-2 mt-1">
                 <p>Phone: </p>
                 <p>{selectedDataForView?.mobile}</p>
@@ -129,36 +174,29 @@ export default function Users_table() {
                 <p>{selectedDataForView?.bisunessAdd}</p>
               </div>
               <div className="border flex py-2 pl-2 mt-1">
+                <p>Address: </p>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={ApproveStatus}
+                  sx={{ width: 300 }}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Update user Status" />
+                  )}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="border flex py-2 pl-2 mt-1">
                 <p>Status: </p>
                 <p>
-                  {
-                  
-                  selectedDataForView?.isApproved === true ? (
+                  {selectedDataForView?.isApproved === true ? (
                     <Chip label="APPROVED" color="info" />
                   ) : selectedDataForView?.isApproved === false ? (
-                    <Chip label="REJECTED" color="error" />
+                    <Chip label="PENDING" color="error" />
                   ) : (
                     <Chip label="REJECTED" color="error" />
-                  )
-                  
-                  // selectedDataForView?.isApproved === "SUBMITTED" ? (
-                  //   <Chip label="SUBMITTED" color="default" />
-                  // ) : selectedDataForView?.isApproved === "CANCELLED" ? (
-                  //   <Chip label="CANCELLED" color="warning" />
-                  // ) : selectedDataForView?.isApproved === "RECEIVED" ? (
-                  //   <Chip label="RECEIVED" color="success" />
-                  // ) : selectedDataForView?.isApproved === "APPLIED" ? (
-                  //   <Chip label="APPLIED" color="primary" />
-                  // ) : selectedDataForView?.isApproved === "APPROVED" ? (
-                  //   <Chip label="APPROVED" color="info" />
-                  // ) : selectedDataForView?.isApproved === "REJECTED" ? (
-                  //   <Chip label="REJECTED" color="error" />
-                  // ) : (
-                  //   <Chip label="REJECTED" color="error" />
-                  // )
-                  
-                  
-                  }
+                  )}
                 </p>
               </div>
             </div>

@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogTitle,
@@ -48,6 +49,9 @@ const style = {
 
 export default function Lone_request_table() {
   const dispatch: AppDispatch = useDispatch();
+  // loading
+  const loading = useSelector((state: RootState) => state?.loan?.loading);
+  // get data
   const loanListAll = useSelector(
     (state: RootState) => state?.loan?.loan?.data
   );
@@ -131,7 +135,11 @@ export default function Lone_request_table() {
     setOpenModalForEdit(false);
   };
 
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">

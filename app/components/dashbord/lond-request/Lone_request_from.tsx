@@ -16,24 +16,30 @@ import { CreateLoneRequestSchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { createLoanReq, getAllLoanReq } from "../../../lib/features/loan/loanSlice";
+import {
+  createLoanReq,
+  getAllLoanReq,
+} from "../../../lib/features/loan/loanSlice";
 import { AppDispatch, RootState } from "../../../lib/store/store";
+import { CircularProgress } from "@mui/material";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 export default function Lone_request_from() {
+
+  // loading state
+  const [loading, setLoading] = useState(true);
+
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userIdFromLocalStorage = JSON.parse(localStorage?.getItem('userId'));
+    if (typeof window !== "undefined") {
+      const userIdFromLocalStorage = JSON.parse(
+        localStorage?.getItem("userId")
+      );
       setUserId(userIdFromLocalStorage);
     }
   }, []);
-  
 
   const dispatch: AppDispatch = useDispatch();
-
-
-
 
   const initialValues: CreateLoneRequestValues = {
     userId: userId,
@@ -48,7 +54,25 @@ export default function Lone_request_from() {
     dispatch(createLoanReq(values));
   };
 
-  return (
+
+
+  // for loading 
+
+  useEffect(() => {
+    // Simulate a loading period
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 seconds loading period
+
+    // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
+  }, []);
+
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div className="border p-3 w-6/12">
       <Formik
         initialValues={initialValues}
@@ -188,5 +212,6 @@ export default function Lone_request_from() {
         )}
       </Formik>
     </div>
-  );
+  )
+
 }

@@ -6,6 +6,7 @@ import { base_url } from "../../../utils/config";
 interface UserState {
   user: any;
   users: any;
+  status: any;
   loading: boolean;
   error: string | null;
 }
@@ -13,6 +14,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   users: null,
+  status: null,
   loading: false,
   error: null,
 };
@@ -85,7 +87,7 @@ export const getUsers = createAsyncThunk(
 
 export const approveUser = createAsyncThunk(
   "user/approveUser",
-  async (id, { rejectWithValue }) => {
+  async (id: any, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}user/userApprove/${id}`);
       console.log(response);
@@ -181,7 +183,7 @@ const userSlice = createSlice({
       })
       .addCase(approveUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.status = action.payload;
       })
       .addCase(approveUser.rejected, (state, action) => {
         state.loading = false;

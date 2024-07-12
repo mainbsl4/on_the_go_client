@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogTitle,
@@ -48,6 +49,9 @@ const style = {
 
 export default function Lone_request_Admin_Table() {
   const dispatch: AppDispatch = useDispatch();
+  const loading = useSelector((state: RootState) => state?.loan?.loading);
+
+  // get data
   const loanListAll = useSelector(
     (state: RootState) => state?.loan?.loan?.data
   );
@@ -131,7 +135,11 @@ export default function Lone_request_Admin_Table() {
     setOpenModalForEdit(false);
   };
 
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center h-[90vh]">
+      <CircularProgress />
+    </div>
+  ) : (
     <div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
@@ -345,24 +353,24 @@ export default function Lone_request_Admin_Table() {
                       </DemoContainer>
                     </LocalizationProvider>
                     {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer
-                  components={["DatePicker"]}
-                  sx={{ padding: "0px" }}
-                >
-                  <Field name="settlmentDate">
-                  {({ field }) => (
-                  <DatePicker
-                   {...field}
-                    label="Settlement Date"
-                    value={field.value}
-                    onChange={(date) => setFieldValue("settlmentDate", date)}
-                    error={touched.settlmentDate && !!errors.settlmentDate}
-                    helperText={touched.settlmentDate && errors.settlmentDate}
-                    sx={{ width: "100%" }} />
-                )}
-                  </Field>
-                </DemoContainer>
-              </LocalizationProvider> */}
+              <DemoContainer
+                components={["DatePicker"]}
+                sx={{ padding: "0px" }}
+              >
+                <Field name="settlmentDate">
+                {({ field }) => (
+                <DatePicker
+                 {...field}
+                  label="Settlement Date"
+                  value={field.value}
+                  onChange={(date) => setFieldValue("settlmentDate", date)}
+                  error={touched.settlmentDate && !!errors.settlmentDate}
+                  helperText={touched.settlmentDate && errors.settlmentDate}
+                  sx={{ width: "100%" }} />
+              )}
+                </Field>
+              </DemoContainer>
+            </LocalizationProvider> */}
                     <Field name="amount">
                       {({ field }) => (
                         <TextField
@@ -431,10 +439,10 @@ export default function Lone_request_Admin_Table() {
             {"Are you sure to cancel it"}
           </DialogTitle>
           {/* <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            
-          </DialogContentText>
-        </DialogContent> */}
+        <DialogContentText id="alert-dialog-description">
+          
+        </DialogContentText>
+      </DialogContent> */}
           <DialogActions>
             <Button onClick={handleForDelete} variant="contained" color="error">
               YES
