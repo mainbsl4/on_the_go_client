@@ -15,7 +15,10 @@ import { CreateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
 import { CreateDepositRequestSchema } from "../../../utils/validationSchema";
 import dayjs from "dayjs";
-import { createDepositReq, getAllDepositReq } from "../../../lib/features/deposit/depositSlice";
+import {
+  createDepositReq,
+  getAllDepositReq,
+} from "../../../lib/features/deposit/depositSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { uploadSlipImg } from "../../../lib/features/upload/uploadSlice";
@@ -35,44 +38,6 @@ const bankNames = [
   { label: "Commercial Bank of Ceylon PLC" },
   { label: "Community Bank Bangladesh Limited" },
   { label: "Dhaka Bank Limited" },
-  { label: "Dutch-Bangla Bank Limited" },
-  { label: "Eastern Bank Limited" },
-  { label: "EXIM Bank Limited" },
-  { label: "First Security Islami Bank Limited" },
-  { label: "Habib Bank Limited" },
-  { label: "ICB Islamic Bank Limited" },
-  { label: "IFIC Bank Limited" },
-  { label: "Islami Bank Bangladesh Limited" },
-  { label: "Jamuna Bank Limited" },
-  { label: "Janata Bank Limited" },
-  { label: "Meghna Bank Limited" },
-  { label: "Midland Bank Limited" },
-  { label: "Modhumoti Bank Limited" },
-  { label: "Mutual Trust Bank Limited" },
-  { label: "National Bank Limited" },
-  { label: "National Credit and Commerce Bank Limited" },
-  { label: "NRB Bank Limited" },
-  { label: "NRB Commercial Bank Limited" },
-  { label: "NRB Global Bank Limited" },
-  { label: "One Bank Limited" },
-  { label: "Prime Bank Limited" },
-  { label: "Pubali Bank Limited" },
-  { label: "Rajshahi Krishi Unnayan Bank" },
-  { label: "Rupali Bank Limited" },
-  { label: "SBAC Bank Limited" },
-  { label: "Shahjalal Islami Bank Limited" },
-  { label: "Shimanto Bank Limited" },
-  { label: "Social Islami Bank Limited" },
-  { label: "Sonali Bank Limited" },
-  { label: "Southeast Bank Limited" },
-  { label: "Standard Bank Limited" },
-  { label: "Standard Chartered Bank" },
-  { label: "State Bank of India" },
-  { label: "The City Bank Limited" },
-  { label: "Trust Bank Limited" },
-  { label: "Union Bank Limited" },
-  { label: "United Commercial Bank Limited" },
-  { label: "Uttara Bank Limited" }
 ];
 
 const modeOfDepo = [
@@ -118,6 +83,8 @@ export default function Deposit_request_from() {
     // dispatch(getAllDepositReq())
   }, []);
 
+  console.log("pagla", userId);
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -132,31 +99,6 @@ export default function Deposit_request_from() {
     amount: 0,
     bankName: "",
   };
-
-  // const handleSubmit = (values: CreateDepositRequestFormValues) => {
-  //   dispatch(createDepositReq(values))
-  // };
-
-  // const handleSubmit = async (values: CreateDepositRequestFormValues, { setSubmitting }) => {
-  //   const formData = new FormData();
-  //   Object.keys(values).forEach(key => {
-  //     const value = key === "amount" ? Number(values[key]) : values[key];
-  //     formData.append(key, value);
-  //   });
-
-  //   if (file) formData.append('slipImage', file);
-
-  //   try {
-  //     const response = await dispatch(createDepositReq(formData)).unwrap();
-  //     console.log(response);
-  //     // Handle successful response
-  //   } catch (error) {
-  //     console.error('API Error:', error);
-  //     // Handle error response
-  //   } finally {
-  //     setSubmitting(false);
-  //   }
-  // };
 
   const handleSubmit = async (
     values: CreateDepositRequestFormValues,
@@ -193,23 +135,21 @@ export default function Deposit_request_from() {
       initialValues={initialValues}
       validationSchema={CreateDepositRequestSchema}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
-      {({ isSubmitting, touched, errors }) => (
+      {({ isSubmitting, touched, errors, setFieldValue, values }) => (
         <Form className=" w-6/12">
           <Box className="border grid grid-cols-1 gap-4 p-4">
             <Field name="dpType">
-              {({ field, form }) => (
+              {({ field }) => (
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={modeOfDepo.map((option) => option.label)}
-                  onChange={(event, value) =>
-                    form.setFieldValue(field.name, value)
-                  }
-                  // sx={{ width: 300 }}
+                  onChange={(event, value) => setFieldValue(field.name, value)}
+                  value={values.dpType}
                   renderInput={(params) => (
                     <TextField
-                      {...field}
                       {...params}
                       label="Mode of Deposit"
                       error={touched.dpType && !!errors.dpType}
@@ -262,18 +202,15 @@ export default function Deposit_request_from() {
               )}
             </Field>
             <Field name="bankName">
-              {({ field, form }) => (
+              {({ field }) => (
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={bankNames.map((option) => option.label)}
-                  onChange={(event, value) =>
-                    form.setFieldValue(field.name, value)
-                  }
-                  // sx={{ width: 300 }}
+                  onChange={(event, value) => setFieldValue(field.name, value)}
+                  value={values.bankName}
                   renderInput={(params) => (
                     <TextField
-                      {...field}
                       {...params}
                       label="Choose Bank"
                       error={touched.bankName && !!errors.bankName}
