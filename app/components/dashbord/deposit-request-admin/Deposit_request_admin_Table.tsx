@@ -55,16 +55,15 @@ const top100Films = [
   { label: "The Godfather: Part II", year: 1974 },
 ];
 
-
 const statusCatagory = [
   { label: "APPROVED", value: "approved" },
-  { label: "REJECTED", value: "rejected" }
-]
+  { label: "REJECTED", value: "rejected" },
+];
 
 export default function Deposit_request_admin_Table() {
-    // for get data from status and comment
-    const [status, setStatus] = React.useState(null);
-    const [comment, setComment] = React.useState("");
+  // for get data from status and comment
+  const [status, setStatus] = React.useState(null);
+  const [comment, setComment] = React.useState("");
 
   // for modal
   // for view modal
@@ -159,7 +158,6 @@ export default function Deposit_request_admin_Table() {
       formData.append(key, values[key]);
     });
 
-
     // for update
     // if (img) {
     //   formData.append("slipImage", img);
@@ -180,9 +178,8 @@ export default function Deposit_request_admin_Table() {
     // }
   };
 
-
-   // for get data from status and comment
-   const handleUpdate = () => {
+  // for get data from status and comment
+  const handleUpdate = () => {
     console.log("Selected Status:", status);
     console.log("Comment:", comment);
   };
@@ -330,7 +327,7 @@ export default function Deposit_request_admin_Table() {
                   </p>
                 </div>
 
-             {/* now i will add dropwown for status  */}
+                {/* now i will add dropwown for status  */}
                 <div className="border mt-1 py-2 pl-2">
                   <p>Update Status : </p>
                   <Autocomplete
