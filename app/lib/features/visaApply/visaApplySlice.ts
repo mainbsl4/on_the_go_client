@@ -50,7 +50,7 @@ export const updateVisaApplyStatus = createAsyncThunk(
     try {
       const response = await axios.put(
         `${base_url}visa_apply/update-status/${id}`,
-        data
+        { status: data }
       );
       console.log(response);
       return response.data;

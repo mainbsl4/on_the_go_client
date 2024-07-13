@@ -37,6 +37,7 @@ import {
   deleteVisa,
   getAllVisaApply,
   updateVisaApply,
+  updateVisaApplyStatus,
 } from "../../../lib/features/visaApply/visaApplySlice";
 import {
   uploadDocImage,
@@ -422,7 +423,7 @@ export default function Visa_Application_List_Table_Admin() {
 
   // get data
   const getVesaApplyData = useSelector(
-    (state: RootState) => state?.visaApply?.visaApply?.data
+    (state: RootState) => state?.visaApply?.visaApply?.data || []
   );
 
   // loading
@@ -432,7 +433,11 @@ export default function Visa_Application_List_Table_Admin() {
     dispatch(getAllVisaApply());
   }, []);
 
-  const reversedgetVesaApplyData = getVesaApplyData?.slice().reverse();
+
+  const reversedgetVesaApplyData = Array.isArray(getVesaApplyData)
+  ? getVesaApplyData.slice().reverse() // Reverse the array if needed
+  : [];
+
 
   // formik validation
   const initialValues: UpdateVisaApplyFormValues = {
@@ -516,11 +521,15 @@ export default function Visa_Application_List_Table_Admin() {
     }
   };
 
-  // for get data from status and comment
+  
 
-  const handleUpdate = () => {
+  const handleUpdate =  () => {
     console.log("Selected Status:", status);
-    // console.log("Comment:", comment);
+    dispatch(updateVisaApplyStatus({ id: selectedDataForView?.id, data: status }))
+    setOpenModalForView(false);
+    actionDataGet(500)
+    
+
   };
 
   return loading ? (
@@ -659,30 +668,30 @@ export default function Visa_Application_List_Table_Admin() {
 
                         {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" && (
-                          <IconButton
-                            aria-label="edit"
-                            color="info"
-                            onClick={() =>
-                              handleOpenModalForEdit(reversedgetVesaApplyData)
-                            }
-                          >
-                            <Icon icon="mingcute:edit-line" />
-                          </IconButton>
-                        )}
+                            <IconButton
+                              aria-label="edit"
+                              color="info"
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
+                            >
+                              <Icon icon="mingcute:edit-line" />
+                            </IconButton>
+                          )}
                         {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" && (
-                          <IconButton
-                            aria-label="delete"
-                            color="error"
-                            onClick={() =>
-                              handleClickOpenModalForDelete(
-                                reversedgetVesaApplyData?.id
-                              )
-                            }
-                          >
-                            <Icon icon="lets-icons:cancel" />
-                          </IconButton>
-                        )}
+                            <IconButton
+                              aria-label="delete"
+                              color="error"
+                              onClick={() =>
+                                handleClickOpenModalForDelete(
+                                  reversedgetVesaApplyData?.id
+                                )
+                              }
+                            >
+                              <Icon icon="lets-icons:cancel" />
+                            </IconButton>
+                          )}
                       </Stack>
                     </td>
                   </tr>
@@ -773,7 +782,7 @@ export default function Visa_Application_List_Table_Admin() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -910,7 +919,7 @@ export default function Visa_Application_List_Table_Admin() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1044,7 +1053,7 @@ export default function Visa_Application_List_Table_Admin() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1178,7 +1187,7 @@ export default function Visa_Application_List_Table_Admin() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1312,7 +1321,7 @@ export default function Visa_Application_List_Table_Admin() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1446,7 +1455,7 @@ export default function Visa_Application_List_Table_Admin() {
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                            "SUBMITTED" ? (
                             <Chip label="SUBMITTED" color="default" />
                           ) : reversedgetVesaApplyData?.isApproved ===
                             "CANCELLED" ? (
@@ -1552,16 +1561,16 @@ export default function Visa_Application_List_Table_Admin() {
                     {selectedDataForView?.isApproved === "SUBMITTED"
                       ? "SUBMITTED"
                       : selectedDataForView?.isApproved === "CANCELLED"
-                      ? "CANCELLED"
-                      : selectedDataForView?.isApproved === "RECEIVED"
-                      ? "RECEIVED"
-                      : selectedDataForView?.isApproved === "APPLIED"
-                      ? "APPLIED"
-                      : selectedDataForView?.isApproved === "APPROVED"
-                      ? "APPROVED"
-                      : selectedDataForView?.isApproved === "REJECTED"
-                      ? "REJECTED"
-                      : "REJECTED"}
+                        ? "CANCELLED"
+                        : selectedDataForView?.isApproved === "RECEIVED"
+                          ? "RECEIVED"
+                          : selectedDataForView?.isApproved === "APPLIED"
+                            ? "APPLIED"
+                            : selectedDataForView?.isApproved === "APPROVED"
+                              ? "APPROVED"
+                              : selectedDataForView?.isApproved === "REJECTED"
+                                ? "REJECTED"
+                                : "REJECTED"}
                   </p>
                 </div>
 
@@ -1573,7 +1582,7 @@ export default function Visa_Application_List_Table_Admin() {
                     id="combo-box-demo"
                     options={statusCatagory}
                     sx={{ width: 300, marginBottom: "10px" }}
-                    onChange={(event, newValue) => setStatus(newValue)}
+                    onChange={(event, newValue) => setStatus(newValue?.label)}
                     renderInput={(params) => (
                       <TextField {...params} label="Status" />
                     )}
