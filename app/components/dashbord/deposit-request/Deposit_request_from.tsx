@@ -22,10 +22,63 @@ import { uploadSlipImg } from "../../../lib/features/upload/uploadSlice";
 import { useSelector } from "react-redux";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
+const bankNames = [
+  { label: "AB Bank Limited" },
+  { label: "Agrani Bank Limited" },
+  { label: "Al-Arafah Islami Bank Limited" },
+  { label: "Bangladesh Commerce Bank Limited" },
+  { label: "Bangladesh Development Bank Limited" },
+  { label: "Bank Asia Limited" },
+  { label: "BASIC Bank Limited" },
+  { label: "BRAC Bank Limited" },
+  { label: "Citibank N.A." },
+  { label: "Commercial Bank of Ceylon PLC" },
+  { label: "Community Bank Bangladesh Limited" },
+  { label: "Dhaka Bank Limited" },
+  { label: "Dutch-Bangla Bank Limited" },
+  { label: "Eastern Bank Limited" },
+  { label: "EXIM Bank Limited" },
+  { label: "First Security Islami Bank Limited" },
+  { label: "Habib Bank Limited" },
+  { label: "ICB Islamic Bank Limited" },
+  { label: "IFIC Bank Limited" },
+  { label: "Islami Bank Bangladesh Limited" },
+  { label: "Jamuna Bank Limited" },
+  { label: "Janata Bank Limited" },
+  { label: "Meghna Bank Limited" },
+  { label: "Midland Bank Limited" },
+  { label: "Modhumoti Bank Limited" },
+  { label: "Mutual Trust Bank Limited" },
+  { label: "National Bank Limited" },
+  { label: "National Credit and Commerce Bank Limited" },
+  { label: "NRB Bank Limited" },
+  { label: "NRB Commercial Bank Limited" },
+  { label: "NRB Global Bank Limited" },
+  { label: "One Bank Limited" },
+  { label: "Prime Bank Limited" },
+  { label: "Pubali Bank Limited" },
+  { label: "Rajshahi Krishi Unnayan Bank" },
+  { label: "Rupali Bank Limited" },
+  { label: "SBAC Bank Limited" },
+  { label: "Shahjalal Islami Bank Limited" },
+  { label: "Shimanto Bank Limited" },
+  { label: "Social Islami Bank Limited" },
+  { label: "Sonali Bank Limited" },
+  { label: "Southeast Bank Limited" },
+  { label: "Standard Bank Limited" },
+  { label: "Standard Chartered Bank" },
+  { label: "State Bank of India" },
+  { label: "The City Bank Limited" },
+  { label: "Trust Bank Limited" },
+  { label: "Union Bank Limited" },
+  { label: "United Commercial Bank Limited" },
+  { label: "Uttara Bank Limited" }
+];
+
+const modeOfDepo = [
+  { label: "Cash" },
+  { label: "Bank Transfer" },
+  { label: "Cheque & DD" },
 ];
 
 // for upload
@@ -149,7 +202,7 @@ export default function Deposit_request_from() {
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
-                  options={top100Films.map((option) => option.label)}
+                  options={modeOfDepo.map((option) => option.label)}
                   onChange={(event, value) =>
                     form.setFieldValue(field.name, value)
                   }
@@ -213,7 +266,7 @@ export default function Deposit_request_from() {
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
-                  options={top100Films.map((option) => option.label)}
+                  options={bankNames.map((option) => option.label)}
                   onChange={(event, value) =>
                     form.setFieldValue(field.name, value)
                   }
