@@ -37,6 +37,7 @@ import {
   deleteVisa,
   getAllVisaApply,
   updateVisaApply,
+  updateVisaApplyStatus,
 } from "../../../lib/features/visaApply/visaApplySlice";
 import {
   uploadDocImage,
@@ -520,6 +521,7 @@ export default function Visa_Application_List_Table_Admin() {
 
   const handleUpdate = () => {
     console.log("Selected Status:", status);
+    dispatch(updateVisaApplyStatus({id: selectedDataForView?.id, data: "RECEIVED"}))
     // console.log("Comment:", comment);
   };
 
@@ -1573,7 +1575,7 @@ export default function Visa_Application_List_Table_Admin() {
                     id="combo-box-demo"
                     options={statusCatagory}
                     sx={{ width: 300, marginBottom: "10px" }}
-                    onChange={(event, newValue) => setStatus(newValue)}
+                    onChange={(event, newValue) => setStatus(newValue?.label)}
                     renderInput={(params) => (
                       <TextField {...params} label="Status" />
                     )}
