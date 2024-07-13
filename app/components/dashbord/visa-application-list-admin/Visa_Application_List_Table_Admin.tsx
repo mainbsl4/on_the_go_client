@@ -1567,13 +1567,13 @@ export default function Visa_Application_List_Table_Admin() {
                     )}
                   />
 
-                  <TextField
+                  {/* <TextField
                     id="outlined-basic"
                     label="Comment"
                     variant="outlined"
                     type="text"
                     sx={{marginBottom:"5px"}}
-                  />
+                  /> */}
                   <br />
                   <Button variant="contained" >Update</Button>
                 </div>
