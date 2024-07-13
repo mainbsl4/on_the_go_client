@@ -89,6 +89,7 @@ export default function Users_table() {
   };
 
   const columns = [
+    { field: "regNo", headerName: "Reg No", width: 100 },
     { field: "userName", headerName: "Name", width: 150 },
     { field: "mobile", headerName: "Phone", width: 150 },
     { field: "email", headerName: "Email", width: 150 },
