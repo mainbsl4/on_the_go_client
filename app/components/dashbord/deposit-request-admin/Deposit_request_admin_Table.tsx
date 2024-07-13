@@ -55,6 +55,12 @@ const top100Films = [
   { label: "The Godfather: Part II", year: 1974 },
 ];
 
+
+const statusCatagory = [
+  { label: "APPROVED", value: "approved" },
+  { label: "REJECTED", value: "rejected" }
+]
+
 export default function Deposit_request_admin_Table() {
   // for modal
   // for view modal
@@ -79,19 +85,17 @@ export default function Deposit_request_admin_Table() {
   };
 
   // for edit modal
-  const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
+  // const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
 
-  const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
-  // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
-  const handleOpenModalForEdit = (data: any) => {
-    setOpenModalForEdit(true);
-    setSelectedDataForEdit(data);
-  };
-  // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
-  const handleCloseModalForEdit = () => {
-    setOpenModalForEdit(false);
-    setSelectedDataForEdit(null);
-  };
+  // const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
+  // const handleOpenModalForEdit = (data: any) => {
+  //   setOpenModalForEdit(true);
+  //   setSelectedDataForEdit(data);
+  // };
+  // const handleCloseModalForEdit = () => {
+  //   setOpenModalForEdit(false);
+  //   setSelectedDataForEdit(null);
+  // };
 
   // for cancle modal
 
@@ -133,15 +137,14 @@ export default function Deposit_request_admin_Table() {
 
   const getDepositRequestData = depositRequestData?.slice().reverse();
 
-  // edit from validation
-
-  const initialValues: UpdateDepositRequestFormValues = {
-    userId: selectedDataForEdit?.userId,
-    dpType: selectedDataForEdit?.dpType || "",
-    date: dayjs(selectedDataForEdit?.date).format("YYYY-MM-DD"),
-    amount: selectedDataForEdit?.amount || 0,
-    bankName: selectedDataForEdit?.bankName || "",
-  };
+  // edit from validation for edit
+  // const initialValues: UpdateDepositRequestFormValues = {
+  //   userId: selectedDataForEdit?.userId,
+  //   dpType: selectedDataForEdit?.dpType || "",
+  //   date: dayjs(selectedDataForEdit?.date).format("YYYY-MM-DD"),
+  //   amount: selectedDataForEdit?.amount || 0,
+  //   bankName: selectedDataForEdit?.bankName || "",
+  // };
 
   const handleSubmit = async (
     values: UpdateDepositRequestFormValues,
@@ -152,23 +155,25 @@ export default function Deposit_request_admin_Table() {
       formData.append(key, values[key]);
     });
 
-    if (img) {
-      formData.append("slipImage", img);
-    } else {
-      formData.append("slipImage", selectedDataForEdit?.slipImage);
-    }
 
-    try {
-      const response = await dispatch(
-        updateDeposit({ id: selectedDataForEdit?.id, data: formData })
-      ).unwrap();
-      // Handle successful response
-    } catch (error) {
-      console.error("API Error:", error);
-      // Handle error response
-    } finally {
-      setSubmitting(false);
-    }
+    // for update
+    // if (img) {
+    //   formData.append("slipImage", img);
+    // } else {
+    //   formData.append("slipImage", selectedDataForEdit?.slipImage);
+    // }
+
+    // try {
+    //   const response = await dispatch(
+    //     updateDeposit({ id: selectedDataForEdit?.id, data: formData })
+    //   ).unwrap();
+    //   // Handle successful response
+    // } catch (error) {
+    //   console.error("API Error:", error);
+    //   // Handle error response
+    // } finally {
+    //   setSubmitting(false);
+    // }
   };
 
   return loading ? (
@@ -242,7 +247,7 @@ export default function Deposit_request_admin_Table() {
                   >
                     <Icon icon="hugeicons:view" />
                   </IconButton>
-                  <IconButton
+                  {/* <IconButton
                     aria-label="edit"
                     color="info"
                     onClick={() =>
@@ -250,7 +255,7 @@ export default function Deposit_request_admin_Table() {
                     }
                   >
                     <Icon icon="mingcute:edit-line" />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton
                     aria-label="delete"
                     color="error"
@@ -313,6 +318,30 @@ export default function Deposit_request_admin_Table() {
                     )}
                   </p>
                 </div>
+
+                {/* now i will add dropwown for status  */}
+                <div className=" border mt-1 py-2 pl-2">
+                  <p>Update Status : </p>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={statusCatagory}
+                    sx={{ width: 300, marginBottom:"10px" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Movie" />
+                    )}
+                  />
+
+                  <TextField
+                    id="outlined-basic"
+                    label="Comment"
+                    variant="outlined"
+                    type="text"
+                    sx={{marginBottom:"5px"}}
+                  />
+                  <br />
+                  <Button variant="contained" >Update</Button>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col items-start justify-center gap-2">
@@ -329,7 +358,7 @@ export default function Deposit_request_admin_Table() {
         </Box>
       </Modal>
       {/* for edit modal  */}
-      <Modal
+      {/* <Modal
         open={openModalForEdit}
         onClose={handleCloseModalForEdit}
         aria-labelledby="modal-modal-title"
@@ -455,7 +484,7 @@ export default function Deposit_request_admin_Table() {
             </Formik>
           )}
         </Box>
-      </Modal>
+      </Modal> */}
       {/* for cancle  */}
       <React.Fragment>
         <Dialog

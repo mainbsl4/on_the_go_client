@@ -1,6 +1,7 @@
 "use client";
 import { Icon } from "@iconify/react";
 import {
+  Autocomplete,
   Box,
   Button,
   Chip,
@@ -47,6 +48,12 @@ const style = {
   // gridGap:"5px"
 };
 
+// for status
+const statusCatagory = [
+  { label: "APPROVED", value: "approved" },
+  { label: "REJECTED", value: "rejected" },
+];
+
 export default function Lone_request_Admin_Table() {
   const dispatch: AppDispatch = useDispatch();
   const loading = useSelector((state: RootState) => state?.loan?.loading);
@@ -86,20 +93,18 @@ export default function Lone_request_Admin_Table() {
   };
   // for edit modal
 
-  const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
+  // const [selectedDataForEdit, setSelectedDataForEdit] = React.useState(null);
 
-  const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
-  // const handleOpenModalForEdit = () => setOpenModalForEdit(true);
-  const handleOpenModalForEdit = (data: any) => {
-    setOpenModalForEdit(true);
-    setUpdateId(data?.id);
-    setSelectedDataForEdit(data);
-  };
-  // const handleCloseModalForEdit = () => setOpenModalForEdit(false);
-  const handleCloseModalForEdit = () => {
-    setOpenModalForEdit(false);
-    setSelectedDataForEdit(null);
-  };
+  // const [openModalForEdit, setOpenModalForEdit] = React.useState(false);
+  // const handleOpenModalForEdit = (data: any) => {
+  //   setOpenModalForEdit(true);
+  //   setUpdateId(data?.id);
+  //   setSelectedDataForEdit(data);
+  // };
+  // const handleCloseModalForEdit = () => {
+  //   setOpenModalForEdit(false);
+  //   setSelectedDataForEdit(null);
+  // };
 
   // for cancle modal
 
@@ -119,20 +124,20 @@ export default function Lone_request_Admin_Table() {
     setOpenModalForDelete(false);
   };
 
-  // for validation
-  const initialValues: UpdateLoneRequestValues = {
-    userId: "",
-    reqDate: selectedDataForEdit?.reqDate || "",
-    settlmentDate: selectedDataForEdit?.settlmentDate || "",
-    amount: selectedDataForEdit?.amount || 0,
-    remarks: selectedDataForEdit?.remarks || "",
-    refNo: selectedDataForEdit?.refNo || "",
-  };
+  // for validation of update
+  // const initialValues: UpdateLoneRequestValues = {
+  //   userId: "",
+  //   reqDate: selectedDataForEdit?.reqDate || "",
+  //   settlmentDate: selectedDataForEdit?.settlmentDate || "",
+  //   amount: selectedDataForEdit?.amount || 0,
+  //   remarks: selectedDataForEdit?.remarks || "",
+  //   refNo: selectedDataForEdit?.refNo || "",
+  // };
 
   const handleSubmit = (values: UpdateLoneRequestValues) => {
     dispatch(updateLoan({ id: updateId, data: values }));
     actionDataGet(700);
-    setOpenModalForEdit(false);
+    // setOpenModalForEdit(false);
   };
 
   return loading ? (
@@ -199,13 +204,13 @@ export default function Lone_request_Admin_Table() {
                   >
                     <Icon icon="hugeicons:view" />
                   </IconButton>
-                  <IconButton
+                  {/* <IconButton
                     aria-label="edit"
                     color="info"
                     onClick={() => handleOpenModalForEdit(loanList)}
                   >
                     <Icon icon="mingcute:edit-line" />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton
                     aria-label="delete"
                     color="error"
@@ -271,12 +276,36 @@ export default function Lone_request_Admin_Table() {
                   )}
                 </p>
               </div>
+
+              {/* now i will add dropwown for status  */}
+              <div className=" border mt-1 py-2 pl-2">
+                <p>Update Status : </p>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={statusCatagory}
+                  sx={{ width: 300, marginBottom: "10px" }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Movie" />
+                  )}
+                />
+
+                <TextField
+                  id="outlined-basic"
+                  label="Comment"
+                  variant="outlined"
+                  type="text"
+                  sx={{ marginBottom: "5px" }}
+                />
+                <br />
+                <Button variant="contained">Update</Button>
+              </div>
             </div>
           )}
         </Box>
       </Modal>
       {/* for edit modal  */}
-      <Modal
+      {/* <Modal
         open={openModalForEdit}
         onClose={handleCloseModalForEdit}
         aria-labelledby="modal-modal-title"
@@ -352,25 +381,7 @@ export default function Lone_request_Admin_Table() {
                         </Field>
                       </DemoContainer>
                     </LocalizationProvider>
-                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer
-                components={["DatePicker"]}
-                sx={{ padding: "0px" }}
-              >
-                <Field name="settlmentDate">
-                {({ field }) => (
-                <DatePicker
-                 {...field}
-                  label="Settlement Date"
-                  value={field.value}
-                  onChange={(date) => setFieldValue("settlmentDate", date)}
-                  error={touched.settlmentDate && !!errors.settlmentDate}
-                  helperText={touched.settlmentDate && errors.settlmentDate}
-                  sx={{ width: "100%" }} />
-              )}
-                </Field>
-              </DemoContainer>
-            </LocalizationProvider> */}
+
                     <Field name="amount">
                       {({ field }) => (
                         <TextField
@@ -426,7 +437,7 @@ export default function Lone_request_Admin_Table() {
             </Formik>
           )}
         </Box>
-      </Modal>
+      </Modal> */}
       {/* for cancle  */}
       <React.Fragment>
         <Dialog
