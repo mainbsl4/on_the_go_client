@@ -286,6 +286,14 @@ const religion = [
   { label: "Falun Gong" },
 ];
 
+const statusCatagory = [
+  { label: "CANCELLED" },
+  { label: "RECEIVED" },
+  { label: "APPLIED" },
+  { label: "APPROVED" },
+  { label: "REJECTED" },
+];
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -1526,6 +1534,48 @@ export default function Visa_Application_List_Table_Admin() {
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Religion : </p>
                   <p>{selectedDataForView?.religion}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Status : </p>
+                  <p>
+                    {selectedDataForView?.isApproved === "SUBMITTED"
+                      ? "SUBMITTED"
+                      : selectedDataForView?.isApproved === "CANCELLED"
+                      ? "CANCELLED"
+                      : selectedDataForView?.isApproved === "RECEIVED"
+                      ? "RECEIVED"
+                      : selectedDataForView?.isApproved === "APPLIED"
+                      ? "APPLIED"
+                      : selectedDataForView?.isApproved === "APPROVED"
+                      ? "APPROVED"
+                      : selectedDataForView?.isApproved === "REJECTED"
+                      ? "REJECTED"
+                      : "REJECTED"}
+                  </p>
+                </div>
+
+                {/* now i will add dropwown for status  */}
+                <div className=" border mt-1 py-2 pl-2">
+                  <p>Update Status : </p>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={statusCatagory}
+                    sx={{ width: 300, marginBottom:"10px" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Movie" />
+                    )}
+                  />
+
+                  <TextField
+                    id="outlined-basic"
+                    label="Comment"
+                    variant="outlined"
+                    type="text"
+                    sx={{marginBottom:"5px"}}
+                  />
+                  <br />
+                  <Button variant="contained" >Update</Button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
