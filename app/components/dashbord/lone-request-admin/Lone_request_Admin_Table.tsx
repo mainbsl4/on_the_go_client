@@ -55,6 +55,10 @@ const statusCatagory = [
 ];
 
 export default function Lone_request_Admin_Table() {
+  // for get data from status and comment
+  const [status, setStatus] = React.useState(null);
+  const [comment, setComment] = React.useState("");
+
   const dispatch: AppDispatch = useDispatch();
   const loading = useSelector((state: RootState) => state?.loan?.loading);
 
@@ -138,6 +142,12 @@ export default function Lone_request_Admin_Table() {
     dispatch(updateLoan({ id: updateId, data: values }));
     actionDataGet(700);
     // setOpenModalForEdit(false);
+  };
+
+  // for get data from status and comment
+  const handleUpdate = () => {
+    console.log("Selected Status:", status);
+    console.log("Comment:", comment);
   };
 
   return loading ? (
@@ -278,27 +288,31 @@ export default function Lone_request_Admin_Table() {
               </div>
 
               {/* now i will add dropwown for status  */}
-              <div className=" border mt-1 py-2 pl-2">
+              <div className="border mt-1 py-2 pl-2">
                 <p>Update Status : </p>
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={statusCatagory}
                   sx={{ width: 300, marginBottom: "10px" }}
+                  onChange={(event, newValue) => setStatus(newValue)}
                   renderInput={(params) => (
-                    <TextField {...params} label="Movie" />
+                    <TextField {...params} label="Status" />
                   )}
                 />
-
                 <TextField
                   id="outlined-basic"
                   label="Comment"
                   variant="outlined"
                   type="text"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
                   sx={{ marginBottom: "5px" }}
                 />
                 <br />
-                <Button variant="contained">Update</Button>
+                <Button variant="contained" onClick={handleUpdate}>
+                  Update
+                </Button>
               </div>
             </div>
           )}

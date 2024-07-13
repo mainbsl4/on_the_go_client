@@ -62,6 +62,10 @@ const statusCatagory = [
 ]
 
 export default function Deposit_request_admin_Table() {
+    // for get data from status and comment
+    const [status, setStatus] = React.useState(null);
+    const [comment, setComment] = React.useState("");
+
   // for modal
   // for view modal
   const [idForDelete, setIdForDelete] = useState(null);
@@ -174,6 +178,13 @@ export default function Deposit_request_admin_Table() {
     // } finally {
     //   setSubmitting(false);
     // }
+  };
+
+
+   // for get data from status and comment
+   const handleUpdate = () => {
+    console.log("Selected Status:", status);
+    console.log("Comment:", comment);
   };
 
   return loading ? (
@@ -319,28 +330,32 @@ export default function Deposit_request_admin_Table() {
                   </p>
                 </div>
 
-                {/* now i will add dropwown for status  */}
-                <div className=" border mt-1 py-2 pl-2">
+             {/* now i will add dropwown for status  */}
+                <div className="border mt-1 py-2 pl-2">
                   <p>Update Status : </p>
                   <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={statusCatagory}
-                    sx={{ width: 300, marginBottom:"10px" }}
+                    sx={{ width: 300, marginBottom: "10px" }}
+                    onChange={(event, newValue) => setStatus(newValue)}
                     renderInput={(params) => (
-                      <TextField {...params} label="Movie" />
+                      <TextField {...params} label="Status" />
                     )}
                   />
-
                   <TextField
                     id="outlined-basic"
                     label="Comment"
                     variant="outlined"
                     type="text"
-                    sx={{marginBottom:"5px"}}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    sx={{ marginBottom: "5px" }}
                   />
                   <br />
-                  <Button variant="contained" >Update</Button>
+                  <Button variant="contained" onClick={handleUpdate}>
+                    Update
+                  </Button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
