@@ -55,7 +55,7 @@ export const UpdateLoneRequestSchema = Yup.object().shape({
 export const CreateVisaApplySchema = Yup.object().shape({
   userId: Yup.string(),
   givenName: Yup.string().required("Given Name is required"),
-  surName: Yup.string().required("Sur Name is required"),
+  surName: Yup.string(),
   gender: Yup.string().required("Gender No is required"),
   nationality: Yup.string().required("Nationality is required"),
   passportNo: Yup.string().required("Passport No is required"),
