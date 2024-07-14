@@ -90,12 +90,11 @@ export default function Users_table() {
 
   const columns = [
     { field: "regNo", headerName: "Reg No", width: 100 },
-    { field: "userName", headerName: "Name", width: 150 },
+    { field: "companyName", headerName: "Company", width: 150 },
     { field: "mobile", headerName: "Phone", width: 150 },
     { field: "email", headerName: "Email", width: 150 },
-    { field: "companyName", headerName: "Company", width: 150 },
-    { field: "country", headerName: "Country", width: 150 },
     { field: "bisunessAdd", headerName: "Address", width: 150 },
+    { field: "country", headerName: "Country", width: 150 },
     {
       field: "isApproved",
       headerName: "Status",
