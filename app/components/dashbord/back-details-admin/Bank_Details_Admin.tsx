@@ -187,7 +187,13 @@ export default function Bank_Details_Admin() {
                 A/C No
               </th>
               <th scope="col" className="px-6 py-3">
+              District
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Branch
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Rouating No
               </th>
               <th scope="col" className="px-6 py-3">
                 Action
@@ -205,6 +211,8 @@ export default function Bank_Details_Admin() {
                 </td>
                 <td className="px-6 py-4">{listItem.accName}</td>
                 <td className="px-6 py-4">{listItem.accNo}</td>
+                <td className="px-6 py-4">{listItem.branch}</td>
+                <td className="px-6 py-4">{listItem.branch}</td>
                 <td className="px-6 py-4">{listItem.branch}</td>
                 <td className="px-6 py-4">
                   <Stack direction="row" spacing={1}>
@@ -291,7 +299,33 @@ export default function Bank_Details_Admin() {
                       <TextField
                         {...field}
                         id="outlined-basic"
+                        label="District"
+                        variant="outlined"
+                        type="text"
+                        error={touched.branch && !!errors.branch}
+                        helperText={touched.branch && errors.branch}
+                      />
+                    )}
+                  </Field>
+                  <Field name="branch">
+                    {({ field }) => (
+                      <TextField
+                        {...field}
+                        id="outlined-basic"
                         label="Branch"
+                        variant="outlined"
+                        type="text"
+                        error={touched.branch && !!errors.branch}
+                        helperText={touched.branch && errors.branch}
+                      />
+                    )}
+                  </Field>
+                  <Field name="branch">
+                    {({ field }) => (
+                      <TextField
+                        {...field}
+                        id="outlined-basic"
+                        label="Routing Number"
                         variant="outlined"
                         type="text"
                         error={touched.branch && !!errors.branch}
