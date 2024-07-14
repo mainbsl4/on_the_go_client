@@ -22,6 +22,7 @@ import {
   deleteDeposit,
   getAllDepositReq,
   updateDeposit,
+  updateDepositStatus,
 } from "../../../lib/features/deposit/depositSlice";
 import { UpdateDepositRequestFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
@@ -138,7 +139,8 @@ export default function Deposit_request_admin_Table() {
     dispatch(getAllDepositReq());
   }, []);
 
-  const getDepositRequestData = depositRequestData?.slice().reverse();
+  const getDepositRequestData = Array.isArray(depositRequestData)
+  ? depositRequestData?.slice().reverse() : [];
 
   // edit from validation for edit
   // const initialValues: UpdateDepositRequestFormValues = {
@@ -179,10 +181,23 @@ export default function Deposit_request_admin_Table() {
   };
 
   // for get data from status and comment
+  // const handleUpdate = () => {
+  //   console.log("Selected Status:", status);
+  //   console.log("Comment:", comment);
+  // };
+
   const handleUpdate = () => {
     console.log("Selected Status:", status);
-    console.log("Comment:", comment);
+    dispatch(
+      updateDepositStatus({ id: selectedDataForView?.id, data: status, comment:  comment})
+    );
+    setOpenModalForView(false);
+    actionDataGet(500);
   };
+
+
+
+
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -339,7 +354,7 @@ export default function Deposit_request_admin_Table() {
                     id="combo-box-demo"
                     options={statusCatagory}
                     sx={{ width: 300, marginBottom: "10px" }}
-                    onChange={(event, newValue) => setStatus(newValue)}
+                    onChange={(event, newValue) => setStatus(newValue?.label)}
                     renderInput={(params) => (
                       <TextField {...params} label="Status" />
                     )}
