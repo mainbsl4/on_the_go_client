@@ -133,6 +133,7 @@ export default function Deposit_request_from() {
     userId: userId,
     dpType: "",
     date: "",
+    trnId: "",
     amount: 0,
     bankName: "",
   };
@@ -225,7 +226,7 @@ export default function Deposit_request_from() {
               </DemoContainer>
             </LocalizationProvider>
 
-            <Field name="amount">
+            <Field name="trnId">
               {({ field }) => (
                 <TextField
                   {...field}
@@ -233,8 +234,8 @@ export default function Deposit_request_from() {
                   label="Transaction ID"
                   variant="outlined"
                   type="number"
-                  error={touched.amount && !!errors.amount}
-                  helperText={touched.amount && errors.amount}
+                  error={touched.trnId && !!errors.trnId}
+                  helperText={touched.trnId && errors.trnId}
                 />
               )}
             </Field>

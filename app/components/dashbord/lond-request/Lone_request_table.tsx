@@ -126,7 +126,7 @@ export default function Lone_request_table() {
     settlmentDate: selectedDataForEdit?.settlmentDate || "",
     amount: selectedDataForEdit?.amount || 0,
     remarks: selectedDataForEdit?.remarks || "",
-    refNo: selectedDataForEdit?.refNo || "",
+    // refNo: selectedDataForEdit?.refNo || "",
   };
 
   const handleSubmit = (values: UpdateLoneRequestValues) => {
@@ -397,7 +397,7 @@ export default function Lone_request_table() {
                         />
                       )}
                     </Field>
-                    <Field name="refNo">
+                    {/* <Field name="refNo">
                       {({ field }) => (
                         <TextField
                           {...field}
@@ -409,7 +409,7 @@ export default function Lone_request_table() {
                           helperText={touched.refNo && errors.refNo}
                         />
                       )}
-                    </Field>
+                    </Field> */}
                   </div>
                   <div className="text-center mt-3">
                     <Button

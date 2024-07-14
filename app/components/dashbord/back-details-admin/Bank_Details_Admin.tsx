@@ -84,14 +84,18 @@ export default function Bank_Details_Admin() {
     bankName: "",
     accName: "",
     accNo: "",
+    district: "",
     branch: "",
+    routingNo: "",
   };
 
   interface BankDetails {
     bankName: string;
     accName: string;
     accNo: string;
+    district: string;
     branch: string;
+    routingNo: string;
   }
 
   function isBankDetails(obj: any): obj is BankDetails {
@@ -108,7 +112,9 @@ export default function Bank_Details_Admin() {
     bankName: isBankDetails(editBankDetails) ? editBankDetails.bankName : "",
     accName: isBankDetails(editBankDetails) ? editBankDetails.accName : "",
     accNo: isBankDetails(editBankDetails) ? editBankDetails.accNo : "",
+    district: isBankDetails(editBankDetails) ? editBankDetails.district : "",
     branch: isBankDetails(editBankDetails) ? editBankDetails.branch : "",
+    routingNo: isBankDetails(editBankDetails) ? editBankDetails.routingNo : "",
   };
 
   const actionDataGet = (sec: number) => {
@@ -121,7 +127,9 @@ export default function Bank_Details_Admin() {
     bankName: string;
     accName: string;
     accNo: string;
+    district: string;
     branch: string;
+    routingNo: string;
   }
 
   const handleSubmit = (values: CreateBankDetailsFormValues) => {
@@ -294,7 +302,7 @@ export default function Bank_Details_Admin() {
                       />
                     )}
                   </Field>
-                  <Field name="branch">
+                  <Field name="district">
                     {({ field }) => (
                       <TextField
                         {...field}
@@ -302,8 +310,8 @@ export default function Bank_Details_Admin() {
                         label="District"
                         variant="outlined"
                         type="text"
-                        error={touched.branch && !!errors.branch}
-                        helperText={touched.branch && errors.branch}
+                        error={touched.district && !!errors.district}
+                        helperText={touched.district && errors.district}
                       />
                     )}
                   </Field>
@@ -320,7 +328,7 @@ export default function Bank_Details_Admin() {
                       />
                     )}
                   </Field>
-                  <Field name="branch">
+                  <Field name="routingNo">
                     {({ field }) => (
                       <TextField
                         {...field}
@@ -328,8 +336,8 @@ export default function Bank_Details_Admin() {
                         label="Routing Number"
                         variant="outlined"
                         type="text"
-                        error={touched.branch && !!errors.branch}
-                        helperText={touched.branch && errors.branch}
+                        error={touched.routingNo && !!errors.routingNo}
+                        helperText={touched.routingNo && errors.routingNo}
                       />
                     )}
                   </Field>
@@ -408,6 +416,19 @@ export default function Bank_Details_Admin() {
                         />
                       )}
                     </Field>
+                    <Field name="district">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="District"
+                          variant="outlined"
+                          type="text"
+                          error={touched.district && !!errors.district}
+                          helperText={touched.district && errors.district}
+                        />
+                      )}
+                    </Field>
                     <Field name="branch">
                       {({ field }) => (
                         <TextField
@@ -418,6 +439,19 @@ export default function Bank_Details_Admin() {
                           type="text"
                           error={touched.branch && !!errors.branch}
                           helperText={touched.branch && errors.branch}
+                        />
+                      )}
+                    </Field>
+                    <Field name="routingNo">
+                      {({ field }) => (
+                        <TextField
+                          {...field}
+                          id="outlined-basic"
+                          label="Rouating number"
+                          variant="outlined"
+                          type="text"
+                          error={touched.routingNo && !!errors.routingNo}
+                          helperText={touched.routingNo && errors.routingNo}
                         />
                       )}
                     </Field>
