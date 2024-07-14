@@ -447,7 +447,7 @@ export default function Visa_Apply_Form() {
           <Form>
             <div className="grid grid-cols-2 gap-2 ">
               <Field name="givenName">
-                {({ field }) => (
+                {({ field, form }) => (
                   <TextField
                     required
                     {...field}
@@ -457,11 +457,15 @@ export default function Visa_Apply_Form() {
                     type="text"
                     error={touched.givenName && !!errors.givenName}
                     helperText={touched.givenName && errors.givenName}
+                    onChange={(event) => {
+                      const upperCaseValue = event.target.value.toUpperCase();
+                      form.setFieldValue(field.name, upperCaseValue);
+                    }}
                   />
                 )}
               </Field>
               <Field name="surName">
-                {({ field }) => (
+                {({ field, form }) => (
                   <TextField
                     {...field}
                     id="outlined-basic"
@@ -470,6 +474,10 @@ export default function Visa_Apply_Form() {
                     type="text"
                     error={touched.surName && !!errors.surName}
                     helperText={touched.surName && errors.surName}
+                    onChange={(event) => {
+                      const upperCaseValue = event.target.value.toUpperCase();
+                      form.setFieldValue(field.name, upperCaseValue);
+                    }}
                   />
                 )}
               </Field>
@@ -519,7 +527,7 @@ export default function Visa_Apply_Form() {
               </Field>
 
               <Field name="passportNo">
-                {({ field }) => (
+                {({ field, form }) => (
                   <TextField
                     required
                     {...field}
@@ -529,6 +537,10 @@ export default function Visa_Apply_Form() {
                     type="text"
                     error={touched.passportNo && !!errors.passportNo}
                     helperText={touched.passportNo && errors.passportNo}
+                    onChange={(event) => {
+                      const upperCaseValue = event.target.value.toUpperCase();
+                      form.setFieldValue(field.name, upperCaseValue);
+                    }}
                   />
                 )}
               </Field>
@@ -718,11 +730,15 @@ export default function Visa_Apply_Form() {
             </div>
             <div className="text-center mt-3">
               <Button
-
                 type="submit"
                 disabled={isSubmitting}
                 variant="contained"
-                sx={{ width: "150px", height:"50px", fontSize:"17px", marginTop:"6px" }}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  fontSize: "17px",
+                  marginTop: "6px",
+                }}
                 // size="large"
               >
                 Apply
