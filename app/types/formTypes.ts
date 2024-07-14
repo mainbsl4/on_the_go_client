@@ -36,7 +36,7 @@ export interface CreateLoneRequestValues {
   settlmentDate: string;
   amount: number;
   remarks: string;
-  refNo: string;
+  // refNo: string;
 }
 export interface UpdateLoneRequestValues {
   userId: string;

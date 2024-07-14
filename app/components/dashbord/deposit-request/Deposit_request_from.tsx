@@ -230,6 +230,19 @@ export default function Deposit_request_from() {
                 <TextField
                   {...field}
                   id="outlined-basic"
+                  label="Transaction ID"
+                  variant="outlined"
+                  type="number"
+                  error={touched.amount && !!errors.amount}
+                  helperText={touched.amount && errors.amount}
+                />
+              )}
+            </Field>
+            <Field name="amount">
+              {({ field }) => (
+                <TextField
+                  {...field}
+                  id="outlined-basic"
                   label="Amount"
                   variant="outlined"
                   type="number"

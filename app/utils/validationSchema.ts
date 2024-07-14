@@ -40,7 +40,7 @@ export const CreateLoneRequestSchema = Yup.object().shape({
   settlmentDate: Yup.string().required("Settlment Date is required"),
   amount: Yup.number().required("Amount is required"),
   remarks: Yup.string().required("Remark is required"),
-  refNo: Yup.string().required("Reg NO is required"),
+  // refNo: Yup.string().required("Reg NO is required"),
 });
 
 export const UpdateLoneRequestSchema = Yup.object().shape({
