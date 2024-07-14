@@ -98,7 +98,7 @@ export default function Users_table() {
     { field: "bisunessAdd", headerName: "Address", width: 150 },
     {
       field: "isApproved",
-      headerName: "Address",
+      headerName: "Status",
       width: 150,
       renderCell: (params: any) =>
         params?.row?.isApproved === true ? (

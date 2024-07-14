@@ -1526,6 +1526,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <div className=" border flex py-2 pl-2">
                   <p>Given Name : </p>
                   <p>{selectedDataForView?.givenName}</p>
+                  
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Sur Name : </p>
@@ -1558,19 +1559,28 @@ export default function Visa_Application_List_Table_Admin() {
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Status : </p>
                   <p>
-                    {selectedDataForView?.isApproved === "SUBMITTED"
-                      ? "SUBMITTED"
-                      : selectedDataForView?.isApproved === "CANCELLED"
-                        ? "CANCELLED"
-                        : selectedDataForView?.isApproved === "RECEIVED"
-                          ? "RECEIVED"
-                          : selectedDataForView?.isApproved === "APPLIED"
-                            ? "APPLIED"
-                            : selectedDataForView?.isApproved === "APPROVED"
-                              ? "APPROVED"
-                              : selectedDataForView?.isApproved === "REJECTED"
-                                ? "REJECTED"
-                                : "REJECTED"}
+                  {selectedDataForView?.isApproved ===
+                            "SUBMITTED" ? (
+                            <Chip label="SUBMITTED" color="default" />
+                          ) : selectedDataForView?.isApproved ===
+                            "CANCELLED" ? (
+                            <Chip label="CANCELLED" color="warning" />
+                          ) : selectedDataForView?.isApproved ===
+                            "RECEIVED" ? (
+                            <Chip label="RECEIVED" color="success" />
+                          ) : selectedDataForView?.isApproved ===
+                            "APPLIED" ? (
+                            <Chip label="APPLIED" color="primary" />
+                          ) : selectedDataForView?.isApproved ===
+                            "APPROVED" ? (
+                            <Chip label="APPROVED" color="info" />
+                          ) : selectedDataForView?.isApproved ===
+                            "REJECTED" ? (
+                            <Chip label="REJECTED" color="error" />
+                          ) : (
+                            <Chip label="REJECTED" color="error" />
+                          )}
+                    
                   </p>
                 </div>
 

@@ -78,9 +78,9 @@ const bankNames = [
   { label: "Uttara Bank Limited" },
 ];
 const modeOfDepo = [
-  { label: "Cash" },
+  { label: "Cash / Cheque" },
   { label: "Bank Transfer" },
-  { label: "Cheque & DD" },
+  { label: "Branch Deposit" },
 ];
 
 // for upload
