@@ -72,7 +72,7 @@ export default function page() {
                   <div className="space-y-4 md:space-y-6 grid grid-cols-2 gap-2">
                     <div>
                       <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                        Enter name here
+                        Enter Owner/Representative Name
                       </label>
                       <Field
                         type="text"
@@ -157,10 +157,7 @@ export default function page() {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       >
                         <option value="">Choose Your country</option>
-                        <option value="US">United States</option>
-                        <option value="CA">Canada</option>
-                        <option value="FR">France</option>
-                        <option value="DE">Germany</option>
+                        <option value="US">Bangladesh</option>
                       </Field>
                       {touched.country && errors.country && (
                         <div>{errors.country}</div>
@@ -177,10 +174,25 @@ export default function page() {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       >
                         <option selected>Choose a city</option>
-                        <option value="US">United States</option>
-                        <option value="CA">Canada</option>
-                        <option value="FR">France</option>
-                        <option value="DE">Germany</option>
+                        <option value="dhaka">Dhaka</option>
+                        <option value="chattogram">Chattogram</option>
+                        <option value="khulna">Khulna</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="sylhet">Sylhet</option>
+                        <option value="barisal">Barisal</option>
+                        <option value="rangpur">Rangpur</option>
+                        <option value="mymensingh">Mymensingh</option>
+                        <option value="coxsbazar">Cox's Bazar</option>
+                        <option value="cumilla">Cumilla</option>
+                        <option value="gazipur">Gazipur</option>
+                        <option value="narayanganj">Narayanganj</option>
+                        <option value="bogura">Bogura</option>
+                        <option value="jessore">Jessore</option>
+                        <option value="dinajpur">Dinajpur</option>
+                        <option value="moulvibazar">Moulvibazar</option>
+                        <option value="noakhali">Noakhali</option>
+                        <option value="pabna">Pabna</option>
+                        <option value="tangail">Tangail</option>
                       </Field>
                       {touched.city && errors.city && <div>{errors.city}</div>}
                     </div>
