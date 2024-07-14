@@ -280,6 +280,12 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Visa_Apply_Form() {
+  // file information
+  const [fileInfo, setFileInfo] = useState(null);
+  const [fileInfo1, setFileInfo1] = useState(null);
+  const [fileInfo2, setFileInfo2] = useState(null);
+  const [fileInfo3, setFileInfo3] = useState(null);
+
   const [filePass, setFilePass] = useState(null);
   const [filePassDoc, setFilePassDoc] = useState(null);
   const [fileImage, setFileImage] = useState(null);
@@ -335,17 +341,59 @@ export default function Visa_Apply_Form() {
     if (selectedFile) {
       dispatch(uploadPassImage(selectedFile));
     }
+
+    // file information
+    const file = event.target.files[0];
+    if (file) {
+      setFileInfo({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+      });
+    }
   };
   const handleFileChange1 = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       dispatch(uploadImg(selectedFile));
     }
+
+    // file information
+    const file = event.target.files[0];
+    if (file) {
+      setFileInfo1({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+      });
+    }
   };
   const handleFileChange2 = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       dispatch(uploadDocImage(selectedFile));
+    }
+
+    // file information
+    const file = event.target.files[0];
+    if (file) {
+      setFileInfo2({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+      });
+    }
+  };
+  const handleFileChange3 = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      dispatch(uploadDocImage(selectedFile));
+    }
+
+    // file information
+    const file = event.target.files[0];
+    if (file) {
+      setFileInfo3({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+      });
     }
   };
 
@@ -399,28 +447,37 @@ export default function Visa_Apply_Form() {
           <Form>
             <div className="grid grid-cols-2 gap-2 ">
               <Field name="givenName">
-                {({ field }) => (
+                {({ field, form }) => (
                   <TextField
+                    required
                     {...field}
                     id="outlined-basic"
-                    label="Given Name"
+                    label="Full Name"
                     variant="outlined"
                     type="text"
                     error={touched.givenName && !!errors.givenName}
                     helperText={touched.givenName && errors.givenName}
+                    onChange={(event) => {
+                      const upperCaseValue = event.target.value.toUpperCase();
+                      form.setFieldValue(field.name, upperCaseValue);
+                    }}
                   />
                 )}
               </Field>
               <Field name="surName">
-                {({ field }) => (
+                {({ field, form }) => (
                   <TextField
                     {...field}
                     id="outlined-basic"
-                    label="Sur Name"
+                    label="Father Name"
                     variant="outlined"
                     type="text"
                     error={touched.surName && !!errors.surName}
                     helperText={touched.surName && errors.surName}
+                    onChange={(event) => {
+                      const upperCaseValue = event.target.value.toUpperCase();
+                      form.setFieldValue(field.name, upperCaseValue);
+                    }}
                   />
                 )}
               </Field>
@@ -435,6 +492,7 @@ export default function Visa_Apply_Form() {
                     }
                     renderInput={(params) => (
                       <TextField
+                        required
                         {...field}
                         {...params}
                         label="Select Gender"
@@ -456,6 +514,7 @@ export default function Visa_Apply_Form() {
                     }
                     renderInput={(params) => (
                       <TextField
+                        required
                         {...field}
                         {...params}
                         label="Select Nationality"
@@ -468,8 +527,9 @@ export default function Visa_Apply_Form() {
               </Field>
 
               <Field name="passportNo">
-                {({ field }) => (
+                {({ field, form }) => (
                   <TextField
+                    required
                     {...field}
                     id="outlined-basic"
                     label="Passport Number"
@@ -477,6 +537,10 @@ export default function Visa_Apply_Form() {
                     type="text"
                     error={touched.passportNo && !!errors.passportNo}
                     helperText={touched.passportNo && errors.passportNo}
+                    onChange={(event) => {
+                      const upperCaseValue = event.target.value.toUpperCase();
+                      form.setFieldValue(field.name, upperCaseValue);
+                    }}
                   />
                 )}
               </Field>
@@ -500,6 +564,7 @@ export default function Visa_Apply_Form() {
                         }
                         renderInput={(params) => (
                           <TextField
+                            required
                             {...params}
                             error={
                               touched.passExpiryDate && !!errors.passExpiryDate
@@ -534,6 +599,7 @@ export default function Visa_Apply_Form() {
                         }
                         renderInput={(params) => (
                           <TextField
+                            required
                             {...params}
                             error={touched.dob && !!errors.dob}
                             helperText={touched.dob && errors.dob}
@@ -556,6 +622,7 @@ export default function Visa_Apply_Form() {
                     }
                     renderInput={(params) => (
                       <TextField
+                        required
                         {...params}
                         {...field}
                         label="Select Religion"
@@ -567,48 +634,114 @@ export default function Visa_Apply_Form() {
                 )}
               </Field>
 
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                color="info"
-                tabIndex={-1}
-                startIcon={<Icon icon="ep:upload-filled" />}
-              >
-                Upload Passport
-                <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-              </Button>
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                color="info"
-                tabIndex={-1}
-                startIcon={<Icon icon="ep:upload-filled" />}
-              >
-                Upload Photo
-                <VisuallyHiddenInput type="file" onChange={handleFileChange1} />
-              </Button>
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                color="info"
-                tabIndex={-1}
-                startIcon={<Icon icon="ep:upload-filled" />}
-              >
-                Others Documents
-                <VisuallyHiddenInput type="file" onChange={handleFileChange2} />
-              </Button>
+              <div>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  color="info"
+                  tabIndex={-1}
+                  startIcon={<Icon icon="ep:upload-filled" />}
+                  sx={{ width: "100%" }}
+                >
+                  Upload Passport
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={handleFileChange}
+                  />
+                </Button>
+                {fileInfo && (
+                  <div>
+                    <p>File Name: {fileInfo.name}</p>
+                    <p>File Size: {fileInfo.size} KB</p>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  color="info"
+                  tabIndex={-1}
+                  startIcon={<Icon icon="ep:upload-filled" />}
+                  sx={{ width: "100%" }}
+                >
+                  Upload Photo
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={handleFileChange1}
+                  />
+                </Button>
+                {fileInfo1 && (
+                  <div>
+                    <p>File Name: {fileInfo1.name}</p>
+                    <p>File Size: {fileInfo1.size} KB</p>
+                  </div>
+                )}
+              </div>
+              <div>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  color="info"
+                  tabIndex={-1}
+                  startIcon={<Icon icon="ep:upload-filled" />}
+                  sx={{ width: "100%" }}
+                >
+                  Pervious Visa (If Any)
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={handleFileChange2}
+                  />
+                </Button>
+                {fileInfo2 && (
+                  <div>
+                    <p>File Name: {fileInfo2.name}</p>
+                    <p>File Size: {fileInfo2.size} KB</p>
+                  </div>
+                )}
+              </div>
+              <div>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  color="info"
+                  tabIndex={-1}
+                  startIcon={<Icon icon="ep:upload-filled" />}
+                  sx={{ width: "100%" }}
+                >
+                  Others Documents
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={handleFileChange3}
+                  />
+                </Button>
+                {fileInfo3 && (
+                  <div>
+                    <p>File Name: {fileInfo3.name}</p>
+                    <p>File Size: {fileInfo3.size} KB</p>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="text-center mt-3">
               <Button
                 type="submit"
                 disabled={isSubmitting}
                 variant="contained"
-                sx={{ width: "120px" }}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  fontSize: "17px",
+                  marginTop: "6px",
+                }}
+                // size="large"
               >
-                Submit
+                Apply
               </Button>
             </div>
           </Form>

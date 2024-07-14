@@ -200,6 +200,9 @@ export default function Deposit_request_admin_Table() {
               Date
             </th>
             <th scope="col" className="px-6 py-3">
+            Transaction ID
+            </th>
+            <th scope="col" className="px-6 py-3">
               Amount
             </th>
             <th scope="col" className="px-6 py-3">
@@ -225,6 +228,7 @@ export default function Deposit_request_admin_Table() {
             </td> */}
               <td className="px-6 py-4">{getDepositRequestData?.dpType}</td>
               <td className="px-6 py-4">{getDepositRequestData?.date}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
               <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
               <td className="px-6 py-4">{getDepositRequestData?.bankName}</td>
               <td className="px-6 py-4">

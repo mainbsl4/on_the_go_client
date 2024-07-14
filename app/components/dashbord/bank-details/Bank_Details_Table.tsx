@@ -19,7 +19,13 @@ export default function Bank_Details_Table() {
               A/C No
             </th>
             <th scope="col" className="px-6 py-3">
+              District
+            </th>
+            <th scope="col" className="px-6 py-3">
               Branch
+            </th>
+            <th scope="col" className="px-6 py-3">
+            Routing Number
             </th>
             {/* <th scope="col" className="px-6 py-3">
               Action
@@ -36,6 +42,8 @@ export default function Bank_Details_Table() {
               </td>
               <td className="px-6 py-4">Airspan Limited</td>
               <td className="px-6 py-4">0325000050</td>
+              <td className="px-6 py-4">48953764385</td>
+              <td className="px-6 py-4">Mirpur Road Branch</td>
               <td className="px-6 py-4">Mirpur Road Branch</td>
               {/* <td className="px-6 py-4">
                 <Stack direction="row" spacing={1}>

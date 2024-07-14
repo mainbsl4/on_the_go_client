@@ -534,16 +534,7 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -555,8 +546,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -582,28 +582,29 @@ export default function Visa_Application_List_Table() {
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData?.givenName}
                     </td>
-
-                    <td className="px-6 py-4">
-                      {reversedgetVesaApplyData.surName}
-                    </td>
-                    <td className="px-6 py-4">
-                      {reversedgetVesaApplyData.gender}
-                    </td>
-                    <td className="px-6 py-4">
-                      {reversedgetVesaApplyData.nationality}
-                    </td>
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData.dob}
                     </td>
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData.passportNo}
                     </td>
+
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData.passExpiryDate}
                     </td>
                     <td className="px-6 py-4">
+                      {reversedgetVesaApplyData.nationality}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData.gender}
+                    </td>
+                    <td className="px-6 py-4">
                       {reversedgetVesaApplyData.religion}
                     </td>
+
+                    {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData?.isApproved === "SUBMITTED" ? (
                         <Chip label="SUBMITTED" color="default" />
@@ -680,16 +681,7 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -701,8 +693,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -730,28 +731,29 @@ export default function Visa_Application_List_Table() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
                         </td>
-
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.gender}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.nationality}
-                        </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.dob}
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passportNo}
                         </td>
+
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passExpiryDate}
                         </td>
                         <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.nationality}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.gender}
+                        </td>
+                        <td className="px-6 py-4">
                           {reversedgetVesaApplyData.religion}
                         </td>
+
+                        {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" ? (
@@ -817,16 +819,7 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -838,8 +831,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -867,28 +869,29 @@ export default function Visa_Application_List_Table() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
                         </td>
-
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.gender}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.nationality}
-                        </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.dob}
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passportNo}
                         </td>
+
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passExpiryDate}
                         </td>
                         <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.nationality}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.gender}
+                        </td>
+                        <td className="px-6 py-4">
                           {reversedgetVesaApplyData.religion}
                         </td>
+
+                        {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" ? (
@@ -950,17 +953,11 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
+                {/* <th scope="col" className="px-6 py-3">
+                  SL
+                </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -972,8 +969,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1001,28 +1007,29 @@ export default function Visa_Application_List_Table() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
                         </td>
-
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.gender}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.nationality}
-                        </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.dob}
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passportNo}
                         </td>
+
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passExpiryDate}
                         </td>
                         <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.nationality}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.gender}
+                        </td>
+                        <td className="px-6 py-4">
                           {reversedgetVesaApplyData.religion}
                         </td>
+
+                        {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" ? (
@@ -1084,17 +1091,11 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
+                {/* <th scope="col" className="px-6 py-3">
+                  SL
+                </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -1106,8 +1107,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1135,28 +1145,29 @@ export default function Visa_Application_List_Table() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
                         </td>
-
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.gender}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.nationality}
-                        </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.dob}
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passportNo}
                         </td>
+
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passExpiryDate}
                         </td>
                         <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.nationality}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.gender}
+                        </td>
+                        <td className="px-6 py-4">
                           {reversedgetVesaApplyData.religion}
                         </td>
+
+                        {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" ? (
@@ -1218,17 +1229,11 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
+                {/* <th scope="col" className="px-6 py-3">
+                  SL
+                </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -1240,8 +1245,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1269,28 +1283,29 @@ export default function Visa_Application_List_Table() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
                         </td>
-
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.gender}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.nationality}
-                        </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.dob}
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passportNo}
                         </td>
+
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passExpiryDate}
                         </td>
                         <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.nationality}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.gender}
+                        </td>
+                        <td className="px-6 py-4">
                           {reversedgetVesaApplyData.religion}
                         </td>
+
+                        {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" ? (
@@ -1352,17 +1367,11 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
+                {/* <th scope="col" className="px-6 py-3">
+                  SL
+                </th> */}
                 <th scope="col" className="px-6 py-3">
-                  Given Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Sur Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   DOB
@@ -1374,8 +1383,17 @@ export default function Visa_Application_List_Table() {
                   Passport EXP
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Religion
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1403,28 +1421,29 @@ export default function Visa_Application_List_Table() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
                         </td>
-
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.gender}
-                        </td>
-                        <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.nationality}
-                        </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.dob}
                         </td>
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passportNo}
                         </td>
+
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData.passExpiryDate}
                         </td>
                         <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.nationality}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.gender}
+                        </td>
+                        <td className="px-6 py-4">
                           {reversedgetVesaApplyData.religion}
                         </td>
+
+                        {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.isApproved ===
                           "SUBMITTED" ? (
@@ -1496,11 +1515,11 @@ export default function Visa_Application_List_Table() {
             <div>
               <div>
                 <div className=" border flex py-2 pl-2">
-                  <p>Given Name : </p>
+                  <p>Full Name : </p>
                   <p>{selectedDataForView?.givenName}</p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
-                  <p>Sur Name : </p>
+                  <p>Father Name : </p>
                   <p>{selectedDataForView?.surName}</p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">

@@ -21,13 +21,17 @@ export interface CreateBankDetailsFormValues {
   bankName: string;
   accName: string;
   accNo: string;
+  district: string;
   branch: string;
+  routingNo: string;
 }
 export interface UpdateBankDetailsFormValues {
   bankName: string;
   accName: string;
   accNo: string;
+  district: string;
   branch: string;
+  routingNo: string;
 }
 
 export interface CreateLoneRequestValues {
@@ -36,7 +40,7 @@ export interface CreateLoneRequestValues {
   settlmentDate: string;
   amount: number;
   remarks: string;
-  refNo: string;
+  // refNo: string;
 }
 export interface UpdateLoneRequestValues {
   userId: string;
@@ -44,7 +48,7 @@ export interface UpdateLoneRequestValues {
   settlmentDate: string;
   amount: number;
   remarks: string;
-  refNo: string;
+  // refNo: string;
 }
 
 export interface CreateVisaApplyFormValues {
@@ -74,6 +78,7 @@ export interface CreateDepositRequestFormValues {
   userId: string;
   dpType: string;
   date: string;
+  trnId: string;
   amount: number;
   bankName: string;
 }

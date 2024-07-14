@@ -47,7 +47,7 @@ export default function Lone_request_from() {
     settlmentDate: "", // Change to null if settlmentDate is a Date object
     amount: 0,
     remarks: "",
-    refNo: "",
+    // refNo: "",
   };
 
   const handleSubmit = (values: CreateLoneRequestValues) => {
@@ -184,7 +184,7 @@ export default function Lone_request_from() {
                   />
                 )}
               </Field>
-              <Field name="refNo">
+              {/* <Field name="refNo">
                 {({ field }) => (
                   <TextField
                     {...field}
@@ -196,7 +196,7 @@ export default function Lone_request_from() {
                     helperText={touched.refNo && errors.refNo}
                   />
                 )}
-              </Field>
+              </Field> */}
             </div>
             <div className="text-center mt-3">
               <Button
