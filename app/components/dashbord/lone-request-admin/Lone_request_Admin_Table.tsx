@@ -22,6 +22,7 @@ import {
   deleteLoan,
   getAllLoanReq,
   updateLoan,
+  updateLoanStatus,
 } from "../../../lib/features/loan/loanSlice";
 import { UpdateLoneRequestValues } from "../../../types/formTypes";
 import { UpdateLoneRequestSchema } from "../../../utils/validationSchema";
@@ -66,7 +67,8 @@ export default function Lone_request_Admin_Table() {
   const loanListAll = useSelector(
     (state: RootState) => state?.loan?.loan?.data
   );
-  const loanList = loanListAll?.slice().reverse();
+  const loanList = Array.isArray(loanListAll)
+  ? loanListAll?.slice().reverse() : [];
 
   React.useEffect(() => {
     dispatch(getAllLoanReq());
@@ -145,10 +147,23 @@ export default function Lone_request_Admin_Table() {
   };
 
   // for get data from status and comment
+  // const handleUpdate = () => {
+  //   console.log("Selected Status:", status);
+  //   console.log("Comment:", comment);
+  // };
+
+
   const handleUpdate = () => {
     console.log("Selected Status:", status);
-    console.log("Comment:", comment);
+    dispatch(
+      updateLoanStatus({ id: selectedDataForView?.id, data: status, comment:  comment})
+    );
+    setOpenModalForView(false);
+    actionDataGet(500);
   };
+
+
+
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -295,7 +310,7 @@ export default function Lone_request_Admin_Table() {
                   id="combo-box-demo"
                   options={statusCatagory}
                   sx={{ width: 300, marginBottom: "10px" }}
-                  onChange={(event, newValue) => setStatus(newValue)}
+                  onChange={(event, newValue) => setStatus(newValue?.label)}
                   renderInput={(params) => (
                     <TextField {...params} label="Status" />
                   )}

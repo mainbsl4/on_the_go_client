@@ -64,11 +64,11 @@ export const getAllDepositReq = createAsyncThunk(
 
 export const updateDepositStatus = createAsyncThunk(
   "deposit/updateDepositStatus",
-  async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
+  async ({ id, data, comment }: { id: any; data: any, comment: any }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${base_url}deposit/update-status/${id}`,
-        data
+        { status: data, comment: comment }
       );
       console.log(response);
       return response.data;

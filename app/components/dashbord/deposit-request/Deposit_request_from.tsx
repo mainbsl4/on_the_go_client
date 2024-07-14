@@ -233,7 +233,7 @@ export default function Deposit_request_from() {
                   id="outlined-basic"
                   label="Transaction ID"
                   variant="outlined"
-                  type="number"
+                  type="text"
                   error={touched.trnId && !!errors.trnId}
                   helperText={touched.trnId && errors.trnId}
                 />
