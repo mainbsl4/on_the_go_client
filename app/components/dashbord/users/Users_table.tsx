@@ -173,20 +173,7 @@ export default function Users_table() {
                 <p>Address: </p>
                 <p>{selectedDataForView?.bisunessAdd}</p>
               </div>
-              <div className="border flex py-2 pl-2 mt-1">
-                <p>Address: </p>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={ApproveStatus}
-                  sx={{ width: 300 }}
-                  getOptionLabel={(option) => option.label}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Update user Status" />
-                  )}
-                  onChange={handleChange}
-                />
-              </div>
+              
               <div className="border flex py-2 pl-2 mt-1">
                 <p>Status: </p>
                 <p>
@@ -198,6 +185,20 @@ export default function Users_table() {
                     <Chip label="REJECTED" color="error" />
                   )}
                 </p>
+              </div>
+              <div className="border flex py-2 pl-2 mt-1">
+                <p>Update Status: </p>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={ApproveStatus}
+                  sx={{ width: 300 }}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Update user Status" />
+                  )}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           )}

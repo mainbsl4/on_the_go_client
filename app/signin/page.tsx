@@ -66,7 +66,7 @@ export default function page() {
                 <Form className="space-y-4 md:space-y-6" action="#">
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                      Your email
+                      Your Email or Phone
                     </label>
                     <Field
                       type="text"

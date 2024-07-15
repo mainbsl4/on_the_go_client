@@ -189,6 +189,7 @@ export default function Deposit_request_from() {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      required
                       label="Mode of Deposit"
                       error={touched.dpType && !!errors.dpType}
                       helperText={touched.dpType && errors.dpType}
@@ -215,6 +216,7 @@ export default function Deposit_request_from() {
                       }
                       renderInput={(params) => (
                         <TextField
+                        required
                           {...params}
                           error={touched.date && !!errors.date}
                           helperText={touched.date && errors.date}
@@ -243,6 +245,7 @@ export default function Deposit_request_from() {
               {({ field }) => (
                 <TextField
                   {...field}
+                  required
                   id="outlined-basic"
                   label="Amount"
                   variant="outlined"
@@ -263,6 +266,7 @@ export default function Deposit_request_from() {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      required
                       label="Choose Bank"
                       error={touched.bankName && !!errors.bankName}
                       helperText={touched.bankName && errors.bankName}
