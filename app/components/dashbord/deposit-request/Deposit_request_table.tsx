@@ -56,8 +56,8 @@ const top100Films = [
 ];
 
 export default function Deposit_request_table() {
-    // get data
-    const [data, setData] = React.useState([]);
+  // get data
+  const [data, setData] = React.useState([]);
   // for modal
   // for view modal
   const [idForDelete, setIdForDelete] = useState(null);
@@ -135,21 +135,15 @@ export default function Deposit_request_table() {
     (state: RootState) => state?.user?.user?.data?.deposit_request
   );
 
-  useEffect(()=>{
-
-    if(depositRequestDataWhenLogin && depositRequestDataAfterLogin){
-      setData(depositRequestDataWhenLogin.concat(depositRequestDataAfterLogin))
-    }else if(depositRequestDataWhenLogin){
-      setData(depositRequestDataWhenLogin)
-    }else if(depositRequestDataAfterLogin){
-      setData(depositRequestDataAfterLogin)
+  useEffect(() => {
+    if (depositRequestDataWhenLogin && depositRequestDataAfterLogin) {
+      setData(depositRequestDataWhenLogin.concat(depositRequestDataAfterLogin));
+    } else if (depositRequestDataWhenLogin) {
+      setData(depositRequestDataWhenLogin);
+    } else if (depositRequestDataAfterLogin) {
+      setData(depositRequestDataAfterLogin);
     }
-    },[depositRequestDataWhenLogin,depositRequestDataAfterLogin])
-  
-
-
-
-
+  }, [depositRequestDataWhenLogin, depositRequestDataAfterLogin]);
 
   const loading = useSelector((state: RootState) => state?.deposit?.loading);
 
@@ -158,7 +152,6 @@ export default function Deposit_request_table() {
   useEffect(() => {
     dispatch(getAllDepositReq());
   }, []);
-
 
   // edit from validation
 
@@ -214,7 +207,7 @@ export default function Deposit_request_table() {
               Date
             </th>
             <th scope="col" className="px-6 py-3">
-            Transaction ID
+              Transaction ID
             </th>
             <th scope="col" className="px-6 py-3">
               Amount

@@ -48,10 +48,8 @@ const style = {
 };
 
 export default function Lone_request_table() {
-    // get data
-    const [data, setData] = React.useState([]);
-
-
+  // get data
+  const [data, setData] = React.useState([]);
 
   const dispatch: AppDispatch = useDispatch();
   // loading
@@ -62,7 +60,6 @@ export default function Lone_request_table() {
   );
   // const loanList = loanListAll?.slice().reverse();
 
-
   const loanListAllWhenLogin = useSelector(
     (state: RootState) => state?.user?.user?.user?.loan_request
   );
@@ -72,9 +69,6 @@ export default function Lone_request_table() {
   );
 
   // console.log("dddddd",loanListAfterLogin.slice().reverse());
-  
-
-
 
   React.useEffect(() => {
     // dispatch(getAllLoanReq());
@@ -84,12 +78,7 @@ export default function Lone_request_table() {
       setData(loanListAfterLogin);
     }
     // const loanList = loanListAll?.slice().reverse();
-
-    
-    }, [loanListAllWhenLogin, loanListAfterLogin]);
-
-
-
+  }, [loanListAllWhenLogin, loanListAfterLogin]);
 
   const actionDataGet = (sec) => {
     setTimeout(() => {
