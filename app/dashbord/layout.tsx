@@ -279,6 +279,8 @@ export default function RootLayout({
     }
   }, [user, dispatch]);
 
+  const [totalBalance, setTotalBalance] = React.useState(0)
+
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       const timeoutId = setTimeout(() => {
@@ -290,10 +292,28 @@ export default function RootLayout({
         } else {
           console.log("User IDs match, staying on the current page.");
         }
+
+        const totalDepo = user?.data?.deposit_request ? user?.data?.deposit_request : user?.user?.deposit_request;
+        console.log(totalDepo);
+        const totalDepoAmount = totalDepo?.reduce((sum, depo) => sum + depo?.amount, 0);
+        console.log('Total Deposit Amount:', totalDepoAmount);
+        const totalLoan = user?.data?.loan_request ? user?.data?.loan_request : user?.user?.loan_request;
+        console.log(totalLoan);
+        const totalLoanAmount = totalLoan?.reduce((sum, loan) => sum + loan?.amount, 0);
+        console.log('Total Loan Amount:', totalLoanAmount);
+        const totalAddedBalance = totalDepoAmount + totalLoanAmount
+        setTotalBalance(totalAddedBalance)
+
+
+
       }, 3000); // 3 seconds delay
 
       // Clean up the timeout if the component unmounts
       return () => clearTimeout(timeoutId);
+
+
+      
+
     }
   }, [user, router]);
 
@@ -349,7 +369,7 @@ export default function RootLayout({
       {showDetails && (
         <div className="p-2" style={{ marginTop: 2, position:"absolute", top:"65px", right:"0px", color:"black", backgroundColor:"gray" }}>
           <p>Name: Main</p>
-          <p>Balance: 00</p>
+          <p>Balance: {totalBalance}</p>
           <Button variant="outlined">Settings</Button>
         </div>
       )}
