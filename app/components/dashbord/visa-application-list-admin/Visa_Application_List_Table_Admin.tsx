@@ -353,6 +353,9 @@ function a11yProps(index: number) {
 }
 
 export default function Visa_Application_List_Table_Admin() {
+  // file information
+  const [fileInfo3, setFileInfo3] = React.useState(null);
+
   // for get data from status and comment
   const [status, setStatus] = React.useState(null);
   // const [comment, setComment] = React.useState("");
@@ -516,6 +519,21 @@ export default function Visa_Application_List_Table_Admin() {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       dispatch(uploadDocImage(selectedFile));
+    }
+  };
+  const handleFileChange3 = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      dispatch(uploadDocImage(selectedFile));
+    }
+
+    // file information
+    const file = event.target.files[0];
+    if (file) {
+      setFileInfo3({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+      });
     }
   };
 
@@ -1597,7 +1615,7 @@ export default function Visa_Application_List_Table_Admin() {
                 {/* now i will add dropwown for status  */}
                 <div className="border mt-1 py-2 pl-2">
                   <p>Update Status : </p>
-                  <Autocomplete
+                  {/* <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={statusCatagory}
@@ -1606,6 +1624,120 @@ export default function Visa_Application_List_Table_Admin() {
                     renderInput={(params) => (
                       <TextField {...params} label="Status" />
                     )}
+                  /> */}
+
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={statusCatagory}
+                    sx={{ marginBottom: "10px" }}
+                    onChange={(event, newValue) => setStatus(newValue?.label)}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Status" />
+                    )}
+                  />
+
+                  {status === "RECEIVED"  && (
+                    <>
+                      <TextField
+                        required
+                        id="input1"
+                        label="Bying Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input2"
+                        label="Saleing Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                    </>
+                  )}
+                  {status === "APPLIED" && (
+                    <>
+                      <TextField
+                        required
+                        id="input1"
+                        label="Bying Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input2"
+                        label="Saleing Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input3"
+                        label="Application ID"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                    </>
+                  )}
+                  {status === "APPROVED" && (
+                    <>
+                      <TextField
+                        required
+                        id="input1"
+                        label="Bying Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input2"
+                        label="Saleing Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input3"
+                        label="Application ID"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+
+                      <div className=" mt-3">
+                        <Button
+                          component="label"
+                          role={undefined}
+                          variant="contained"
+                          color="info"
+                          tabIndex={-1}
+                          startIcon={<Icon icon="ep:upload-filled" />}
+                          sx={{ width: "100%" }}
+                        >
+                          Upload Visa
+                          <VisuallyHiddenInput
+                            type="file"
+                            onChange={handleFileChange3}
+                          />
+                        </Button>
+                        {fileInfo3 && (
+                          <div>
+                            <p>File Name: {fileInfo3.name}</p>
+                            <p>File Size: {fileInfo3.size} KB</p>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                  <br />
+                  <TextField
+                    id="outlined-required"
+                    label="Comment"
                   />
                   {/* <TextField
                     id="outlined-basic"
@@ -1617,7 +1749,7 @@ export default function Visa_Application_List_Table_Admin() {
                     sx={{ marginBottom: "5px" }}
                   /> */}
                   <br />
-                  <Button variant="contained" onClick={handleUpdate}>
+                  <Button variant="contained" onClick={handleUpdate} sx={{marginTop:"10px"}}>
                     Update
                   </Button>
                 </div>
