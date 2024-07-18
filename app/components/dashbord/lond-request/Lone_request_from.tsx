@@ -22,7 +22,9 @@ import {
 } from "../../../lib/features/loan/loanSlice";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Lone_request_from() {
 
@@ -50,8 +52,25 @@ export default function Lone_request_from() {
     // refNo: "",
   };
 
-  const handleSubmit = (values: CreateLoneRequestValues) => {
-    dispatch(createLoanReq(values));
+  const handleSubmit = async (values: CreateLoneRequestValues) => {
+    // dispatch(createLoanReq(values));
+    try {
+      const response = await dispatch(createLoanReq(values))
+      
+      if (response?.payload?.status === 200){
+        // console.log("pagla", response);
+        toast.success("Your  Lone Request successfully", {
+          position: "top-center",
+        });
+        setTimeout(() => {
+          window.location.href = "/dashbord/lone-request-list";
+        }, 3000);
+      }
+    } catch (error) {
+      toast.error("Something Worng, please try again", {
+        position: "top-center",
+      });
+    }
   };
 
 

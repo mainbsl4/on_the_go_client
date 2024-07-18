@@ -23,6 +23,8 @@ import {
 } from "../../../lib/features/upload/uploadSlice";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const gender = [
   { label: "Male" },
@@ -424,8 +426,39 @@ export default function Visa_Apply_Form() {
 
     try {
       const response = await dispatch(createVisaApply(formData)).unwrap();
+      console.log("pagla", response);
+      if (response?.status === 200) {
+        toast.success("Your visa applycation created successfully", {
+          position: "top-center",
+        });
+        setTimeout(() => {
+          window.location.href = "/dashbord/visa-application-list";
+        }, 3000);
+        // success
+        // window.location.reload();
+        // window.location.replace("/main")
+        // window.location.assign("/main")
+        // window.location.reload(true)
+        // window.location.href = "http://localhost:3000/main"
+        // window.location.replace("http://localhost:3000/main")
+        // window.location.assign("http://localhost:3000/main")
+        // window.location.reload(true)
+        // window.location.href = "/main"
+        // window.location.replace("/main")
+        // window.location.assign("/main")
+        // window.location.reload(true)
+        // window.location.href = "http://localhost:3000/main"
+        // window.location.replace("http://localhost:3000/main")
+        // window.history.push("/main")
+
+        // tostify
+      }
+
       // Handle successful response
     } catch (error) {
+      toast.error("Something Worng, please try again", {
+        position: "top-center",
+      });
       console.error("API Error:", error);
       // Handle error response
     } finally {

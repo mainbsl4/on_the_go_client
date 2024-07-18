@@ -48,6 +48,9 @@ const style = {
 };
 
 export default function Lone_request_table() {
+  // get data
+  const [data, setData] = React.useState([]);
+
   const dispatch: AppDispatch = useDispatch();
   // loading
   const loading = useSelector((state: RootState) => state?.loan?.loading);
@@ -55,11 +58,27 @@ export default function Lone_request_table() {
   const loanListAll = useSelector(
     (state: RootState) => state?.loan?.loan?.data
   );
-  const loanList = loanListAll?.slice().reverse();
+  // const loanList = loanListAll?.slice().reverse();
+
+  const loanListAllWhenLogin = useSelector(
+    (state: RootState) => state?.user?.user?.user?.loan_request
+  );
+
+  const loanListAfterLogin = useSelector(
+    (state: RootState) => state?.user?.user?.data?.loan_request
+  );
+
+  // console.log("dddddd",loanListAfterLogin.slice().reverse());
 
   React.useEffect(() => {
-    dispatch(getAllLoanReq());
-  }, []);
+    // dispatch(getAllLoanReq());
+    if (loanListAllWhenLogin) {
+      setData(loanListAllWhenLogin);
+    } else if (loanListAfterLogin) {
+      setData(loanListAfterLogin);
+    }
+    // const loanList = loanListAll?.slice().reverse();
+  }, [loanListAllWhenLogin, loanListAfterLogin]);
 
   const actionDataGet = (sec) => {
     setTimeout(() => {
@@ -166,7 +185,7 @@ export default function Lone_request_table() {
           </tr>
         </thead>
         <tbody>
-          {loanList?.map((loanList) => (
+          {data?.map((loanList) => (
             <tr className="bg-white border-b " key={loanList.id}>
               <td className="px-6 py-4">{loanList.reqDate}</td>
               <td className="px-6 py-4">{loanList.settlmentDate}</td>

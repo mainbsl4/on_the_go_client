@@ -56,6 +56,8 @@ const top100Films = [
 ];
 
 export default function Deposit_request_table() {
+  // get data
+  const [data, setData] = React.useState([]);
   // for modal
   // for view modal
   const [idForDelete, setIdForDelete] = useState(null);
@@ -120,9 +122,29 @@ export default function Deposit_request_table() {
   };
 
   // get data
-  const depositRequestData = useSelector(
-    (state: RootState) => state?.deposit?.deposit?.data
+  // const depositRequestData = useSelector(
+  //   (state: RootState) => state?.deposit?.deposit?.data
+  // );
+
+  // const getDepositRequestData = depositRequestData?.slice().reverse();
+
+  const depositRequestDataWhenLogin = useSelector(
+    (state: RootState) => state?.user?.user?.user?.deposit_request
   );
+  const depositRequestDataAfterLogin = useSelector(
+    (state: RootState) => state?.user?.user?.data?.deposit_request
+  );
+
+  useEffect(() => {
+    if (depositRequestDataWhenLogin && depositRequestDataAfterLogin) {
+      setData(depositRequestDataWhenLogin.concat(depositRequestDataAfterLogin));
+    } else if (depositRequestDataWhenLogin) {
+      setData(depositRequestDataWhenLogin);
+    } else if (depositRequestDataAfterLogin) {
+      setData(depositRequestDataAfterLogin);
+    }
+  }, [depositRequestDataWhenLogin, depositRequestDataAfterLogin]);
+
   const loading = useSelector((state: RootState) => state?.deposit?.loading);
 
   console.log("loading", loading);
@@ -130,8 +152,6 @@ export default function Deposit_request_table() {
   useEffect(() => {
     dispatch(getAllDepositReq());
   }, []);
-
-  const getDepositRequestData = depositRequestData?.slice().reverse();
 
   // edit from validation
 
@@ -187,7 +207,7 @@ export default function Deposit_request_table() {
               Date
             </th>
             <th scope="col" className="px-6 py-3">
-            Transaction ID
+              Transaction ID
             </th>
             <th scope="col" className="px-6 py-3">
               Amount
@@ -205,7 +225,7 @@ export default function Deposit_request_table() {
           </tr>
         </thead>
         <tbody>
-          {getDepositRequestData?.map((getDepositRequestData) => (
+          {data?.map((getDepositRequestData) => (
             <tr className="bg-white border-b " key={getDepositRequestData.id}>
               {/* <td
             scope="row"

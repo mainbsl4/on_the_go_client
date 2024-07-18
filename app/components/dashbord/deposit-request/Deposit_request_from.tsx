@@ -23,7 +23,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { uploadSlipImg } from "../../../lib/features/upload/uploadSlice";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import "react-toastify/dist/ReactToastify.css";
+
 
 const bankNames = [
   { label: "AB Bank Limited" },
@@ -154,10 +157,21 @@ export default function Deposit_request_from() {
       // Log formData to check if amount is correctly converted
 
       const response = await dispatch(createDepositReq(formData)).unwrap();
-
+      console.log("rajakar", response);
+      if (response?.status === 200){
+        toast.success("Your deposite request successfully", {
+          position: "top-center",
+        });
+        setTimeout(() => {
+          window.location.href = "/dashbord/deposit-request-list";
+        }, 3000);
+      }
       // Handle successful response
     } catch (error) {
-      console.error("API Error:", error);
+      toast.error("Something Worng, please try again", {
+        position: "top-center",
+      });
+      // console.error("API Error:", error);
       // Handle error response
     } finally {
       setSubmitting(false);
@@ -189,6 +203,7 @@ export default function Deposit_request_from() {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      required
                       label="Mode of Deposit"
                       error={touched.dpType && !!errors.dpType}
                       helperText={touched.dpType && errors.dpType}
@@ -215,6 +230,7 @@ export default function Deposit_request_from() {
                       }
                       renderInput={(params) => (
                         <TextField
+                        required
                           {...params}
                           error={touched.date && !!errors.date}
                           helperText={touched.date && errors.date}
@@ -243,6 +259,7 @@ export default function Deposit_request_from() {
               {({ field }) => (
                 <TextField
                   {...field}
+                  required
                   id="outlined-basic"
                   label="Amount"
                   variant="outlined"
@@ -263,6 +280,7 @@ export default function Deposit_request_from() {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      required
                       label="Choose Bank"
                       error={touched.bankName && !!errors.bankName}
                       helperText={touched.bankName && errors.bankName}
