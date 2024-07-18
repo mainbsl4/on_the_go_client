@@ -27,6 +27,8 @@ import { AppDispatch, RootState } from "../lib/store/store";
 import { getUser } from "../lib/features/users/userSlice";
 import { useRouter } from "next/navigation";
 import { manageToken } from "../utils/config";
+import { Avatar, Button } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 const linkData = [
   {
     id: 1,
@@ -306,14 +308,23 @@ export default function RootLayout({
     }
   }, []);
 
+
+
+  // for profile button 
+  const [showDetails, setShowDetails] = React.useState(false);
+
+  const toggleDetails = () => {
+    setShowDetails((prev) => !prev);
+  };
+
   return (
     <div>
       {/* <Icon icon="mdi-light:home" /> */}
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
+        <AppBar position="fixed" open={open} >
+          <Toolbar sx={{display:"flex",justifyContent:"space-between"}}>
+            {/* <IconButton
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
@@ -324,11 +335,27 @@ export default function RootLayout({
               }}
             >
               <Icon icon="material-symbols-light:menu" />
-            </IconButton>
+            </IconButton> */}
             <Typography variant="h6" noWrap component="div">
               ON THE GO
             </Typography>
+            <Box sx={{display:"flex", alignItems:"center"}}>
+      <Avatar
+        sx={{ bgcolor: deepOrange[500] }}
+        alt="Remy Sharp"
+        src="/broken-image.jpg"
+        onClick={toggleDetails}
+      />
+      {showDetails && (
+        <div className="p-2" style={{ marginTop: 2, position:"absolute", top:"65px", right:"0px", color:"black", backgroundColor:"gray" }}>
+          <p>Name: Main</p>
+          <p>Balance: 00</p>
+          <Button variant="outlined">Settings</Button>
+        </div>
+      )}
+    </Box>
           </Toolbar>
+          
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
