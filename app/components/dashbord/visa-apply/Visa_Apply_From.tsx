@@ -293,6 +293,11 @@ export default function Visa_Apply_Form() {
   const [fileImage, setFileImage] = useState(null);
   // loading
   const [loading, setLoading] = useState(true);
+  // for button
+  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loadingBtn1, setLoadingBtn1] = useState(false);
+  const [loadingBtn2, setLoadingBtn2] = useState(false);
+  const [loadingBtn3, setLoadingBtn3] = useState(false);
 
   const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
@@ -338,13 +343,32 @@ export default function Visa_Apply_Form() {
     img = imgState[0].url;
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = event.target.files?.[0];
+  //   if (selectedFile) {
+  //     dispatch(uploadPassImage(selectedFile));
+  //   }
+
+  //   // file information
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setFileInfo({
+  //       name: file.name,
+  //       size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+  //     });
+  //   }
+  // };
+
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      dispatch(uploadPassImage(selectedFile));
+      setLoadingBtn(true); // Set loading to true before the API call
+      await dispatch(uploadPassImage(selectedFile));
+      setLoadingBtn(false); // Set loading to false after the API call
     }
 
-    // file information
+    // File information
     const file = event.target.files[0];
     if (file) {
       setFileInfo({
@@ -353,10 +377,14 @@ export default function Visa_Apply_Form() {
       });
     }
   };
-  const handleFileChange1 = (event) => {
+
+
+  const handleFileChange1 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadImg(selectedFile));
+      setLoadingBtn1(true);
+     await dispatch(uploadImg(selectedFile));
+     setLoadingBtn1(false);
     }
 
     // file information
@@ -368,10 +396,12 @@ export default function Visa_Apply_Form() {
       });
     }
   };
-  const handleFileChange2 = (event) => {
+  const handleFileChange2 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImage(selectedFile));
+      setLoadingBtn2(true);
+      await dispatch(uploadDocImage(selectedFile));
+      setLoadingBtn2(false);
     }
 
     // file information
@@ -383,10 +413,12 @@ export default function Visa_Apply_Form() {
       });
     }
   };
-  const handleFileChange3 = (event) => {
+  const handleFileChange3 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImage(selectedFile));
+     setLoadingBtn3(true);
+      await dispatch(uploadDocImage(selectedFile));
+     setLoadingBtn3(false);
     }
 
     // file information
@@ -674,10 +706,20 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={<Icon icon="ep:upload-filled" />}
+                  startIcon={loadingBtn ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
-                  Upload Passport
+                  {loadingBtn ? (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                  ):(
+                    <>Upload Passport</>
+                  )}
+                  
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleFileChange}
@@ -698,10 +740,20 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={<Icon icon="ep:upload-filled" />}
+                  startIcon={loadingBtn1 ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
-                  Upload Photo
+                  {loadingBtn1 ? (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                  ):(
+                    <>Upload Photo</>
+                  )}
+                  
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleFileChange1}
@@ -721,10 +773,20 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={<Icon icon="ep:upload-filled" />}
+                  // startIcon={<Icon icon="ep:upload-filled" />}
+                  startIcon={loadingBtn2 ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
-                  Pervious Visa (If Any)
+                  {loadingBtn2 ? (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                    ):(
+                    <>Upload Previous Visa (If Any)</>
+                  )}
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleFileChange2}
@@ -744,10 +806,19 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={<Icon icon="ep:upload-filled" />}
+                  startIcon={loadingBtn3 ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
-                  Others Documents
+                  {loadingBtn3? (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                  ):(
+                    <>Upload Others Documents (If Any)</>
+                  )}
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleFileChange3}
