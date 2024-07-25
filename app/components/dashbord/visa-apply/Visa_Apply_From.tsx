@@ -293,7 +293,7 @@ export default function Visa_Apply_Form() {
   const [fileImage, setFileImage] = useState(null);
   // loading
   const [loading, setLoading] = useState(true);
-  // for button
+  // for button loading
   const [loadingBtn, setLoadingBtn] = useState(false);
   const [loadingBtn1, setLoadingBtn1] = useState(false);
   const [loadingBtn2, setLoadingBtn2] = useState(false);
