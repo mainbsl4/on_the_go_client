@@ -27,7 +27,6 @@ import { toast } from "react-toastify";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import "react-toastify/dist/ReactToastify.css";
 
-
 const bankNames = [
   { label: "AB Bank Limited" },
   { label: "Agrani Bank Limited" },
@@ -81,9 +80,9 @@ const bankNames = [
   { label: "Uttara Bank Limited" },
 ];
 const modeOfDepo = [
-  { label: "Cash / Cheque" },
-  { label: "Bank Transfer" },
-  { label: "Branch Deposit" },
+  { id: 1, label: "Cash / Cheque" },
+  { id: 2, label: "Bank Transfer" },
+  { id: 3, label: "Branch Deposit" },
 ];
 
 // for upload
@@ -100,12 +99,18 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Deposit_request_from() {
+  // select id of depo mode
+  const [selectedId, setSelectedId] = useState(null);
+
   const [file, setFile] = useState(null);
   const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
   const imgState = useSelector((state: RootState) => state?.upload?.uploadSlip);
   // for loading define
   const loading = useSelector((state: RootState) => state?.deposit?.loading);
+
+  // for button loading
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   let img = "";
   if (imgState && imgState?.length > 0) {
@@ -125,10 +130,12 @@ export default function Deposit_request_from() {
 
   console.log("pagla", userId);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadSlipImg(selectedFile));
+      setLoadingBtn(true)
+      await dispatch(uploadSlipImg(selectedFile));
+      setLoadingBtn(false)
     }
   };
 
@@ -158,7 +165,7 @@ export default function Deposit_request_from() {
 
       const response = await dispatch(createDepositReq(formData)).unwrap();
       console.log("rajakar", response);
-      if (response?.status === 200){
+      if (response?.status === 200) {
         toast.success("Your deposite request successfully", {
           position: "top-center",
         });
@@ -192,14 +199,44 @@ export default function Deposit_request_from() {
       {({ isSubmitting, touched, errors, setFieldValue, values }) => (
         <Form className=" w-6/12">
           <Box className="border grid grid-cols-1 gap-4 p-4">
-            <Field name="dpType">
+            {/* <Field name="dpType">
               {({ field }) => (
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={modeOfDepo.map((option) => option.label)}
-                  onChange={(event, value) => setFieldValue(field.name, value)}
+                  onChange={(event, value) => setFieldValue(field.name, value)} 
                   value={values.dpType}
+
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      label="Mode of Deposit"
+                      error={touched.dpType && !!errors.dpType}
+                      helperText={touched.dpType && errors.dpType}
+                    />
+                  )}
+                />
+              )}
+            </Field> */}
+
+            <Field name="dpType">
+              {({ field }) => (
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={modeOfDepo}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(event, value) => {
+                    setFieldValue(field.name, value ? value.label : "");
+                    setSelectedId(value ? value.id : null);
+                  }}
+                  value={
+                    modeOfDepo.find(
+                      (option) => option.label === values.dpType
+                    ) || null
+                  }
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -230,7 +267,7 @@ export default function Deposit_request_from() {
                       }
                       renderInput={(params) => (
                         <TextField
-                        required
+                          required
                           {...params}
                           error={touched.date && !!errors.date}
                           helperText={touched.date && errors.date}
@@ -241,6 +278,8 @@ export default function Deposit_request_from() {
                 </Field>
               </DemoContainer>
             </LocalizationProvider>
+
+
 
             <Field name="trnId">
               {({ field }) => (
@@ -269,35 +308,52 @@ export default function Deposit_request_from() {
                 />
               )}
             </Field>
-            <Field name="bankName">
-              {({ field }) => (
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={bankNames.map((option) => option.label)}
-                  onChange={(event, value) => setFieldValue(field.name, value)}
-                  value={values.bankName}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      label="Choose Bank"
-                      error={touched.bankName && !!errors.bankName}
-                      helperText={touched.bankName && errors.bankName}
+
+            {
+              selectedId === 2 ? (
+                <Field name="bankName">
+                  {({ field }) => (
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={bankNames.map((option) => option.label)}
+                      onChange={(event, value) => setFieldValue(field.name, value)}
+                      value={values.bankName}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          required
+                          label="Choose Bank"
+                          error={touched.bankName && !!errors.bankName}
+                          helperText={touched.bankName && errors.bankName}
+                        />
+                      )}
                     />
                   )}
-                />
-              )}
-            </Field>
+                </Field>
+              ) : (<></>)
+            }
+
             <Button
               component="label"
               role={undefined}
               variant="contained"
               color="info"
               tabIndex={-1}
-              startIcon={<Icon icon="ep:upload-filled" />}
+              startIcon={loadingBtn ? (
+                <></>
+              ) : (
+                <Icon icon="ep:upload-filled" />
+              )
+              }
+
             >
-              Upload file
+              {loadingBtn ? (
+                <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+              ) : (
+                <>Upload file</>
+              )}
+
               <VisuallyHiddenInput type="file" onChange={handleFileChange} />
             </Button>
             <Button type="submit" variant="contained" disabled={isSubmitting}>
