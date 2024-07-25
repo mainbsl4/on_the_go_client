@@ -295,12 +295,24 @@ export default function RootLayout({
 
         const totalDepo = user?.data?.deposit_request ? user?.data?.deposit_request : user?.user?.deposit_request;
         console.log(totalDepo);
-        const totalDepoAmount = totalDepo?.reduce((sum, depo) => sum + depo?.amount, 0);
-        console.log('Total Deposit Amount:', totalDepoAmount);
+
+        // Filter deposits to include only those with status 'APPROVED'
+        const approvedDeposits = totalDepo?.filter(depo => depo?.isApproved === 'APPROVED');
+
+        // Calculate the total deposit amount for approved deposits
+        const totalDepoAmount = approvedDeposits?.reduce((sum, depo) => sum + depo?.amount, 0);
+        console.log('Total Deposit Amount for Approved Deposits:', totalDepoAmount);
+
+
         const totalLoan = user?.data?.loan_request ? user?.data?.loan_request : user?.user?.loan_request;
         console.log(totalLoan);
-        const totalLoanAmount = totalLoan?.reduce((sum, loan) => sum + loan?.amount, 0);
-        console.log('Total Loan Amount:', totalLoanAmount);
+
+        // Filter loans to include only those with status 'APPROVED'
+        const approvedLoans = totalLoan?.filter(loan => loan?.isApproved === 'APPROVED');
+
+        // Calculate the total loan amount for approved loans
+        const totalLoanAmount = approvedLoans?.reduce((sum, loan) => sum + loan?.amount, 0);
+        console.log('Total Loan Amount for Approved Loans:', totalLoanAmount);
         const totalAddedBalance = totalDepoAmount + totalLoanAmount
         setTotalBalance(totalAddedBalance)
 
@@ -312,7 +324,7 @@ export default function RootLayout({
       return () => clearTimeout(timeoutId);
 
 
-      
+
 
     }
   }, [user, router]);
@@ -343,7 +355,7 @@ export default function RootLayout({
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="fixed" open={open} >
-          <Toolbar sx={{display:"flex",justifyContent:"space-between"}}>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             {/* <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -359,23 +371,24 @@ export default function RootLayout({
             <Typography variant="h6" noWrap component="div">
               ON THE GO
             </Typography>
-            <Box sx={{display:"flex", alignItems:"center"}}>
-      <Avatar
-        sx={{ bgcolor: deepOrange[500] }}
-        alt="Remy Sharp"
-        src="/broken-image.jpg"
-        onClick={toggleDetails}
-      />
-      {showDetails && (
-        <div className="p-2" style={{ marginTop: 2, position:"absolute", top:"65px", right:"0px", color:"black", backgroundColor:"gray" }}>
-          <p>Name: Main</p>
-          <p>Balance: {totalBalance}</p>
-          <Button variant="outlined">Settings</Button>
-        </div>
-      )}
-    </Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Avatar
+                sx={{ bgcolor: deepOrange[500] }}
+                alt={user?.data?.userName ? user?.data?.userName : user?.user?.userName}
+                src="/broken-image.jpg"
+                onClick={toggleDetails}
+              />
+              {showDetails && (
+                <div className="p-2" style={{ marginTop: 2, position: "absolute", top: "65px", right: "0px", color: "black", backgroundColor: "gray" }}>
+                  <p>Name: {user?.data?.userName ? user?.data?.userName : user?.user?.userName}</p>
+                  <p>Register No: {user?.data?.userName ? user?.data?.regNo : user?.user?.regNo}</p>
+                  <p>Balance: {totalBalance}</p>
+                  {/* <Button variant="outlined">Settings</Button> */}
+                </div>
+              )}
+            </Box>
           </Toolbar>
-          
+
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
