@@ -1637,7 +1637,7 @@ export default function Visa_Application_List_Table_Admin() {
                     )}
                   />
 
-                  {status === "RECEIVED"  && (
+                  {status === "RECEIVED" && (
                     <>
                       <TextField
                         required
@@ -1734,11 +1734,36 @@ export default function Visa_Application_List_Table_Admin() {
                       </div>
                     </>
                   )}
+
+                  {status === "REJECTED" && (
+                    <>
+                      <TextField
+                        required
+                        id="input1"
+                        label="Bying Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input2"
+                        label="Saleing Price"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input3"
+                        label="Application ID"
+                        defaultValue=""
+                        sx={{ marginTop: "10px" }}
+                      />
+                    </>
+                  )}
                   <br />
-                  <TextField
-                    id="outlined-required"
-                    label="Comment"
-                  />
+                  <TextField id="outlined-required" label="Comment" />
                   {/* <TextField
                     id="outlined-basic"
                     label="Comment"
@@ -1749,7 +1774,11 @@ export default function Visa_Application_List_Table_Admin() {
                     sx={{ marginBottom: "5px" }}
                   /> */}
                   <br />
-                  <Button variant="contained" onClick={handleUpdate} sx={{marginTop:"10px"}}>
+                  <Button
+                    variant="contained"
+                    onClick={handleUpdate}
+                    sx={{ marginTop: "10px" }}
+                  >
                     Update
                   </Button>
                 </div>
