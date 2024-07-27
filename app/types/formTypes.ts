@@ -61,6 +61,7 @@ export interface CreateVisaApplyFormValues {
   passExpiryDate: string;
   dob: string;
   religion: string;
+  applyForCountry: string;
 }
 export interface UpdateVisaApplyFormValues {
   userId: string;

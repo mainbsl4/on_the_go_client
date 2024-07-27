@@ -46,11 +46,11 @@ export const getAllVisaApply = createAsyncThunk(
 
 export const updateVisaApplyStatus = createAsyncThunk(
   "visaApply/updateVisaApplyStatus",
-  async ({ id, data }: { id: any; data: any }, { rejectWithValue }) => {
+  async ({ id, data, comment, buyingPrise, sellingPrise, trackingId }: { id: any; data: any, comment: any, buyingPrise: number, sellingPrise: number, trackingId: any, }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `${base_url}visa_apply/update-status/${id}`,
-        { status: data }
+        { status: data, comment: comment, buyingPrise: buyingPrise, sellingPrise: sellingPrise, trackingId: trackingId }
       );
       console.log(response);
       return response.data;
