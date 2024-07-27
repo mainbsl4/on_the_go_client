@@ -7,6 +7,8 @@ interface UploadState {
     uploadPass: any;
     uploadDoc: any;
     uploadImg: any;
+    uploadImgIf: any;
+    deliveredVisa: any;
     uploadSlip: any;
     loading: boolean;
     error: string | null;
@@ -16,6 +18,8 @@ const initialState: UploadState = {
     uploadPass: null,
     uploadDoc: null,
     uploadImg: null,
+    uploadImgIf: null,
+    deliveredVisa: null,
     uploadSlip: null,
     loading: false,
     error: null,
@@ -68,6 +72,56 @@ export const uploadDocImage = createAsyncThunk(
         }
     }
 );
+
+
+export const uploadDocImageIf = createAsyncThunk(
+    "upload/uploadDocImageIf",
+    async (file: File, { rejectWithValue }) => {
+        try {
+            const formData = new FormData();
+            formData.append("images", file);
+
+            const response = await axios.post(
+                `${base_url}upload/previous-visa-img`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+export const deliveredVisaPdf = createAsyncThunk(
+    "upload/deliveredVisaPdf",
+    async (file: File, { rejectWithValue }) => {
+        try {
+            const formData = new FormData();
+            formData.append("images", file);
+
+            const response = await axios.post(
+                `${base_url}upload/delivered-visa-pdf`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+
 export const uploadImg = createAsyncThunk(
     "upload/uploadImg",
     async (file: File, { rejectWithValue }) => {
@@ -167,6 +221,30 @@ const uploadSlice = createSlice({
                 state.uploadSlip = action.payload;
             })
             .addCase(uploadSlipImg.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(uploadDocImageIf.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(uploadDocImageIf.fulfilled, (state, action) => {
+                state.loading = false;
+                state.uploadImgIf = action.payload;
+            })
+            .addCase(uploadDocImageIf.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(deliveredVisaPdf.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deliveredVisaPdf.fulfilled, (state, action) => {
+                state.loading = false;
+                state.deliveredVisa = action.payload;
+            })
+            .addCase(deliveredVisaPdf.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
