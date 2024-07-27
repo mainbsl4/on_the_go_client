@@ -66,6 +66,7 @@ export const CreateVisaApplySchema = Yup.object().shape({
   passExpiryDate: Yup.string().required("Passport ExpiryDate is required"),
   dob: Yup.string().required("Date of Birth is required"),
   religion: Yup.string().required("Religion is required"),
+  applyForCountry: Yup.string().required("Please select country"),
 });
 export const UpdateVisaApplySchema = Yup.object().shape({
   userId: Yup.string(),

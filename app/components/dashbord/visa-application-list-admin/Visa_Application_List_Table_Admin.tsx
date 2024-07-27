@@ -288,11 +288,11 @@ const religion = [
 ];
 
 const statusCatagory = [
-  { label: "CANCELLED" },
-  { label: "RECEIVED" },
-  { label: "APPLIED" },
-  { label: "APPROVED" },
-  { label: "REJECTED" },
+  { id: 1, label: "CANCELLED" },
+  { id: 2, label: "RECEIVED" },
+  { id: 3, label: "APPLIED" },
+  { id: 4, label: "APPROVED" },
+  { id: 5, label: "REJECTED" },
 ];
 
 const VisuallyHiddenInput = styled("input")({
@@ -358,6 +358,12 @@ export default function Visa_Application_List_Table_Admin() {
 
   // for get data from status and comment
   const [status, setStatus] = React.useState(null);
+  const [comment, setComment] = React.useState("");
+  const [buyingPrise, setbuyingPrise] = React.useState(null);
+  const [sellingPrise, setsellingPrise] = React.useState(null);
+  const [trackingId, setTrackingId] = React.useState(null);
+
+
   // const [comment, setComment] = React.useState("");
 
   const [value, setValue] = React.useState(0);
@@ -537,13 +543,23 @@ export default function Visa_Application_List_Table_Admin() {
     }
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     console.log("Selected Status:", status);
-    dispatch(
-      updateVisaApplyStatus({ id: selectedDataForView?.id, data: status })
+    const response = await dispatch(
+      updateVisaApplyStatus({
+        id: selectedDataForView?.id,
+        data: status,
+        comment: comment,
+        buyingPrise: + buyingPrise,
+        sellingPrise: + sellingPrise,
+        trackingId: trackingId,
+      })
     );
-    setOpenModalForView(false);
-    actionDataGet(500);
+
+    if (response) {
+      setOpenModalForView(false);
+      actionDataGet(500);
+    }
   };
 
   return loading ? (
@@ -1645,6 +1661,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Bying Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={buyingPrise}
+                        onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1653,6 +1672,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Saleing Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={sellingPrise}
+                        onChange={(e) => setsellingPrise(e.target.value)}
                       />
                     </>
                   )}
@@ -1664,6 +1686,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Bying Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={buyingPrise}
+                        onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1672,6 +1697,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Saleing Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={sellingPrise}
+                        onChange={(e) => setsellingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1680,6 +1708,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Application ID"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="text"
+                        value={trackingId}
+                        onChange={(e) => setTrackingId(e.target.value)}
                       />
                     </>
                   )}
@@ -1691,6 +1722,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Bying Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={buyingPrise}
+                        onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1699,6 +1733,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Saleing Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={sellingPrise}
+                        onChange={(e) => setsellingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1707,6 +1744,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Application ID"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="text"
+                        value={trackingId}
+                        onChange={(e) => setTrackingId(e.target.value)}
                       />
 
                       <div className=" mt-3">
@@ -1743,6 +1783,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Bying Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={buyingPrise}
+                        onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1751,6 +1794,9 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Saleing Price"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="number"
+                        value={sellingPrise}
+                        onChange={(e) => setsellingPrise(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -1759,11 +1805,19 @@ export default function Visa_Application_List_Table_Admin() {
                         label="Application ID"
                         defaultValue=""
                         sx={{ marginTop: "10px" }}
+                        type="text"
+                        value={trackingId}
+                        onChange={(e) => setTrackingId(e.target.value)}
                       />
                     </>
                   )}
                   <br />
-                  <TextField id="outlined-required" label="Comment" />
+                  <TextField
+                    id="outlined-required"
+                    label="Comment"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
                   {/* <TextField
                     id="outlined-basic"
                     label="Comment"
