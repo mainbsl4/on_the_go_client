@@ -175,6 +175,12 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="la:clone-solid" />,
     link: "/dashbord/lone-request-list",
   },
+  {
+    id: 7,
+    text: "Profit Loss",
+    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    link: "/dashbord/profit-loss",
+  },
 ];
 
 const drawerWidth = 280;
