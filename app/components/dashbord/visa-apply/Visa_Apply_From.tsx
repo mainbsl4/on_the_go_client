@@ -51,7 +51,10 @@ const gender = [
   // { label: "Third Gender" },
   // { label: "Questioning" },
 ];
-const nationality = [{ label: "Bangladeshi" }, { label: "Others" }];
+const nationality = [
+  { label: "Bangladeshi" },
+  { label: "Others" },
+];
 const whichCountry = [
   { label: "AFGHAN" },
   { label: "ALBANIAN" },
@@ -284,10 +287,6 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Visa_Apply_Form() {
-
-  const [imgPass, setImgPass] = useState(null)
-  const [imgPassDoc, setImgPassDoc] = useState(null)
-  // const [imgImage, setImgImage] = useState(null)
   // file information
   const [fileInfo, setFileInfo] = useState(null);
   const [fileInfo1, setFileInfo1] = useState(null);
@@ -337,17 +336,6 @@ export default function Visa_Apply_Form() {
   const imgState = useSelector((state: RootState) => state?.upload?.uploadImg);
   const previousPassState = useSelector((state: RootState) => state?.upload?.uploadImgIf);
 
-<<<<<<< HEAD
-  // let imgPass = {};
-  // let imgDoc = {};
-  let img = {};
-  // if (imgPassState && imgPassState.length > 0) {
-  //   imgPass = { id: imgPassState[0]?.public_id, url: imgPassState[0].url };
-  // }
-  // if (imgDocState && imgDocState.length > 0) {
-  //   imgDoc = { id: imgDocState[0]?.public_id, url: imgDocState[0].url };
-  // }
-=======
   let imgPass = "";
   let imgDoc = "";
   let img = "";
@@ -358,9 +346,8 @@ export default function Visa_Apply_Form() {
   if (imgDocState && imgDocState.length > 0) {
     imgDoc = imgDocState[0].url;
   }
->>>>>>> 9c08843cf901dc442626d77174a9d50c9b644f92
   if (imgState && imgState.length > 0) {
-    img = { id: imgState[0]?.public_id, url: imgState[0].url };
+    img = imgState[0].url;
   }
   if (previousPassState && previousPassState.length > 0) {
     previousPass = previousPassState[0].url;
@@ -382,14 +369,12 @@ export default function Visa_Apply_Form() {
   //   }
   // };
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       setLoadingBtn(true); // Set loading to true before the API call
-      setImgPass(selectedFile)
-      // await dispatch(uploadPassImage(selectedFile));
+      await dispatch(uploadPassImage(selectedFile));
       setLoadingBtn(false); // Set loading to false after the API call
     }
 
@@ -403,12 +388,13 @@ export default function Visa_Apply_Form() {
     }
   };
 
+
   const handleFileChange1 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setLoadingBtn1(true);
-      await dispatch(uploadImg(selectedFile));
-      setLoadingBtn1(false);
+     await dispatch(uploadImg(selectedFile));
+     setLoadingBtn1(false);
     }
 
     // file information
@@ -424,8 +410,7 @@ export default function Visa_Apply_Form() {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setLoadingBtn2(true);
-      setImgPassDoc(selectedFile)
-      // await dispatch(uploadDocImage(selectedFile));
+      await dispatch(uploadDocImage(selectedFile));
       setLoadingBtn2(false);
     }
 
@@ -441,15 +426,9 @@ export default function Visa_Apply_Form() {
   const handleFileChange3 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-<<<<<<< HEAD
-      setLoadingBtn3(true);
-      // await dispatch(uploadDocImage(selectedFile));
-      setLoadingBtn3(false);
-=======
      setLoadingBtn3(true);
       await dispatch(uploadDocImageIf(selectedFile));
      setLoadingBtn3(false);
->>>>>>> 9c08843cf901dc442626d77174a9d50c9b644f92
     }
 
     // file information
@@ -472,7 +451,7 @@ export default function Visa_Apply_Form() {
     passExpiryDate: "",
     dob: "",
     religion: "",
-    applyForCountry: "",
+    applyForCountry: ""
   };
 
   const handleSubmit = async (
@@ -484,37 +463,14 @@ export default function Visa_Apply_Form() {
       formData.append(key, values[key]);
     });
 
-<<<<<<< HEAD
-    // if (imgPass) formData.append("passportPdf", imgPass);
-    // if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
-    // if (img) formData.append("image", img);
-
-    if (imgPass) {
-      formData.append("passportPdf", imgPass);
-      console.log("ulluk", imgPass);
-      
-    }
-
-    // Assuming you need to append imgDoc and img similarly
-    if (imgPassDoc) {
-      formData.append("documentPdf", imgPassDoc);
-    }
-
-    if (img) {
-      formData.append("image", JSON.stringify(img));
-    }
-=======
     if (imgPass) formData.append("passportPdf", imgPass);
     if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
     if (img) formData.append("image", img);
     if (previousPass) formData.append("previousPassPdf", previousPass);
->>>>>>> 9c08843cf901dc442626d77174a9d50c9b644f92
 
     try {
       const response = await dispatch(createVisaApply(formData)).unwrap();
       console.log("pagla", response);
-      console.log("Mlluk", formData);
-
       if (response?.status === 200) {
         toast.success("Your visa applycation created successfully", {
           position: "top-center",
@@ -553,9 +509,6 @@ export default function Visa_Apply_Form() {
       setSubmitting(false);
     }
   };
-
-  console.log("rajakar", imgPass);
-  
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
       <CircularProgress />
@@ -664,12 +617,8 @@ export default function Visa_Apply_Form() {
                         {...field}
                         {...params}
                         label="Which country for visa"
-                        error={
-                          touched.applyForCountry && !!errors.applyForCountry
-                        }
-                        helperText={
-                          touched.applyForCountry && errors.applyForCountry
-                        }
+                        error={touched.applyForCountry && !!errors.applyForCountry}
+                        helperText={touched.applyForCountry && errors.applyForCountry}
                       />
                     )}
                   />
@@ -791,20 +740,20 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={
-                    loadingBtn ? <></> : <Icon icon="ep:upload-filled" />
-                  }
+                  startIcon={loadingBtn ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
                   {loadingBtn ? (
-                    <Icon
-                      icon="line-md:loading-twotone-loop"
-                      className="text-2xl"
-                    />
-                  ) : (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                  ):(
                     <>Upload Passport</>
                   )}
-
+                  
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleFileChange}
@@ -825,20 +774,20 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={
-                    loadingBtn1 ? <></> : <Icon icon="ep:upload-filled" />
-                  }
+                  startIcon={loadingBtn1 ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
                   {loadingBtn1 ? (
-                    <Icon
-                      icon="line-md:loading-twotone-loop"
-                      className="text-2xl"
-                    />
-                  ) : (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                  ):(
                     <>Upload Photo</>
                   )}
-
+                  
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleFileChange1}
@@ -859,17 +808,17 @@ export default function Visa_Apply_Form() {
                   color="info"
                   tabIndex={-1}
                   // startIcon={<Icon icon="ep:upload-filled" />}
-                  startIcon={
-                    loadingBtn2 ? <></> : <Icon icon="ep:upload-filled" />
-                  }
+                  startIcon={loadingBtn2 ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
                   {loadingBtn2 ? (
-                    <Icon
-                      icon="line-md:loading-twotone-loop"
-                      className="text-2xl"
-                    />
-                  ) : (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                    ):(
                     <>Upload Previous Visa (If Any)</>
                   )}
                   <VisuallyHiddenInput
@@ -891,17 +840,17 @@ export default function Visa_Apply_Form() {
                   variant="contained"
                   color="info"
                   tabIndex={-1}
-                  startIcon={
-                    loadingBtn3 ? <></> : <Icon icon="ep:upload-filled" />
-                  }
+                  startIcon={loadingBtn3 ? (
+                    <></>
+                  ):(
+                    <Icon icon="ep:upload-filled" />
+                  )
+                }
                   sx={{ width: "100%" }}
                 >
-                  {loadingBtn3 ? (
-                    <Icon
-                      icon="line-md:loading-twotone-loop"
-                      className="text-2xl"
-                    />
-                  ) : (
+                  {loadingBtn3? (
+                    <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+                  ):(
                     <>Upload Others Documents (If Any)</>
                   )}
                   <VisuallyHiddenInput
