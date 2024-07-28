@@ -18,6 +18,7 @@ import { createVisaApply } from "../../../lib/features/visaApply/visaApplySlice"
 import { useDispatch } from "react-redux";
 import {
   uploadDocImage,
+  uploadDocImageIf,
   uploadImg,
   uploadPassImage,
 } from "../../../lib/features/upload/uploadSlice";
@@ -334,7 +335,9 @@ export default function Visa_Apply_Form() {
     (state: RootState) => state?.upload?.uploadDoc
   );
   const imgState = useSelector((state: RootState) => state?.upload?.uploadImg);
+  const previousPassState = useSelector((state: RootState) => state?.upload?.uploadImgIf);
 
+<<<<<<< HEAD
   // let imgPass = {};
   // let imgDoc = {};
   let img = {};
@@ -344,8 +347,23 @@ export default function Visa_Apply_Form() {
   // if (imgDocState && imgDocState.length > 0) {
   //   imgDoc = { id: imgDocState[0]?.public_id, url: imgDocState[0].url };
   // }
+=======
+  let imgPass = "";
+  let imgDoc = "";
+  let img = "";
+  let previousPass = "";
+  if (imgPassState && imgPassState.length > 0) {
+    imgPass = imgPassState[0].url;
+  }
+  if (imgDocState && imgDocState.length > 0) {
+    imgDoc = imgDocState[0].url;
+  }
+>>>>>>> 9c08843cf901dc442626d77174a9d50c9b644f92
   if (imgState && imgState.length > 0) {
     img = { id: imgState[0]?.public_id, url: imgState[0].url };
+  }
+  if (previousPassState && previousPassState.length > 0) {
+    previousPass = previousPassState[0].url;
   }
 
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -423,9 +441,15 @@ export default function Visa_Apply_Form() {
   const handleFileChange3 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
+<<<<<<< HEAD
       setLoadingBtn3(true);
       // await dispatch(uploadDocImage(selectedFile));
       setLoadingBtn3(false);
+=======
+     setLoadingBtn3(true);
+      await dispatch(uploadDocImageIf(selectedFile));
+     setLoadingBtn3(false);
+>>>>>>> 9c08843cf901dc442626d77174a9d50c9b644f92
     }
 
     // file information
@@ -460,6 +484,7 @@ export default function Visa_Apply_Form() {
       formData.append(key, values[key]);
     });
 
+<<<<<<< HEAD
     // if (imgPass) formData.append("passportPdf", imgPass);
     // if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
     // if (img) formData.append("image", img);
@@ -478,6 +503,12 @@ export default function Visa_Apply_Form() {
     if (img) {
       formData.append("image", JSON.stringify(img));
     }
+=======
+    if (imgPass) formData.append("passportPdf", imgPass);
+    if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
+    if (img) formData.append("image", img);
+    if (previousPass) formData.append("previousPassPdf", previousPass);
+>>>>>>> 9c08843cf901dc442626d77174a9d50c9b644f92
 
     try {
       const response = await dispatch(createVisaApply(formData)).unwrap();

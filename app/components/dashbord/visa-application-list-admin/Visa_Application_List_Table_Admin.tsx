@@ -40,6 +40,7 @@ import {
   updateVisaApplyStatus,
 } from "../../../lib/features/visaApply/visaApplySlice";
 import {
+  deliveredVisaPdf,
   uploadDocImage,
   uploadImg,
   uploadPassImage,
@@ -362,7 +363,7 @@ export default function Visa_Application_List_Table_Admin() {
   const [buyingPrise, setbuyingPrise] = React.useState(null);
   const [sellingPrise, setsellingPrise] = React.useState(null);
   const [trackingId, setTrackingId] = React.useState(null);
-
+  const [loadingBtn4, setLoadingBtn4] = React.useState(false);
 
   // const [comment, setComment] = React.useState("");
 
@@ -372,6 +373,39 @@ export default function Visa_Application_List_Table_Admin() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+
+
+
+
+
+  const handleFileChange4 = async (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+     setLoadingBtn4(true);
+      await dispatch(deliveredVisaPdf(selectedFile));
+     setLoadingBtn4(false);
+    }
+
+    // file information
+    const file = event.target.files[0];
+    if (file) {
+      setFileInfo3({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
+      });
+    }
+  };
+
+
+
+  const deliveredVisaState = useSelector((state: RootState) => state?.upload?.deliveredVisa);
+
+  let deliveredVisa = "";
+
+  if (deliveredVisaState && deliveredVisaState.length > 0) {
+    deliveredVisa = deliveredVisaState[0].url;
+  }
 
   // for modal
   // for view modal
@@ -553,6 +587,7 @@ export default function Visa_Application_List_Table_Admin() {
         buyingPrise: + buyingPrise,
         sellingPrise: + sellingPrise,
         trackingId: trackingId,
+        deliveredVisa: deliveredVisa
       })
     );
 
@@ -1762,7 +1797,7 @@ export default function Visa_Application_List_Table_Admin() {
                           Upload Visa
                           <VisuallyHiddenInput
                             type="file"
-                            onChange={handleFileChange3}
+                            onChange={handleFileChange4}
                           />
                         </Button>
                         {fileInfo3 && (
