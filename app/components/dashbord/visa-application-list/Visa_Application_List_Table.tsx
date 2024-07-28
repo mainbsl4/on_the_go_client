@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 
-import img from "../../../assets/images/dashbord/dashbord_page/plain1.jpg";
 import Image from "next/image";
 import { UpdateVisaApplyFormValues } from "../../../types/formTypes";
 import { Field, Form, Formik } from "formik";
@@ -43,6 +42,7 @@ import {
   uploadImg,
   uploadPassImage,
 } from "../../../lib/features/upload/uploadSlice";
+import axios from "axios";
 
 const gender = [
   { label: "Male" },
@@ -519,6 +519,68 @@ export default function Visa_Application_List_Table() {
     }
   };
 
+  // const handleDownload = () => {
+  //   const element = document.createElement("a");
+  //   const file = new Blob(["Hello, world!"], { type: "text/plain" });
+  //   element.href = URL.createObjectURL(file);
+  //   element.download = "sample.txt";
+  //   document.body.appendChild(element);
+  //   element.click();
+  // };
+
+  // const handleDownload = () => {
+  //   const imageUrl = "https://res.cloudinary.com/db7ovrkki/image/upload/v1722080534/qrnxfefffkfp92ixpthk.png";
+  //   const fileName = "downloaded_image.png";
+
+  //   fetch(imageUrl)
+  //     .then(response => response.blob())
+  //     .then(blob => {
+  //       const url = window.URL.createObjectURL(blob);
+  //       const a = document.createElement('a');
+  //       a.style.display = 'none';
+  //       a.href = url;
+  //       a.download = fileName;
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       window.URL.revokeObjectURL(url);
+  //       document.body.removeChild(a);
+  //     })
+  //     .catch(() => alert('An error occurred while downloading the image.'));
+  // };
+
+  const handleDownload = async (data) => {
+    try {
+      const imageObject = JSON.parse(data?.passportPdf);
+      const response = await axios.get(
+        `https://nanofirst.onrender.com/api/upload/download/${imageObject?.id}`,
+        {
+          responseType: "blob", // Important for handling binary data
+        }
+      );
+
+      // Create a link element to trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "file.pdf"); // or get filename from response headers
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
+
+  const getImageUrl = (data) => {
+    try {
+      const imageObject = JSON.parse(data?.image);
+      return imageObject?.url;
+    } catch (error) {
+      console.error("Error parsing image string:", error);
+      return "";
+    }
+  };
+
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
       <CircularProgress />
@@ -787,7 +849,9 @@ export default function Visa_Application_List_Table() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
@@ -923,7 +987,9 @@ export default function Visa_Application_List_Table() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
@@ -1059,7 +1125,9 @@ export default function Visa_Application_List_Table() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
@@ -1195,7 +1263,9 @@ export default function Visa_Application_List_Table() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
@@ -1331,7 +1401,9 @@ export default function Visa_Application_List_Table() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
@@ -1467,7 +1539,9 @@ export default function Visa_Application_List_Table() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
@@ -1546,7 +1620,8 @@ export default function Visa_Application_List_Table() {
                     className=" w-full rounded-lg h-96"
                     width={100}
                     height={100}
-                    src={selectedDataForView?.image}
+                    // src={{()i => mageUrl()}}
+                    src={getImageUrl(selectedDataForView)}
                     alt="nature image"
                   />
                   <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
@@ -1554,17 +1629,21 @@ export default function Visa_Application_List_Table() {
                   </div>
                 </div>
                 <div className="flex flex-col items-start justify-center gap-2">
-                  <Button
+                  {/* <Button
                     variant="contained"
                     startIcon={<Icon icon="material-symbols:download-sharp" />}
                   >
                     <a
-                      href="https://res.cloudinary.com/db7ovrkki/image/upload/v1720440973/p2sc2lwtvr8jhjdt0wus.jpg"
+                      href={selectedDataForView?.image}
                       download
                     >
                       Download Passport
                     </a>
-                  </Button>
+                  </Button> */}
+
+                  <button onClick={() => handleDownload(selectedDataForView)}>
+                    Download File
+                  </button>
                   <Button
                     variant="contained"
                     size="large"
