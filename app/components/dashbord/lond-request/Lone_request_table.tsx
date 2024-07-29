@@ -29,6 +29,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
+import { getUser } from "../../../lib/features/users/userSlice";
 
 //for modal style
 const style = {
@@ -79,6 +80,12 @@ export default function Lone_request_table() {
     }
     // const loanList = loanListAll?.slice().reverse();
   }, [loanListAllWhenLogin, loanListAfterLogin]);
+
+  React.useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    dispatch(getUser( JSON.parse(storedUserId)));
+  }, []);
+
 
   const actionDataGet = (sec) => {
     setTimeout(() => {

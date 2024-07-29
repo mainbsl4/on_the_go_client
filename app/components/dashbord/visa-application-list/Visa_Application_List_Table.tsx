@@ -48,6 +48,7 @@ import { toast } from "react-toastify";
 
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
+import { getUser } from "../../../lib/features/users/userSlice";
 
 const gender = [
   { label: "Male" },
@@ -445,13 +446,17 @@ export default function Visa_Application_List_Table() {
 
   // data
   React.useEffect(() => {
-    // dispatch(getAllVisaApply());
+   
     // setLoading(true)
     const userVisaApplyData = getVisaApply ? getVisaApply : getVesaApplyData;
     const reversedgetVesaApplyData = userVisaApplyData?.slice().reverse();
     setData(reversedgetVesaApplyData);
     setLoading(false);
   }, [getVisaApply, getVesaApplyData]);
+  React.useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    dispatch(getUser( JSON.parse(storedUserId)));
+  }, []);
 
   // formik validation
   const initialValues: UpdateVisaApplyFormValues = {
@@ -639,14 +644,11 @@ export default function Visa_Application_List_Table() {
           })
         );
 
-        if (updateStatus) {
-
-          console.log("xxxxxx", updateStatus);
-          
-          // setTimeout(() => {
-          //   window.location.href = "/dashbord/visa-application-list";
-          // }, 3000);
-        }
+        
+          setTimeout(() => {
+            window.location.href = "/dashbord/visa-application-list";
+          }, 2000);
+        
       
     } catch (error) {
       console.error("Error during download or notifying the API:", error);
