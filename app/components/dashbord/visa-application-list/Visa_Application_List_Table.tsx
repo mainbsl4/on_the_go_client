@@ -36,6 +36,7 @@ import {
   deleteVisa,
   getAllVisaApply,
   updateVisaApply,
+  updateVisaApplyStatus,
 } from "../../../lib/features/visaApply/visaApplySlice";
 import {
   uploadDocImage,
@@ -528,9 +529,49 @@ export default function Visa_Application_List_Table() {
   //   element.click();
   // };
 
-  // const handleDownload = () => {
-  //   const imageUrl = "https://res.cloudinary.com/db7ovrkki/image/upload/v1722080534/qrnxfefffkfp92ixpthk.png";
-  //   const fileName = "downloaded_image.png";
+  const handleDownloadPass = (data: any) => {
+    const imageUrl = data?.passportPdf;
+    const fileName = `${data?.givenName}-passport.pdf`;
+
+    fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(() => alert('An error occurred while downloading the image.'));
+  };
+
+  const handleDownloadDoc = (data: any) => {
+    const imageUrl = data?.otherDocumentPdf;
+    const fileName = `${data?.givenName}-document.pdf`;
+
+    fetch(imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(() => alert('An error occurred while downloading the image.'));
+  };
+
+  // const handleDownloadVisa = (data: any) => {
+  //   const imageUrl = data?.deliveredVisa;
+  //   const fileName = `${data?.givenName}-visa.pdf`;
 
   //   fetch(imageUrl)
   //     .then(response => response.blob())
@@ -548,38 +589,88 @@ export default function Visa_Application_List_Table() {
   //     .catch(() => alert('An error occurred while downloading the image.'));
   // };
 
-  const handleDownload = async (data) => {
-    try {
-      const imageObject = JSON.parse(data?.passportPdf);
-      const response = await axios.get(
-        `https://nanofirst.onrender.com/api/upload/download/${imageObject?.id}`,
-        {
-          responseType: "blob", // Important for handling binary data
-        }
-      );
+  const handleDownloadVisa = async (data: any) => {
+    const imageUrl = data?.deliveredVisa;
+    const fileName = `${data?.givenName}-visa.pdf`;
 
-      // Create a link element to trigger download
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "file.pdf"); // or get filename from response headers
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // Trigger the download
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      // Call the API to notify success
+      const status = "DELIVERED"
+
+      const updateStatus = await dispatch(updateVisaApplyStatus({
+        id: data?.id, data: status,
+        comment: data?.comment,
+        buyingPrise: + data?.buyingPrise,
+        sellingPrise: + data?.sellingPrise,
+        trackingId: data?.trackingId,
+        deliveredVisa: data?.deliveredVisa
+      }));
+
+      if (response?.status === 200) {
+        
+        setTimeout(() => {
+          window.location.href = "/dashbord/visa-application-list";
+        }, 3000);
+      }
+
     } catch (error) {
-      console.error("Error downloading file:", error);
+      console.error('Error during download or notifying the API:', error);
+      alert('An error occurred while downloading the file.');
     }
   };
 
-  const getImageUrl = (data) => {
-    try {
-      const imageObject = JSON.parse(data?.image);
-      return imageObject?.url;
-    } catch (error) {
-      console.error("Error parsing image string:", error);
-      return "";
-    }
-  };
+
+
+  // const handleDownload = async (data) => {
+  //   try {
+  //     const imageObject = JSON.parse(data?.passportPdf);
+  //     const response = await axios.get(
+  //       `https://nanofirst.onrender.com/api/upload/download/${imageObject?.id}`,
+  //       {
+  //         responseType: "blob", // Important for handling binary data
+  //       }
+  //     );
+
+  //     // Create a link element to trigger download
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "file.pdf"); // or get filename from response headers
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   } catch (error) {
+  //     console.error("Error downloading file:", error);
+  //   }
+  // };
+
+  // const getImageUrl = (data) => {
+  //   try {
+  //     const imageObject = JSON.parse(data?.image);
+  //     return imageObject?.url;
+  //   } catch (error) {
+  //     console.error("Error parsing image string:", error);
+  //     return "";
+  //   }
+  // };
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -692,7 +783,9 @@ export default function Visa_Application_List_Table() {
                       <Chip label="APPROVED" color="info" />
                     ) : reversedgetVesaApplyData?.isApproved === "REJECTED" ? (
                       <Chip label="REJECTED" color="error" />
-                    ) : (
+                    ) :  reversedgetVesaApplyData?.isApproved === "DELIVERED" ? (
+                      <Chip label="DELIVERED" color="success" />
+                    ) :  (
                       <Chip label="REJECTED" color="error" />
                     )}
                     {/* <Chip label={reversedgetVesaApplyData?.isApproved} color="default" /> */}
@@ -822,7 +915,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -960,7 +1053,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1098,7 +1191,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1236,7 +1329,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1374,7 +1467,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1512,7 +1605,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1621,7 +1714,7 @@ export default function Visa_Application_List_Table() {
                     width={100}
                     height={100}
                     // src={{()i => mageUrl()}}
-                    src={getImageUrl(selectedDataForView)}
+                    src={selectedDataForView?.image}
                     alt="nature image"
                   />
                   <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
@@ -1629,27 +1722,34 @@ export default function Visa_Application_List_Table() {
                   </div>
                 </div>
                 <div className="flex flex-col items-start justify-center gap-2">
-                  {/* <Button
+                  <Button
                     variant="contained"
                     startIcon={<Icon icon="material-symbols:download-sharp" />}
+                    onClick={() => handleDownloadPass(selectedDataForView)}
                   >
-                    <a
-                      href={selectedDataForView?.image}
-                      download
-                    >
-                      Download Passport
-                    </a>
-                  </Button> */}
 
-                  <button onClick={() => handleDownload(selectedDataForView)}>
+                    Download Passport
+
+                  </Button>
+
+                  {/* <button onClick={() => handleDownload(selectedDataForView)}>
                     Download File
-                  </button>
+                  </button> */}
                   <Button
                     variant="contained"
                     size="large"
                     startIcon={<Icon icon="material-symbols:download-sharp" />}
+                    onClick={() => handleDownloadDoc(selectedDataForView)}
                   >
                     Download Other Documents
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<Icon icon="material-symbols:download-sharp" />}
+                    onClick={() => handleDownloadVisa(selectedDataForView)}
+                  >
+                    Download Your Visa
                   </Button>
                 </div>
               </div>

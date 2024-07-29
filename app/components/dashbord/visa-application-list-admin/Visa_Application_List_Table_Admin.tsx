@@ -587,7 +587,8 @@ export default function Visa_Application_List_Table_Admin() {
         buyingPrise: + buyingPrise,
         sellingPrise: + sellingPrise,
         trackingId: trackingId,
-        deliveredVisa: deliveredVisa
+        deliveredVisa: deliveredVisa ? deliveredVisa :  deliveredVisa
+        
       })
     );
 

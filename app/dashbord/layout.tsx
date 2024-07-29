@@ -319,7 +319,25 @@ export default function RootLayout({
         // Calculate the total loan amount for approved loans
         const totalLoanAmount = approvedLoans?.reduce((sum, loan) => sum + loan?.amount, 0);
         console.log('Total Loan Amount for Approved Loans:', totalLoanAmount);
-        const totalAddedBalance = totalDepoAmount + totalLoanAmount
+
+
+
+        const totalVisa = user?.data?.visa_apply ? user?.data?.visa_apply : user?.user?.visa_apply;
+        console.log(totalLoan);
+
+        // Filter loans to include only those with status 'APPROVED'
+        const deliveredVisa = totalVisa?.filter(visa => visa?.isApproved === 'DELIVERED');
+
+        // Calculate the total loan amount for approved loans
+        const totalVisaAmount = deliveredVisa?.reduce((sum, visa) => sum + visa?.sellingPrise, 0);
+        console.log('Total Loan Amount for Approved Loans:', totalVisaAmount);
+
+
+
+
+
+
+        const totalAddedBalance = totalDepoAmount + totalLoanAmount - totalVisaAmount
         setTotalBalance(totalAddedBalance)
 
 
