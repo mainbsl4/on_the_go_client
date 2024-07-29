@@ -29,6 +29,8 @@ import { useRouter } from "next/navigation";
 import { manageToken } from "../utils/config";
 import { Avatar, Button } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
+import { setTotalAddedBalance } from "../lib/features/balance/balanceSlice";
+import "react-toastify/dist/ReactToastify.css";
 const linkData = [
   {
     id: 1,
@@ -335,9 +337,11 @@ export default function RootLayout({
 
 
 
+        // Calculate the total balance by adding total deposit, loan, and visa amounts
 
 
         const totalAddedBalance = totalDepoAmount + totalLoanAmount - totalVisaAmount
+        dispatch(setTotalAddedBalance(totalAddedBalance));
         setTotalBalance(totalAddedBalance)
 
 
@@ -351,7 +355,7 @@ export default function RootLayout({
 
 
     }
-  }, [user, router]);
+  }, [user, router, dispatch]);
 
   const handleRoute = (params) => {
     router.push(params);

@@ -6,6 +6,7 @@ import visaApplyReducer from '../features/visaApply/visaApplySlice'
 import loanReducer from '../features/loan/loanSlice'
 import uploadReducer from '../features/upload/uploadSlice'
 import depositReducer from '../features/deposit/depositSlice'
+import balanceReducer from "../features/balance/balanceSlice"
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     deposit: depositReducer,
     loan: loanReducer,
     upload: uploadReducer,
+    balance: balanceReducer,
   }
 })
 

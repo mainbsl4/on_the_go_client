@@ -44,6 +44,10 @@ import {
   uploadPassImage,
 } from "../../../lib/features/upload/uploadSlice";
 import axios from "axios";
+import { toast } from "react-toastify";
+
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 
 const gender = [
   { label: "Male" },
@@ -401,6 +405,17 @@ export default function Visa_Application_List_Table() {
     setOpenModalForDelete(false);
   };
 
+  // visa download conformation
+  const [openVisaDownload, setOpenVisaDownload] = React.useState(false);
+
+  const handleClickOpenVisaDownload = () => {
+    setOpenVisaDownload(true);
+  };
+
+  const handleCloseVisaDownload = () => {
+    setOpenVisaDownload(false);
+  };
+
   const actionDataGet = (sec: number) => {
     setTimeout(() => {
       dispatch(getAllVisaApply());
@@ -534,11 +549,11 @@ export default function Visa_Application_List_Table() {
     const fileName = `${data?.givenName}-passport.pdf`;
 
     fetch(imageUrl)
-      .then(response => response.blob())
-      .then(blob => {
+      .then((response) => response.blob())
+      .then((blob) => {
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
+        const a = document.createElement("a");
+        a.style.display = "none";
         a.href = url;
         a.download = fileName;
         document.body.appendChild(a);
@@ -546,7 +561,7 @@ export default function Visa_Application_List_Table() {
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
       })
-      .catch(() => alert('An error occurred while downloading the image.'));
+      .catch(() => alert("An error occurred while downloading the image."));
   };
 
   const handleDownloadDoc = (data: any) => {
@@ -554,11 +569,11 @@ export default function Visa_Application_List_Table() {
     const fileName = `${data?.givenName}-document.pdf`;
 
     fetch(imageUrl)
-      .then(response => response.blob())
-      .then(blob => {
+      .then((response) => response.blob())
+      .then((blob) => {
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
+        const a = document.createElement("a");
+        a.style.display = "none";
         a.href = url;
         a.download = fileName;
         document.body.appendChild(a);
@@ -566,7 +581,7 @@ export default function Visa_Application_List_Table() {
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
       })
-      .catch(() => alert('An error occurred while downloading the image.'));
+      .catch(() => alert("An error occurred while downloading the image."));
   };
 
   // const handleDownloadVisa = (data: any) => {
@@ -595,49 +610,49 @@ export default function Visa_Application_List_Table() {
 
     try {
       const response = await fetch(imageUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok.');
-      }
+      
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+        // Trigger the download
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
 
-      // Trigger the download
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+        // Call the API to notify success
+        const status = "DELIVERED";
 
-      // Call the API to notify success
-      const status = "DELIVERED"
+        const updateStatus = await dispatch(
+          updateVisaApplyStatus({
+            id: data?.id,
+            data: status,
+            comment: data?.comment,
+            buyingPrise: +data?.buyingPrise,
+            sellingPrise: +data?.sellingPrise,
+            trackingId: data?.trackingId,
+            deliveredVisa: data?.deliveredVisa,
+          })
+        );
 
-      const updateStatus = await dispatch(updateVisaApplyStatus({
-        id: data?.id, data: status,
-        comment: data?.comment,
-        buyingPrise: + data?.buyingPrise,
-        sellingPrise: + data?.sellingPrise,
-        trackingId: data?.trackingId,
-        deliveredVisa: data?.deliveredVisa
-      }));
+        if (updateStatus) {
 
-      if (response?.status === 200) {
-        
-        setTimeout(() => {
-          window.location.href = "/dashbord/visa-application-list";
-        }, 3000);
-      }
-
+          console.log("xxxxxx", updateStatus);
+          
+          // setTimeout(() => {
+          //   window.location.href = "/dashbord/visa-application-list";
+          // }, 3000);
+        }
+      
     } catch (error) {
-      console.error('Error during download or notifying the API:', error);
-      alert('An error occurred while downloading the file.');
+      console.error("Error during download or notifying the API:", error);
+      alert("An error occurred while downloading the file.");
     }
   };
-
-
 
   // const handleDownload = async (data) => {
   //   try {
@@ -672,6 +687,13 @@ export default function Visa_Application_List_Table() {
   //   }
   // };
 
+  // balance
+  const balance = useSelector(
+    (state: RootState) => state?.balance?.totalAddedBalance
+  );
+
+  console.log("balance", balance);
+
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
       <CircularProgress />
@@ -692,6 +714,7 @@ export default function Visa_Application_List_Table() {
             <Tab label="APPLIED" {...a11yProps(5)} />
             <Tab label="APPROVED" {...a11yProps(4)} />
             <Tab label="REJECTED" {...a11yProps(6)} />
+            <Tab label="DELIVERED" {...a11yProps(7)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -783,9 +806,9 @@ export default function Visa_Application_List_Table() {
                       <Chip label="APPROVED" color="info" />
                     ) : reversedgetVesaApplyData?.isApproved === "REJECTED" ? (
                       <Chip label="REJECTED" color="error" />
-                    ) :  reversedgetVesaApplyData?.isApproved === "DELIVERED" ? (
+                    ) : reversedgetVesaApplyData?.isApproved === "DELIVERED" ? (
                       <Chip label="DELIVERED" color="success" />
-                    ) :  (
+                    ) : (
                       <Chip label="REJECTED" color="error" />
                     )}
                     {/* <Chip label={reversedgetVesaApplyData?.isApproved} color="default" /> */}
@@ -915,7 +938,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                        "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -932,6 +955,9 @@ export default function Visa_Application_List_Table() {
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1053,7 +1079,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                        "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1070,6 +1096,9 @@ export default function Visa_Application_List_Table() {
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1191,7 +1220,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                        "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1208,6 +1237,9 @@ export default function Visa_Application_List_Table() {
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1329,7 +1361,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                        "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1346,6 +1378,9 @@ export default function Visa_Application_List_Table() {
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1467,7 +1502,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                        "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1484,6 +1519,9 @@ export default function Visa_Application_List_Table() {
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1605,7 +1643,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                          "SUBMITTED" ? (
+                        "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1622,6 +1660,150 @@ export default function Visa_Application_List_Table() {
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
+                        ) : (
+                          <Chip label="REJECTED" color="error" />
+                        )}
+                        {/* <Chip label={reversedgetVesaApplyData?.isApproved} color="default" /> */}
+                      </td>
+                      <td className="px-6 py-4">
+                        <Stack direction="row" spacing={1}>
+                          <IconButton
+                            aria-label="view"
+                            color="success"
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
+                          >
+                            <Icon icon="hugeicons:view" />
+                          </IconButton>
+                          {/* <IconButton
+                              aria-label="edit"
+                              color="info"
+                              onClick={handleOpenModalForEdit}
+                            >
+                              <Icon icon="mingcute:edit-line" />
+                            </IconButton>
+                            <IconButton
+                              aria-label="delete"
+                              color="error"
+                              onClick={handleClickOpenModalForDelete}
+                            >
+                              <Icon icon="lets-icons:cancel" />
+                            </IconButton> */}
+                        </Stack>
+                      </td>
+                    </tr>
+                  );
+                }
+              })}
+            </tbody>
+          </table>{" "}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={7}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                {/* <th scope="col" className="px-6 py-3">
+                  SL
+                </th> */}
+                <th scope="col" className="px-6 py-3">
+                  Full Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DOB
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Passport NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Passport EXP
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Nationlity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Genger
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Religion
+                </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Father Name
+                </th> */}
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((reversedgetVesaApplyData, index) => {
+                if (reversedgetVesaApplyData?.isApproved === "DELIVERED") {
+                  return (
+                    <tr
+                      className="bg-white border-b "
+                      key={reversedgetVesaApplyData?.id}
+                    >
+                      {/* <td
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      {index}
+                    </td> */}
+
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.givenName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData.dob}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData.passportNo}
+                      </td>
+
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData.passExpiryDate}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData.nationality}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData.gender}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData.religion}
+                      </td>
+
+                      {/* <td className="px-6 py-4">
+                          {reversedgetVesaApplyData.surName}
+                        </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.isApproved ===
+                        "SUBMITTED" ? (
+                          <Chip label="SUBMITTED" color="default" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "CANCELLED" ? (
+                          <Chip label="CANCELLED" color="warning" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "RECEIVED" ? (
+                          <Chip label="RECEIVED" color="success" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "APPLIED" ? (
+                          <Chip label="APPLIED" color="primary" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "APPROVED" ? (
+                          <Chip label="APPROVED" color="info" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "REJECTED" ? (
+                          <Chip label="REJECTED" color="error" />
+                        ) : reversedgetVesaApplyData?.isApproved ===
+                          "DELIVERED" ? (
+                          <Chip label="DELIVERED" color="success" />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1706,6 +1888,28 @@ export default function Visa_Application_List_Table() {
                   <p>Religion : </p>
                   <p>{selectedDataForView?.religion}</p>
                 </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Status : </p>
+                  <p>
+                    {selectedDataForView?.isApproved === "SUBMITTED" ? (
+                      <Chip label="SUBMITTED" color="default" />
+                    ) : selectedDataForView?.isApproved === "CANCELLED" ? (
+                      <Chip label="CANCELLED" color="warning" />
+                    ) : selectedDataForView?.isApproved === "RECEIVED" ? (
+                      <Chip label="RECEIVED" color="success" />
+                    ) : selectedDataForView?.isApproved === "APPLIED" ? (
+                      <Chip label="APPLIED" color="primary" />
+                    ) : selectedDataForView?.isApproved === "APPROVED" ? (
+                      <Chip label="APPROVED" color="info" />
+                    ) : selectedDataForView?.isApproved === "REJECTED" ? (
+                      <Chip label="REJECTED" color="error" />
+                    ) : selectedDataForView?.isApproved === "DELIVERED" ? (
+                      <Chip label="DELIVERED" color="success" />
+                    ) : (
+                      <Chip label="REJECTED" color="error" />
+                    )}
+                  </p>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
@@ -1727,9 +1931,7 @@ export default function Visa_Application_List_Table() {
                     startIcon={<Icon icon="material-symbols:download-sharp" />}
                     onClick={() => handleDownloadPass(selectedDataForView)}
                   >
-
                     Download Passport
-
                   </Button>
 
                   {/* <button onClick={() => handleDownload(selectedDataForView)}>
@@ -1743,14 +1945,75 @@ export default function Visa_Application_List_Table() {
                   >
                     Download Other Documents
                   </Button>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    startIcon={<Icon icon="material-symbols:download-sharp" />}
-                    onClick={() => handleDownloadVisa(selectedDataForView)}
-                  >
-                    Download Your Visa
-                  </Button>
+
+                  {selectedDataForView?.isApproved === "APPROVED" ? (
+                    balance >= selectedDataForView?.sellingPrise ? (
+                      <>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          startIcon={
+                            <Icon icon="material-symbols:download-sharp" />
+                          }
+                          // onClick={() => handleDownloadVisa(selectedDataForView)}
+                          onClick={handleClickOpenVisaDownload}
+                        >
+                          Download Your Visa
+                        </Button>
+                        {/* for visa download conformation  */}
+
+                        <React.Fragment>
+                          <Dialog
+                            open={openVisaDownload}
+                            onClose={handleCloseVisaDownload}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                          >
+                            <DialogTitle id="alert-dialog-title">
+                              {"Are you ready to get your visa"}
+                            </DialogTitle>
+                            <DialogActions>
+                              <Button
+                                variant="contained"
+                                onClick={() =>
+                                  handleDownloadVisa(selectedDataForView)
+                                }
+                              >
+                                Yes
+                              </Button>
+                              <Button
+                                onClick={handleCloseVisaDownload}
+                                variant="contained"
+                              >
+                                Another time
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                        </React.Fragment>
+                      </>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        size="large"
+                        startIcon={
+                          <Icon icon="material-symbols:download-sharp" />
+                        }
+                        onClick={() => {
+                          toast.error(
+                            "Please deposit balance to download your visa.",
+                            {
+                              position: "top-center",
+                            }
+                          );
+                        }}
+                      >
+                        Download Your Visa
+                      </Button>
+                      // <p>p>
+                    )
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>
