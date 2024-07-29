@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../lib/store/store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import '../assets/css/style.css'
 
 interface SigninResponse {
@@ -31,6 +33,9 @@ export default function page() {
       const response = (await dispatch(signinUser(values))) as SigninResponse;
 
       if (!response?.error) {
+        toast.success("User logged in successfully", {
+          position: "top-center",
+        });
         console.log("ress", response);
         router.push("/dashbord");
       } else {

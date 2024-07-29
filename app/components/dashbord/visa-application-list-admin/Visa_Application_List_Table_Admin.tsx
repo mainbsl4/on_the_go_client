@@ -1883,7 +1883,7 @@ export default function Visa_Application_List_Table_Admin() {
                     alt="nature image"
                   />
                   <div className="block mt-2 font-sans text-sm antialiased font-normal leading-normal text-center text-inherit">
-                    Passport
+                    IMAGE
                   </div>
                 </div>
                 <div className="flex flex-col items-start justify-center gap-2">

@@ -10,6 +10,12 @@ import { useSelector } from "react-redux";
 import { registerUser } from "../lib/features/users/userSlice";
 import Link from "next/link";
 import { AppDispatch } from "../lib/store/store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+interface SignupResponse {
+  error?: string;
+}
 
 export default function page() {
   // for acceptTerms
@@ -30,8 +36,23 @@ export default function page() {
     city: "",
   };
 
-  const handleSubmit = (values: SignupFormValues) => {
-    dispatch(registerUser(values));
+  const handleSubmit = async (values: SignupFormValues) => {
+
+    try {
+      // Dispatch the action to log in the user
+      const response = (await dispatch(registerUser(values))) as SignupResponse;
+
+      if (!response?.error) {
+        toast.success("Account created successfully", {
+          position: "top-center",
+        });
+      } else {
+        console.error("Login failed:", response.error);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+   
 
     console.log(values);
   };
