@@ -352,6 +352,8 @@ function a11yProps(index: number) {
 export default function Visa_Application_List_Table() {
   // get data
   const [data, setData] = React.useState([]);
+  console.log("data", data);
+  
   // loading
   const [loading, setLoading] = React.useState(true);
   const [value, setValue] = React.useState(0);
