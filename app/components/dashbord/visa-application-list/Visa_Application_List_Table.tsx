@@ -446,7 +446,6 @@ export default function Visa_Application_List_Table() {
 
   // data
   React.useEffect(() => {
-   
     // setLoading(true)
     const userVisaApplyData = getVisaApply ? getVisaApply : getVesaApplyData;
     const reversedgetVesaApplyData = userVisaApplyData?.slice().reverse();
@@ -455,7 +454,7 @@ export default function Visa_Application_List_Table() {
   }, [getVisaApply, getVesaApplyData]);
   React.useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
-    dispatch(getUser( JSON.parse(storedUserId)));
+    dispatch(getUser(JSON.parse(storedUserId)));
   }, []);
 
   // formik validation
@@ -613,46 +612,39 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.deliveredVisa;
     const fileName = `${data?.givenName}-visa.pdf`;
 
-    try {
+    // Call the API to notify success
+    const status = "DELIVERED";
+
+    const updateStatus = await dispatch(
+      updateVisaApplyStatus({
+        id: data?.id,
+        data: status,
+        comment: data?.comment,
+        buyingPrise: +data?.buyingPrise,
+        sellingPrise: +data?.sellingPrise,
+        trackingId: data?.trackingId,
+        deliveredVisa: data?.deliveredVisa,
+      })
+    );
+    if (updateStatus.payload.status === 200) {
       const response = await fetch(imageUrl);
-      
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
 
-        // Trigger the download
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
 
-        // Call the API to notify success
-        const status = "DELIVERED";
+      // Trigger the download
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
 
-        const updateStatus = await dispatch(
-          updateVisaApplyStatus({
-            id: data?.id,
-            data: status,
-            comment: data?.comment,
-            buyingPrise: +data?.buyingPrise,
-            sellingPrise: +data?.sellingPrise,
-            trackingId: data?.trackingId,
-            deliveredVisa: data?.deliveredVisa,
-          })
-        );
-
-        
-          setTimeout(() => {
-            window.location.href = "/dashbord/visa-application-list";
-          }, 2000);
-        
-      
-    } catch (error) {
-      console.error("Error during download or notifying the API:", error);
-      alert("An error occurred while downloading the file.");
+      setTimeout(() => {
+        window.location.href = "/dashbord/visa-application-list";
+      }, 2000);
     }
   };
 
@@ -723,9 +715,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -764,12 +756,12 @@ export default function Visa_Application_List_Table() {
                   className="bg-white border-b "
                   key={reversedgetVesaApplyData?.id}
                 >
-                  {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                  <td
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                  >
+                    {index + 1}
+                  </td>
 
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData?.givenName}
@@ -862,9 +854,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -905,12 +897,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1003,9 +995,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1046,12 +1038,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1144,9 +1136,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1187,12 +1179,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1285,9 +1277,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1328,12 +1320,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1426,9 +1418,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1469,12 +1461,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1567,9 +1559,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1610,12 +1602,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1708,9 +1700,9 @@ export default function Visa_Application_List_Table() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                {/* <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3">
                   SL
-                </th> */}
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1751,12 +1743,12 @@ export default function Visa_Application_List_Table() {
                       className="bg-white border-b "
                       key={reversedgetVesaApplyData?.id}
                     >
-                      {/* <td
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      {index}
-                    </td> */}
+                      <td
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                      >
+                        {index + 1}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}

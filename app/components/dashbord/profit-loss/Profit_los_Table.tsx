@@ -14,19 +14,21 @@ export default function Profit_los_Table() {
     (state: RootState) => state?.visaApply?.visaApply?.data || []
   );
 
-  const revarseVisaData = getVesaApplyData?.slice().reverse()
+  const revarseVisaData = getVesaApplyData?.slice().reverse();
 
   const dispatch: AppDispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllVisaApply());
   }, []);
 
-
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
         <thead className="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
           <tr>
+            <th scope="col" className="px-6 py-3">
+              SL
+            </th>
             <th scope="col" className="px-6 py-3">
               Date
             </th>
@@ -48,10 +50,18 @@ export default function Profit_los_Table() {
           </tr>
         </thead>
         <tbody>
-          {revarseVisaData?.map((getVesaApplyData) => (
-            <tr className="bg-blue-600 border-b border-blue-400" 
-            key={getVesaApplyData.id}
+          {revarseVisaData?.map((getVesaApplyData, index) => (
+            <tr
+              className="bg-blue-600 border-b border-blue-400"
+              key={getVesaApplyData.id}
+            >
+              <td
+                scope="row"
+                className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
               >
+                {index}
+              </td>
+
               <td
                 scope="row"
                 className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
