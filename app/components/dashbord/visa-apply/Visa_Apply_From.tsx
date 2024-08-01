@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const gender = [
   { label: "Male" },
@@ -303,6 +304,7 @@ export default function Visa_Apply_Form() {
 
   const [userId, setUserId] = useState(null);
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const userIdFromLocalStorage = JSON.parse(
@@ -476,7 +478,8 @@ export default function Visa_Apply_Form() {
           position: "top-center",
         });
         setTimeout(() => {
-          window.location.href = "/dashbord/visa-application-list";
+          // window.location.href = "/dashbord/visa-application-list";
+          router.push("/dashbord/lone-request-list");
         }, 3000);
         // success
         // window.location.reload();

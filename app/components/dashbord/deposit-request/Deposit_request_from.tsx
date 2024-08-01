@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const bankNames = [
   { label: "AB Bank Limited" },
@@ -111,7 +112,7 @@ export default function Deposit_request_from() {
 
   // for button loading
   const [loadingBtn, setLoadingBtn] = useState(false);
-
+  const router = useRouter();
   let img = "";
   if (imgState && imgState?.length > 0) {
     img = imgState[0]?.url;
@@ -170,7 +171,9 @@ export default function Deposit_request_from() {
           position: "top-center",
         });
         setTimeout(() => {
-          window.location.href = "/dashbord/deposit-request-list";
+          // window.location.href = "/dashbord/deposit-request-list";
+          router.push("/dashbord/lone-request-list");
+
         }, 3000);
       }
       // Handle successful response

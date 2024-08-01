@@ -186,13 +186,17 @@ export default function Deposit_request_admin_Table() {
   //   console.log("Comment:", comment);
   // };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     console.log("Selected Status:", status);
-    dispatch(
+   const response = await dispatch(
       updateDepositStatus({ id: selectedDataForView?.id, data: status, comment:  comment})
     );
-    setOpenModalForView(false);
-    actionDataGet(500);
+
+    if (response) {
+      setOpenModalForView(false);
+      actionDataGet(500);
+    }
+
   };
 
 
