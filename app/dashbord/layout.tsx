@@ -407,10 +407,11 @@ export default function RootLayout({
                 onClick={toggleDetails}
               />
               {showDetails && (
-                <div className="p-2" style={{ marginTop: 2, position: "absolute", top: "65px", right: "0px", color: "black", backgroundColor: "gray" }}>
-                  <p>Name: {user?.data?.userName ? user?.data?.userName : user?.user?.userName}</p>
-                  <p>Register No: {user?.data?.userName ? user?.data?.regNo : user?.user?.regNo}</p>
-                  <p>Balance: {totalBalance}</p>
+                <div className="p-2 bg-slate-100 shadow border rounded text-black" style={{ marginTop: 2, position: "absolute", top: "65px", right: "0px" }}>
+                  <p className="border-b-2 py-1">Name: {user?.data?.userName ? user?.data?.userName : user?.user?.userName}</p>
+                  <p className="border-b-2 py-1">Register No: {user?.data?.userName ? user?.data?.regNo : user?.user?.regNo}</p>
+                  <p className="border-b-2 py-1">Balance: {totalBalance}</p>
+                  <div className=" py-1 text-center"><Button variant="contained" color="error">Logout</Button></div>
                   {/* <Button variant="outlined">Settings</Button> */}
                 </div>
               )}
