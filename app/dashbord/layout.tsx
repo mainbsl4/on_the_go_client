@@ -346,7 +346,7 @@ export default function RootLayout({
 
 
 
-      }, 3000); // 3 seconds delay
+      }, 1000); // 1 seconds delay
 
       // Clean up the timeout if the component unmounts
       return () => clearTimeout(timeoutId);
