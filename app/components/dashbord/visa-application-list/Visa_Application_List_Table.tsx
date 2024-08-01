@@ -49,6 +49,7 @@ import { toast } from "react-toastify";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import { getUser } from "../../../lib/features/users/userSlice";
+import { useRouter } from "next/navigation";
 
 const gender = [
   { label: "Male" },
@@ -621,7 +622,7 @@ export default function Visa_Application_List_Table() {
   //     })
   //     .catch(() => alert('An error occurred while downloading the image.'));
   // };
-
+  const router = useRouter();
   const handleDownloadVisa = async (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileName = `${data?.givenName}-visa.pdf`;
@@ -642,7 +643,10 @@ export default function Visa_Application_List_Table() {
     );
     if (updateStatus.payload.status === 200) {
       setTimeout(() => {
-        window.location.href = "/dashbord/visa-application-list";
+        const storedUserId = localStorage.getItem("userId");
+        dispatch(getUser(JSON.parse(storedUserId)));
+        handleCloseVisaDownload()
+        setOpenModalForView(false);
       }, 2000);
       
 
@@ -661,7 +665,8 @@ export default function Visa_Application_List_Table() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      
+     
+
     }
   };
 

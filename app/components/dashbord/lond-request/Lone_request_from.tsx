@@ -25,9 +25,10 @@ import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 export default function Lone_request_from() {
-
+  const router = useRouter();
   // loading state
   const [loading, setLoading] = useState(true);
 
@@ -63,7 +64,8 @@ export default function Lone_request_from() {
           position: "top-center",
         });
         setTimeout(() => {
-          window.location.href = "/dashbord/lone-request-list";
+          // window.location.href = "/dashbord/lone-request-list";
+          router.push("/dashbord/lone-request-list");
         }, 3000);
       }
     } catch (error) {

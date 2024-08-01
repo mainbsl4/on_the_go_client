@@ -68,8 +68,8 @@ export default function Lone_request_Admin_Table() {
     (state: RootState) => state?.loan?.loan?.data
   );
   const loanList = Array.isArray(loanListAll)
-  ? loanListAll?.slice().reverse() : [];
-  
+    ? loanListAll?.slice().reverse() : [];
+
   React.useEffect(() => {
     dispatch(getAllLoanReq());
   }, []);
@@ -153,13 +153,17 @@ export default function Lone_request_Admin_Table() {
   // };
 
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     console.log("Selected Status:", status);
-    dispatch(
-      updateLoanStatus({ id: selectedDataForView?.id, data: status, comment:  comment})
+    const response = await dispatch(
+      updateLoanStatus({ id: selectedDataForView?.id, data: status, comment: comment })
     );
-    setOpenModalForView(false);
-    actionDataGet(500);
+
+    if (response) {
+      setOpenModalForView(false);
+      actionDataGet(500);
+    }
+
   };
 
 

@@ -30,6 +30,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
+import { getUser } from "../../../lib/features/users/userSlice";
 
 //for modal style
 const style = {
@@ -136,13 +137,20 @@ export default function Deposit_request_table() {
   );
 
   useEffect(() => {
-    if (depositRequestDataWhenLogin && depositRequestDataAfterLogin) {
-      setData(depositRequestDataWhenLogin.concat(depositRequestDataAfterLogin));
-    } else if (depositRequestDataWhenLogin) {
-      setData(depositRequestDataWhenLogin);
-    } else if (depositRequestDataAfterLogin) {
-      setData(depositRequestDataAfterLogin);
-    }
+    // if (depositRequestDataWhenLogin && depositRequestDataAfterLogin) {
+    //   setData(depositRequestDataWhenLogin.concat(depositRequestDataAfterLogin));
+    // } else if (depositRequestDataWhenLogin) {
+    //   setData(depositRequestDataWhenLogin);
+    // } else if (depositRequestDataAfterLogin) {
+    //   setData(depositRequestDataAfterLogin);
+    // }
+
+    const mainData = depositRequestDataWhenLogin? depositRequestDataWhenLogin : depositRequestDataAfterLogin
+    const getDepositRequestData = Array.isArray(mainData)
+    ? mainData?.slice().reverse() : [];
+
+    setData(getDepositRequestData)
+
   }, [depositRequestDataWhenLogin, depositRequestDataAfterLogin]);
 
   const loading = useSelector((state: RootState) => state?.deposit?.loading);
@@ -150,7 +158,12 @@ export default function Deposit_request_table() {
   console.log("loading", loading);
 
   useEffect(() => {
-    dispatch(getAllDepositReq());
+    // dispatch(getAllDepositReq());
+    const storedUserId = localStorage.getItem("userId");
+    dispatch(getUser(JSON.parse(storedUserId)));
+
+
+
   }, []);
 
   // edit from validation

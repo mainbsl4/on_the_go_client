@@ -73,12 +73,20 @@ export default function Lone_request_table() {
 
   React.useEffect(() => {
     // dispatch(getAllLoanReq());
-    if (loanListAllWhenLogin) {
-      setData(loanListAllWhenLogin);
-    } else if (loanListAfterLogin) {
-      setData(loanListAfterLogin);
-    }
+    // if (loanListAllWhenLogin) {
+    //   setData(loanListAllWhenLogin);
+    // } else if (loanListAfterLogin) {
+    //   setData(loanListAfterLogin);
+    // }
     // const loanList = loanListAll?.slice().reverse();
+
+    const mainData = loanListAllWhenLogin? loanListAllWhenLogin : loanListAfterLogin
+    const getDepositRequestData = Array.isArray(mainData)
+    ? mainData?.slice().reverse() : [];
+
+    setData(getDepositRequestData)
+
+
   }, [loanListAllWhenLogin, loanListAfterLogin]);
 
   React.useEffect(() => {
