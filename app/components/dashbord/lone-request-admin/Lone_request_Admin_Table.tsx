@@ -69,7 +69,7 @@ export default function Lone_request_Admin_Table() {
   );
   const loanList = Array.isArray(loanListAll)
   ? loanListAll?.slice().reverse() : [];
-
+  
   React.useEffect(() => {
     dispatch(getAllLoanReq());
   }, []);
@@ -175,7 +175,13 @@ export default function Lone_request_Admin_Table() {
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
             <th scope="col" className="px-6 py-3">
+              SL
+            </th>
+            <th scope="col" className="px-6 py-3">
               REQ Date
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Reg No
             </th>
             <th scope="col" className="px-6 py-3">
               Settlement Date
@@ -196,9 +202,11 @@ export default function Lone_request_Admin_Table() {
           </tr>
         </thead>
         <tbody>
-          {loanList?.map((loanList) => (
+          {loanList?.map((loanList, index) => (
             <tr className="bg-white border-b " key={loanList.id}>
+              <td className="px-6 py-4">{index + 1}</td>
               <td className="px-6 py-4">{loanList.reqDate}</td>
+              <td className="px-6 py-4">{loanList?.user?.regNo}</td>
               <td className="px-6 py-4">{loanList.settlmentDate}</td>
               <td className="px-6 py-4">{loanList.amount}</td>
               <td className="px-6 py-4">{loanList.remarks}</td>

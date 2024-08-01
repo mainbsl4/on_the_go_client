@@ -464,7 +464,6 @@ export default function Visa_Application_List_Table_Admin() {
     (state: RootState) => state?.visaApply?.visaApply?.data || []
   );
 
-  console.log("xxxx", getVesaApplyData);
   
 
   // loading
@@ -626,6 +625,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -670,6 +672,9 @@ export default function Visa_Application_List_Table_Admin() {
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                     >
                       {index + 1}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.user?.regNo}
                     </td>
 
                     <td className="px-6 py-4">
@@ -776,6 +781,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -822,6 +830,9 @@ export default function Visa_Application_List_Table_Admin() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                         >
                           {index + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
                         </td>
 
                         <td className="px-6 py-4">
@@ -918,6 +929,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -964,6 +978,9 @@ export default function Visa_Application_List_Table_Admin() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                         >
                           {index + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
                         </td>
 
                         <td className="px-6 py-4">
@@ -1061,6 +1078,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1107,6 +1127,10 @@ export default function Visa_Application_List_Table_Admin() {
                         >
                           {index + 1}
                         </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
+                        </td>
+
 
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
@@ -1201,6 +1225,11 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
+                <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1247,6 +1276,9 @@ export default function Visa_Application_List_Table_Admin() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                         >
                           {index + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
                         </td>
 
                         <td className="px-6 py-4">
@@ -1343,6 +1375,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1388,6 +1423,9 @@ export default function Visa_Application_List_Table_Admin() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                         >
                           {index + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
                         </td>
 
                         <td className="px-6 py-4">
@@ -1484,6 +1522,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1529,6 +1570,9 @@ export default function Visa_Application_List_Table_Admin() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                         >
                           {index + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
                         </td>
 
                         <td className="px-6 py-4">
@@ -1625,6 +1669,9 @@ export default function Visa_Application_List_Table_Admin() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1670,6 +1717,9 @@ export default function Visa_Application_List_Table_Admin() {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                         >
                           {index + 1}
+                        </td>
+                        <td className="px-6 py-4">
+                          {reversedgetVesaApplyData?.user?.regNo}
                         </td>
 
                         <td className="px-6 py-4">

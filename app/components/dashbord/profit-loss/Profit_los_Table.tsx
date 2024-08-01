@@ -15,6 +15,7 @@ export default function Profit_los_Table() {
   );
 
   const revarseVisaData = getVesaApplyData?.slice().reverse();
+console.log("profit", revarseVisaData);
 
   const dispatch: AppDispatch = useDispatch();
   React.useEffect(() => {
@@ -28,6 +29,9 @@ export default function Profit_los_Table() {
           <tr>
             <th scope="col" className="px-6 py-3">
               SL
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Reg NO
             </th>
             <th scope="col" className="px-6 py-3">
               Date
@@ -59,7 +63,13 @@ export default function Profit_los_Table() {
                 scope="row"
                 className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
               >
-                {index}
+                {index + 1}
+              </td>
+              <td
+                scope="row"
+                className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
+              >
+                {getVesaApplyData?.user?.regNo}
               </td>
 
               <td
