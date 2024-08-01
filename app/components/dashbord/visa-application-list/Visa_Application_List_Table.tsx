@@ -641,6 +641,11 @@ export default function Visa_Application_List_Table() {
       })
     );
     if (updateStatus.payload.status === 200) {
+      setTimeout(() => {
+        window.location.href = "/dashbord/visa-application-list";
+      }, 2000);
+      
+
       const response = await fetch(imageUrl);
 
       const blob = await response.blob();
@@ -656,9 +661,7 @@ export default function Visa_Application_List_Table() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      setTimeout(() => {
-        window.location.href = "/dashbord/visa-application-list";
-      }, 2000);
+      
     }
   };
 
