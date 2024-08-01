@@ -352,8 +352,8 @@ function a11yProps(index: number) {
 export default function Visa_Application_List_Table() {
   // get data
   const [data, setData] = React.useState([]);
-  console.log("data", data);
-  
+  // const [regNumber, setRegNumber] = React.useState([]);
+
   // loading
   const [loading, setLoading] = React.useState(true);
   const [value, setValue] = React.useState(0);
@@ -443,6 +443,14 @@ export default function Visa_Application_List_Table() {
     (state: RootState) => state?.user?.user?.data?.visa_apply
   );
 
+  // const regNumberBeforeSingin = useSelector(
+  //   (state: RootState) => state?.user?.user?.user?.regNo
+  // );
+
+  // const regNumberAfterSingin = useSelector(
+  //   (state: RootState) => state?.user?.user?.data?.regNo
+  // );
+
   // loading
   // const loading = useSelector((state: RootState) => state?.visaApply?.loading);
 
@@ -452,6 +460,10 @@ export default function Visa_Application_List_Table() {
     const userVisaApplyData = getVisaApply ? getVisaApply : getVesaApplyData;
     const reversedgetVesaApplyData = userVisaApplyData?.slice().reverse();
     setData(reversedgetVesaApplyData);
+
+    // const regNo = regNumberAfterSingin ? regNumberAfterSingin : regNumberBeforeSingin;
+    // setRegNumber(regNo);
+
     setLoading(false);
   }, [getVisaApply, getVesaApplyData]);
   React.useEffect(() => {
@@ -720,6 +732,9 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                  Reg NO
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -764,6 +779,9 @@ export default function Visa_Application_List_Table() {
                   >
                     {index + 1}
                   </td>
+                  {/* <td className="px-6 py-4">
+                    {regNumber}
+                  </td> */}
 
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData?.givenName}

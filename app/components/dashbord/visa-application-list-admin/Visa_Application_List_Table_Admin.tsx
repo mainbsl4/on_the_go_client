@@ -464,6 +464,9 @@ export default function Visa_Application_List_Table_Admin() {
     (state: RootState) => state?.visaApply?.visaApply?.data || []
   );
 
+  console.log("xxxx", getVesaApplyData);
+  
+
   // loading
   const loading = useSelector((state: RootState) => state?.visaApply?.loading);
 
