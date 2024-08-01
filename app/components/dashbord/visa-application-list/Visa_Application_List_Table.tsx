@@ -707,7 +707,7 @@ export default function Visa_Application_List_Table() {
         toast.success("Your visa updated successfully", {
           position: "top-center",
         });
-
+        setOpenModalForEdit(false);
         const storedUserId = localStorage.getItem("userId");
         dispatch(getUser(JSON.parse(storedUserId)));
       }
