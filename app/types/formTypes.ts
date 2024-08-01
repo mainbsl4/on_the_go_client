@@ -73,6 +73,7 @@ export interface UpdateVisaApplyFormValues {
   passExpiryDate: string;
   dob: string;
   religion: string;
+  applyForCountry: string;
 }
 
 export interface CreateDepositRequestFormValues {

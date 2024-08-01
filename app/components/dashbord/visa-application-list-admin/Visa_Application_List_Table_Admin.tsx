@@ -488,6 +488,8 @@ export default function Visa_Application_List_Table_Admin() {
     passExpiryDate: selectedDataForEdit?.passExpiryDate || "",
     dob: selectedDataForEdit?.dob || "",
     religion: selectedDataForEdit?.religion || "",
+    applyForCountry: selectedDataForEdit?.applyForCountry || "",
+
   };
   const handleSubmit = async (
     values: UpdateVisaApplyFormValues,
@@ -507,6 +509,9 @@ export default function Visa_Application_List_Table_Admin() {
         updateVisaApply({ id: selectedDataForEdit?.id, data: formData })
       ).unwrap();
       // Handle successful response
+
+  
+
     } catch (error) {
       console.error("API Error:", error);
       // Handle error response
