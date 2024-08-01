@@ -63,7 +63,7 @@ console.log("profit", revarseVisaData);
                 scope="row"
                 className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
               >
-                {index}
+                {index + 1}
               </td>
               <td
                 scope="row"
