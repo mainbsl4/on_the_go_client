@@ -1854,6 +1854,23 @@ export default function Visa_Application_List_Table_Admin() {
                   <p>{selectedDataForView?.religion}</p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Buying Price : </p>
+                  <p>{selectedDataForView?.buyingPrise}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Selling Price : </p>
+                  <p>{selectedDataForView?.sellingPrise}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Comment : </p>
+                  <p>{selectedDataForView?.comment}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Application Id : </p>
+                  <p>{selectedDataForView?.trackingId}</p>
+                </div>
+
+                <div className=" border flex py-2 pl-2 mt-1">
                   <p>Status : </p>
                   <p>
                     {selectedDataForView?.isApproved === "SUBMITTED" ? (

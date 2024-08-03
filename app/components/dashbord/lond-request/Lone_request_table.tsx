@@ -80,20 +80,20 @@ export default function Lone_request_table() {
     // }
     // const loanList = loanListAll?.slice().reverse();
 
-    const mainData = loanListAllWhenLogin? loanListAllWhenLogin : loanListAfterLogin
+    const mainData = loanListAllWhenLogin
+      ? loanListAllWhenLogin
+      : loanListAfterLogin;
     const getDepositRequestData = Array.isArray(mainData)
-    ? mainData?.slice().reverse() : [];
+      ? mainData?.slice().reverse()
+      : [];
 
-    setData(getDepositRequestData)
-
-
+    setData(getDepositRequestData);
   }, [loanListAllWhenLogin, loanListAfterLogin]);
 
   React.useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
-    dispatch(getUser( JSON.parse(storedUserId)));
+    dispatch(getUser(JSON.parse(storedUserId)));
   }, []);
-
 
   const actionDataGet = (sec) => {
     setTimeout(() => {
@@ -194,6 +194,11 @@ export default function Lone_request_table() {
             <th scope="col" className="px-6 py-3">
               Status
             </th>
+
+            <th scope="col" className="px-6 py-3">
+              Comment
+            </th>
+
             <th scope="col" className="px-6 py-3">
               Action
             </th>
@@ -224,6 +229,7 @@ export default function Lone_request_table() {
                   <Chip label="REJECTED" color="error" />
                 )}
               </td>
+              <td className="px-6 py-4">{loanList?.comment}</td>
               <td className="px-6 py-4">
                 <Stack direction="row" spacing={1}>
                   <IconButton
@@ -304,6 +310,10 @@ export default function Lone_request_table() {
                     <Chip label="REJECTED" color="error" />
                   )}
                 </p>
+              </div>
+              <div className=" border flex py-2 pl-2 mt-1">
+                <p>Comment : </p>
+                <p>{selectedDataForView?.comment}</p>
               </div>
             </div>
           )}
