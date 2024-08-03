@@ -871,10 +871,9 @@ export default function Visa_Application_List_Table() {
       setTimeout(() => {
         const storedUserId = localStorage.getItem("userId");
         dispatch(getUser(JSON.parse(storedUserId)));
-        handleCloseVisaDownload()
+        handleCloseVisaDownload();
         setOpenModalForView(false);
       }, 2000);
-      
 
       const response = await fetch(imageUrl);
 
@@ -890,9 +889,6 @@ export default function Visa_Application_List_Table() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-
-     
-
     }
   };
 
@@ -2136,6 +2132,19 @@ export default function Visa_Application_List_Table() {
                   <p>Religion : </p>
                   <p>{selectedDataForView?.religion}</p>
                 </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Price : </p>
+                  <p>{selectedDataForView?.sellingPrise}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Comment : </p>
+                  <p>{selectedDataForView?.comment}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Applicatin ID : </p>
+                  <p>{selectedDataForView?.trackingId}</p>
+                </div>
+
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Status : </p>
                   <p>

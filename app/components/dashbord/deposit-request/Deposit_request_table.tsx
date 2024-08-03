@@ -155,7 +155,6 @@ export default function Deposit_request_table() {
 
   const loading = useSelector((state: RootState) => state?.deposit?.loading);
 
-  console.log("loading", loading);
 
   useEffect(() => {
     // dispatch(getAllDepositReq());
@@ -203,6 +202,7 @@ export default function Deposit_request_table() {
       setSubmitting(false);
     }
   };
+console.log("ddd", data);
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -231,6 +231,9 @@ export default function Deposit_request_table() {
 
             <th scope="col" className="px-6 py-3">
               Status
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Comment
             </th>
             <th scope="col" className="px-6 py-3">
               Action
@@ -268,6 +271,8 @@ export default function Deposit_request_table() {
                   <Chip label="REJECTED" color="error" />
                 )}
               </td>
+              <td className="px-6 py-4">{getDepositRequestData?.comment}</td>
+
               <td className="px-6 py-4">
                 <Stack direction="row" spacing={1}>
                   <IconButton
@@ -349,6 +354,10 @@ export default function Deposit_request_table() {
                       <Chip label="REJECTED" color="error" />
                     )}
                   </p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Comment : </p>
+                  <p>{selectedDataForView?.comment}</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
