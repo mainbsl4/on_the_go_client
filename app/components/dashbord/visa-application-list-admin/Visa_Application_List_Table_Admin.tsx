@@ -70,200 +70,204 @@ const gender = [
   { label: "Questioning" },
 ];
 const nationality = [
-  { label: "Afghan" },
-  { label: "Albanian" },
-  { label: "Algerian" },
-  { label: "American" },
-  { label: "Andorran" },
-  { label: "Angolan" },
-  { label: "Antiguans" },
-  { label: "Argentinean" },
-  { label: "Armenian" },
-  { label: "Australian" },
-  { label: "Austrian" },
-  { label: "Azerbaijani" },
-  { label: "Bahamian" },
-  { label: "Bahraini" },
-  { label: "Bangladeshi" },
-  { label: "Barbadian" },
-  { label: "Barbudans" },
-  { label: "Batswana" },
-  { label: "Belarusian" },
-  { label: "Belgian" },
-  { label: "Belizean" },
-  { label: "Beninese" },
-  { label: "Bhutanese" },
-  { label: "Bolivian" },
-  { label: "Bosnian" },
-  { label: "Brazilian" },
-  { label: "British" },
-  { label: "Bruneian" },
-  { label: "Bulgarian" },
-  { label: "Burkinabe" },
-  { label: "Burmese" },
-  { label: "Burundian" },
-  { label: "Cambodian" },
-  { label: "Cameroonian" },
-  { label: "Canadian" },
-  { label: "Cape Verdean" },
-  { label: "Central African" },
-  { label: "Chadian" },
-  { label: "Chilean" },
-  { label: "Chinese" },
-  { label: "Colombian" },
-  { label: "Comoran" },
-  { label: "Congolese" },
-  { label: "Costa Rican" },
-  { label: "Croatian" },
-  { label: "Cuban" },
-  { label: "Cypriot" },
-  { label: "Czech" },
-  { label: "Danish" },
-  { label: "Djibouti" },
-  { label: "Dominican" },
-  { label: "Dutch" },
-  { label: "East Timorese" },
-  { label: "Ecuadorean" },
-  { label: "Egyptian" },
-  { label: "Emirian" },
-  { label: "Equatorial Guinean" },
-  { label: "Eritrean" },
-  { label: "Estonian" },
-  { label: "Ethiopian" },
-  { label: "Fijian" },
-  { label: "Filipino" },
-  { label: "Finnish" },
-  { label: "French" },
-  { label: "Gabonese" },
-  { label: "Gambian" },
-  { label: "Georgian" },
-  { label: "German" },
-  { label: "Ghanaian" },
-  { label: "Greek" },
-  { label: "Grenadian" },
-  { label: "Guatemalan" },
-  { label: "Guinea-Bissauan" },
-  { label: "Guinean" },
-  { label: "Guyanese" },
-  { label: "Haitian" },
-  { label: "Herzegovinian" },
-  { label: "Honduran" },
-  { label: "Hungarian" },
-  { label: "I-Kiribati" },
-  { label: "Icelander" },
-  { label: "Indian" },
-  { label: "Indonesian" },
-  { label: "Iranian" },
-  { label: "Iraqi" },
-  { label: "Irish" },
-  { label: "Israeli" },
-  { label: "Italian" },
-  { label: "Ivorian" },
-  { label: "Jamaican" },
-  { label: "Japanese" },
-  { label: "Jordanian" },
-  { label: "Kazakhstani" },
-  { label: "Kenyan" },
-  { label: "Kittian and Nevisian" },
-  { label: "Kuwaiti" },
-  { label: "Kyrgyz" },
-  { label: "Laotian" },
-  { label: "Latvian" },
-  { label: "Lebanese" },
-  { label: "Liberian" },
-  { label: "Libyan" },
-  { label: "Liechtensteiner" },
-  { label: "Lithuanian" },
-  { label: "Luxembourger" },
-  { label: "Macedonian" },
-  { label: "Malagasy" },
-  { label: "Malawian" },
-  { label: "Malaysian" },
-  { label: "Maldivian" },
-  { label: "Malian" },
-  { label: "Maltese" },
-  { label: "Marshallese" },
-  { label: "Mauritanian" },
-  { label: "Mauritian" },
-  { label: "Mexican" },
-  { label: "Micronesian" },
-  { label: "Moldovan" },
-  { label: "Monacan" },
-  { label: "Mongolian" },
-  { label: "Moroccan" },
-  { label: "Mosotho" },
-  { label: "Motswana" },
-  { label: "Mozambican" },
-  { label: "Namibian" },
-  { label: "Nauruan" },
-  { label: "Nepalese" },
-  { label: "New Zealander" },
-  { label: "Ni-Vanuatu" },
-  { label: "Nicaraguan" },
-  { label: "Nigerien" },
-  { label: "North Korean" },
-  { label: "Northern Irish" },
-  { label: "Norwegian" },
-  { label: "Omani" },
-  { label: "Pakistani" },
-  { label: "Palauan" },
-  { label: "Panamanian" },
-  { label: "Papua New Guinean" },
-  { label: "Paraguayan" },
-  { label: "Peruvian" },
-  { label: "Polish" },
-  { label: "Portuguese" },
-  { label: "Qatari" },
-  { label: "Romanian" },
-  { label: "Russian" },
-  { label: "Rwandan" },
-  { label: "Saint Lucian" },
-  { label: "Salvadoran" },
-  { label: "Samoan" },
-  { label: "San Marinese" },
-  { label: "Sao Tomean" },
-  { label: "Saudi" },
-  { label: "Scottish" },
-  { label: "Senegalese" },
-  { label: "Serbian" },
-  { label: "Seychellois" },
-  { label: "Sierra Leonean" },
-  { label: "Singaporean" },
-  { label: "Slovakian" },
-  { label: "Slovenian" },
-  { label: "Solomon Islander" },
-  { label: "Somali" },
-  { label: "South African" },
-  { label: "South Korean" },
-  { label: "Spanish" },
-  { label: "Sri Lankan" },
-  { label: "Sudanese" },
-  { label: "Surinamer" },
-  { label: "Swazi" },
-  { label: "Swedish" },
-  { label: "Swiss" },
-  { label: "Syrian" },
-  { label: "Taiwanese" },
-  { label: "Tajik" },
-  { label: "Tanzanian" },
-  { label: "Thai" },
-  { label: "Togolese" },
-  { label: "Tongan" },
-  { label: "Trinidadian or Tobagonian" },
-  { label: "Tunisian" },
-  { label: "Turkish" },
-  { label: "Tuvaluan" },
-  { label: "Ugandan" },
-  { label: "Ukrainian" },
-  { label: "Uruguayan" },
-  { label: "Uzbekistani" },
-  { label: "Venezuelan" },
-  { label: "Vietnamese" },
-  { label: "Welsh" },
-  { label: "Yemenite" },
-  { label: "Zambian" },
-  { label: "Zimbabwean" },
+  { label: "AFGHANISTAN" },
+  { label: "ALBANIA" },
+  { label: "ALGERIA" },
+  { label: "ANDORRA" },
+  { label: "ANGOLA" },
+  { label: "ANTIGUA AND BARBUDA" },
+  { label: "ARGENTINA" },
+  { label: "ARMENIA" },
+  { label: "AUSTRALIA" },
+  { label: "AUSTRIA" },
+  { label: "AZERBAIJAN" },
+  { label: "BAHAMAS" },
+  { label: "BAHRAIN" },
+  { label: "BANGLADESH" },
+  { label: "BARBADOS" },
+  { label: "BELARUS" },
+  { label: "BELGIUM" },
+  { label: "BELIZE" },
+  { label: "BENIN" },
+  { label: "BHUTAN" },
+  { label: "BOLIVIA" },
+  { label: "BOSNIA AND HERZEGOVINA" },
+  { label: "BOTSWANA" },
+  { label: "BRAZIL" },
+  { label: "BRUNEI" },
+  { label: "BULGARIA" },
+  { label: "BURKINA FASO" },
+  { label: "BURUNDI" },
+  { label: "CABO VERDE" },
+  { label: "CAMBODIA" },
+  { label: "CAMEROON" },
+  { label: "CANADA" },
+  { label: "CENTRAL AFRICAN REPUBLIC" },
+  { label: "CHAD" },
+  { label: "CHILE" },
+  { label: "CHINA" },
+  { label: "COLOMBIA" },
+  { label: "COMOROS" },
+  { label: "CONGO, DEMOCRATIC REPUBLIC OF THE" },
+  { label: "CONGO, REPUBLIC OF THE" },
+  { label: "COSTA RICA" },
+  { label: "CROATIA" },
+  { label: "CUBA" },
+  { label: "CYPRUS" },
+  { label: "CZECH REPUBLIC" },
+  { label: "DENMARK" },
+  { label: "DJIBOUTI" },
+  { label: "DOMINICA" },
+  { label: "DOMINICAN REPUBLIC" },
+  { label: "ECUADOR" },
+  { label: "EGYPT" },
+  { label: "EL SALVADOR" },
+  { label: "EQUATORIAL GUINEA" },
+  { label: "ERITREA" },
+  { label: "ESTONIA" },
+  { label: "ESWATINI" },
+  { label: "ETHIOPIA" },
+  { label: "FIJI" },
+  { label: "FINLAND" },
+  { label: "FRANCE" },
+  { label: "GABON" },
+  { label: "GAMBIA" },
+  { label: "GEORGIA" },
+  { label: "GERMANY" },
+  { label: "GHANA" },
+  { label: "GREECE" },
+  { label: "GRENADA" },
+  { label: "GUATEMALA" },
+  { label: "GUINEA" },
+  { label: "GUINEA-BISSAU" },
+  { label: "GUYANA" },
+  { label: "HAITI" },
+  { label: "HONDURAS" },
+  { label: "HUNGARY" },
+  { label: "ICELAND" },
+  { label: "INDIA" },
+  { label: "INDONESIA" },
+  { label: "IRAN" },
+  { label: "IRAQ" },
+  { label: "IRELAND" },
+  { label: "ISRAEL" },
+  { label: "ITALY" },
+  { label: "JAMAICA" },
+  { label: "JAPAN" },
+  { label: "JORDAN" },
+  { label: "KAZAKHSTAN" },
+  { label: "KENYA" },
+  { label: "KIRIBATI" },
+  { label: "KOREA, NORTH" },
+  { label: "KOREA, SOUTH" },
+  { label: "KOSOVO" },
+  { label: "KUWAIT" },
+  { label: "KYRGYZSTAN" },
+  { label: "LAOS" },
+  { label: "LATVIA" },
+  { label: "LEBANON" },
+  { label: "LESOTHO" },
+  { label: "LIBERIA" },
+  { label: "LIBYA" },
+  { label: "LIECHTENSTEIN" },
+  { label: "LITHUANIA" },
+  { label: "LUXEMBOURG" },
+  { label: "MADAGASCAR" },
+  { label: "MALAWI" },
+  { label: "MALAYSIA" },
+  { label: "MALDIVES" },
+  { label: "MALI" },
+  { label: "MALTA" },
+  { label: "MARSHALL ISLANDS" },
+  { label: "MAURITANIA" },
+  { label: "MAURITIUS" },
+  { label: "MEXICO" },
+  { label: "MICRONESIA" },
+  { label: "MOLDOVA" },
+  { label: "MONACO" },
+  { label: "MONGOLIA" },
+  { label: "MONTENEGRO" },
+  { label: "MOROCCO" },
+  { label: "MOZAMBIQUE" },
+  { label: "MYANMAR" },
+  { label: "NAMIBIA" },
+  { label: "NAURU" },
+  { label: "NEPAL" },
+  { label: "NETHERLANDS" },
+  { label: "NEW ZEALAND" },
+  { label: "NICARAGUA" },
+  { label: "NIGER" },
+  { label: "NIGERIA" },
+  { label: "NORTH MACEDONIA" },
+  { label: "NORWAY" },
+  { label: "OMAN" },
+  { label: "PAKISTAN" },
+  { label: "PALAU" },
+  { label: "PALESTINE" },
+  { label: "PANAMA" },
+  { label: "PAPUA NEW GUINEA" },
+  { label: "PARAGUAY" },
+  { label: "PERU" },
+  { label: "PHILIPPINES" },
+  { label: "POLAND" },
+  { label: "PORTUGAL" },
+  { label: "QATAR" },
+  { label: "ROMANIA" },
+  { label: "RUSSIA" },
+  { label: "RWANDA" },
+  { label: "SAINT KITTS AND NEVIS" },
+  { label: "SAINT LUCIA" },
+  { label: "SAINT VINCENT AND THE GRENADINES" },
+  { label: "SAMOA" },
+  { label: "SAN MARINO" },
+  { label: "SAO TOME AND PRINCIPE" },
+  { label: "SAUDI ARABIA" },
+  { label: "SENEGAL" },
+  { label: "SERBIA" },
+  { label: "SEYCHELLES" },
+  { label: "SIERRA LEONE" },
+  { label: "SINGAPORE" },
+  { label: "SLOVAKIA" },
+  { label: "SLOVENIA" },
+  { label: "SOLOMON ISLANDS" },
+  { label: "SOMALIA" },
+  { label: "SOUTH AFRICA" },
+  { label: "SPAIN" },
+  { label: "SRI LANKA" },
+  { label: "SUDAN" },
+  { label: "SUDAN, SOUTH" },
+  { label: "SURINAME" },
+  { label: "SWEDEN" },
+  { label: "SWITZERLAND" },
+  { label: "SYRIA" },
+  { label: "TAIWAN" },
+  { label: "TAJIKISTAN" },
+  { label: "TANZANIA" },
+  { label: "THAILAND" },
+  { label: "TIMOR-LESTE" },
+  { label: "TOGO" },
+  { label: "TONGA" },
+  { label: "TRINIDAD AND TOBAGO" },
+  { label: "TUNISIA" },
+  { label: "TURKEY" },
+  { label: "TURKMENISTAN" },
+  { label: "TUVALU" },
+  { label: "UGANDA" },
+  { label: "UKRAINE" },
+  { label: "UNITED ARAB EMIRATES" },
+  { label: "UNITED KINGDOM" },
+  { label: "UNITED STATES" },
+  { label: "URUGUAY" },
+  { label: "UZBEKISTAN" },
+  { label: "VANUATU" },
+  { label: "VATICAN CITY" },
+  { label: "VENEZUELA" },
+  { label: "VIETNAM" },
+  { label: "YEMEN" },
+  { label: "ZAMBIA" },
+  { label: "ZIMBABWE" },
 ];
+
 const religion = [
   { label: "Christianity" },
   { label: "Islam" },
@@ -464,8 +468,6 @@ export default function Visa_Application_List_Table_Admin() {
     (state: RootState) => state?.visaApply?.visaApply?.data || []
   );
 
-  
-
   // loading
   const loading = useSelector((state: RootState) => state?.visaApply?.loading);
 
@@ -489,7 +491,6 @@ export default function Visa_Application_List_Table_Admin() {
     dob: selectedDataForEdit?.dob || "",
     religion: selectedDataForEdit?.religion || "",
     applyForCountry: selectedDataForEdit?.applyForCountry || "",
-
   };
   const handleSubmit = async (
     values: UpdateVisaApplyFormValues,
@@ -509,9 +510,6 @@ export default function Visa_Application_List_Table_Admin() {
         updateVisaApply({ id: selectedDataForEdit?.id, data: formData })
       ).unwrap();
       // Handle successful response
-
-  
-
     } catch (error) {
       console.error("API Error:", error);
       // Handle error response
@@ -1135,7 +1133,6 @@ export default function Visa_Application_List_Table_Admin() {
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.user?.regNo}
                         </td>
-
 
                         <td className="px-6 py-4">
                           {reversedgetVesaApplyData?.givenName}
@@ -1901,27 +1898,22 @@ export default function Visa_Application_List_Table_Admin() {
                 {/* now i will add dropwown for status  */}
                 <div className="border mt-1 py-2 pl-2">
                   <p>Update Status : </p>
-                  {/* <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={statusCatagory}
-                    sx={{ width: 300, marginBottom: "10px" }}
-                    onChange={(event, newValue) => setStatus(newValue?.label)}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Status" />
-                    )}
-                  /> */}
-
+                  {/* i want to set deafult value  */}
                   <Autocomplete
                     disablePortal
                     id="combo-box-demo"
                     options={statusCatagory}
                     sx={{ marginBottom: "10px" }}
+                    defaultValue={selectedDataForView?.isApproved}
                     onChange={(event, newValue) => setStatus(newValue?.label)}
                     renderInput={(params) => (
                       <TextField {...params} label="Status" />
                     )}
                   />
+
+                  {/* {status === "SUBMITTED" && (
+                    <></>
+                  )} */}
 
                   {status === "RECEIVED" && (
                     <>
@@ -1929,10 +1921,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input1"
                         label="Bying Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={buyingPrise}
+                        // value={buyingPrise}
+                        defaultValue={selectedDataForView?.buyingPrise}
                         onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
@@ -1940,24 +1932,26 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input2"
                         label="Saleing Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={sellingPrise}
+                        // value={sellingPrise}
+                        defaultValue={selectedDataForView?.sellingPrise}
                         onChange={(e) => setsellingPrise(e.target.value)}
                       />
                     </>
                   )}
+
+
                   {status === "APPLIED" && (
                     <>
                       <TextField
                         required
                         id="input1"
                         label="Bying Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={buyingPrise}
+                        // value={buyingPrise}
+                        defaultValue={selectedDataForView?.buyingPrise}
                         onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
@@ -1965,10 +1959,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input2"
                         label="Saleing Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={sellingPrise}
+                        // value={sellingPrise}
+                        defaultValue={selectedDataForView?.sellingPrise}
                         onChange={(e) => setsellingPrise(e.target.value)}
                       />
                       <br />
@@ -1976,10 +1970,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input3"
                         label="Application ID"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="text"
-                        value={trackingId}
+                        // value={trackingId}
+                        defaultValue={selectedDataForView?.trackingId}
                         onChange={(e) => setTrackingId(e.target.value)}
                       />
                     </>
@@ -1990,10 +1984,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input1"
                         label="Bying Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={buyingPrise}
+                        // value={buyingPrise}
+                        defaultValue={selectedDataForView?.buyingPrise}
                         onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
@@ -2001,10 +1995,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input2"
                         label="Saleing Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={sellingPrise}
+                        // value={sellingPrise}
+                        defaultValue={selectedDataForView?.sellingPrise}
                         onChange={(e) => setsellingPrise(e.target.value)}
                       />
                       <br />
@@ -2012,10 +2006,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input3"
                         label="Application ID"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="text"
-                        value={trackingId}
+                        // value={trackingId}
+                        defaultValue={selectedDataForView?.trackingId}
                         onChange={(e) => setTrackingId(e.target.value)}
                       />
 
@@ -2051,10 +2045,10 @@ export default function Visa_Application_List_Table_Admin() {
                         required
                         id="input1"
                         label="Bying Price"
-                        defaultValue=""
                         sx={{ marginTop: "10px" }}
                         type="number"
-                        value={buyingPrise}
+                        // value={buyingPrise}
+                        defaultValue={selectedDataForView?.comment}
                         onChange={(e) => setbuyingPrise(e.target.value)}
                       />
                       <br />
@@ -2085,7 +2079,8 @@ export default function Visa_Application_List_Table_Admin() {
                   <TextField
                     id="outlined-required"
                     label="Comment"
-                    value={comment}
+                    // value={comment}
+                    defaultValue={selectedDataForView?.comment}
                     onChange={(e) => setComment(e.target.value)}
                   />
                   {/* <TextField
@@ -2163,7 +2158,7 @@ export default function Visa_Application_List_Table_Admin() {
               onSubmit={handleSubmit}
               enableReinitialize
             >
-              {({ isSubmitting, touched, errors, setFieldValue }) => (
+              {({ isSubmitting, touched, errors, setFieldValue, values }) => (
                 <Form>
                   <div className="grid grid-cols-2 gap-2">
                     {/* <div>
@@ -2201,6 +2196,7 @@ export default function Visa_Application_List_Table_Admin() {
                           disablePortal
                           id="combo-box-demo"
                           options={gender.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
@@ -2222,6 +2218,7 @@ export default function Visa_Application_List_Table_Admin() {
                           disablePortal
                           id="combo-box-demo"
                           options={nationality.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
@@ -2385,6 +2382,7 @@ export default function Visa_Application_List_Table_Admin() {
                           disablePortal
                           id="combo-box-demo"
                           options={religion.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
