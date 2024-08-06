@@ -52,6 +52,13 @@ export default function Lone_request_table() {
   // get data
   const [data, setData] = React.useState([]);
 
+  // for search
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [amountSearchQuery, setAmountSearchQuery] = useState("");
+
+  // const [regSearchQuery, setRegSearchQuery] = useState("");
+
   const dispatch: AppDispatch = useDispatch();
   // loading
   const loading = useSelector((state: RootState) => state?.loan?.loading);
@@ -89,6 +96,36 @@ export default function Lone_request_table() {
 
     setData(getDepositRequestData);
   }, [loanListAllWhenLogin, loanListAfterLogin]);
+
+  // for search
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value);
+  };
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value);
+  };
+  const handleAmountSearchQueryChange = (event) => {
+    setAmountSearchQuery(event.target.value);
+  };
+
+  // const handleRegSearchQueryChange = (event) => {
+  //   setRegSearchQuery(event.target.value);
+  // };
+
+  const filteredData = data.filter((data) => {
+    const itemDate = dayjs(data.settlmentDate);
+    const from = fromDate ? dayjs(fromDate) : null;
+    const to = toDate ? dayjs(toDate) : null;
+
+    return (
+      data.amount.toString().includes(amountSearchQuery) &&
+      (!from ||
+        itemDate.isAfter(from, "day") ||
+        itemDate.isSame(from, "day")) &&
+      (!to || itemDate.isBefore(to, "day") || itemDate.isSame(to, "day"))
+    );
+  });
 
   React.useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -175,6 +212,35 @@ export default function Lone_request_table() {
     </div>
   ) : (
     <div>
+      <div className="mb-4 flex gap-4">
+        <TextField
+          label="From Date"
+          type="date"
+          variant="outlined"
+          value={fromDate}
+          onChange={handleFromDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="To Date"
+          type="date"
+          variant="outlined"
+          value={toDate}
+          onChange={handleToDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="Search by Amount"
+          variant="outlined"
+          value={amountSearchQuery}
+          onChange={handleAmountSearchQueryChange}
+        />
+      </div>
+
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
@@ -205,7 +271,7 @@ export default function Lone_request_table() {
           </tr>
         </thead>
         <tbody>
-          {data?.map((loanList) => (
+          {filteredData?.map((loanList) => (
             <tr className="bg-white border-b " key={loanList.id}>
               <td className="px-6 py-4">{loanList.reqDate}</td>
               <td className="px-6 py-4">{loanList.settlmentDate}</td>
