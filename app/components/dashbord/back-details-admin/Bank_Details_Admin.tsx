@@ -31,6 +31,8 @@ import {
 } from "../../../lib/features/bankDetails/bankDetailsSlice";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //for modal style
 const style = {
@@ -132,10 +134,20 @@ export default function Bank_Details_Admin() {
     routingNo: string;
   }
 
-  const handleSubmit = (values: CreateBankDetailsFormValues) => {
-    dispatch(createBankDetails(values));
-    actionDataGet(700);
-    setOpenModalForAdd(false);
+  const handleSubmit = async (values: CreateBankDetailsFormValues) => {
+
+    const response  = await  dispatch(createBankDetails(values));
+
+    if (response) {
+
+      toast.success(`Bank added successfully`, {
+        position: "top-center",
+      });
+      actionDataGet(500);
+      setOpenModalForAdd(false);
+    }
+   
+   
   };
 
   // interface UpdateBankDetailsFormValues {
@@ -145,10 +157,19 @@ export default function Bank_Details_Admin() {
   //   branch: string;
 
   // }
-  const handleSubmitUpdate = (values: UpdateBankDetailsFormValues) => {
-    dispatch(updateBankDetails({ id: updateId, data: values }));
-    actionDataGet(700);
-    setOpenModalForEdit(false);
+  const handleSubmitUpdate = async (values: UpdateBankDetailsFormValues) => {
+    const response =  await dispatch(updateBankDetails({ id: updateId, data: values }));
+
+    if (response) {
+
+      toast.success(`Bank update successfully`, {
+        position: "top-center",
+      });
+
+      actionDataGet(500);
+      setOpenModalForEdit(false);
+    }
+
   };
 
   const handleClickOpenModalForDelete = (id: any) => {
@@ -164,10 +185,17 @@ export default function Bank_Details_Admin() {
     dispatch(getBankDetails());
   }, [dispatch]);
 
-  const deleteList = (id: any) => {
-    dispatch(deleteBankDetail(id));
-    actionDataGet(700);
+  const deleteList = async (id: any) => {
+   const response = await dispatch(deleteBankDetail(id));
+
+   if (response) {
+    toast.success(`Bank deleted successfully`, {
+      position: "top-center",
+    });
+    actionDataGet(500);
     setOpenModalForDelete(false);
+   }
+
   };
 
   return loading ? (

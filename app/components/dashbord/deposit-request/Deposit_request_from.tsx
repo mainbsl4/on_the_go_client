@@ -172,7 +172,7 @@ export default function Deposit_request_from() {
         });
         setTimeout(() => {
           // window.location.href = "/dashbord/deposit-request-list";
-          router.push("/dashbord/lone-request-list");
+          router.push("/dashbord/deposit-request-list");
 
         }, 3000);
       }
