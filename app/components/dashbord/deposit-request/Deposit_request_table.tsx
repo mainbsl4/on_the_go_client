@@ -59,6 +59,11 @@ const top100Films = [
 export default function Deposit_request_table() {
   // get data
   const [data, setData] = React.useState([]);
+  // for searchQuery
+  const [amountSearchQuery, setAmountSearchQuery] = useState("");
+  const [bankNameSearchQuery, setBankNameSearchQuery] = useState("");
+  const [trnIdSearchQuery, setTrnIdSearchQuery] = useState("");
+
   // for modal
   // for view modal
   const [idForDelete, setIdForDelete] = useState(null);
@@ -137,32 +142,43 @@ export default function Deposit_request_table() {
   );
 
   useEffect(() => {
-    // if (depositRequestDataWhenLogin && depositRequestDataAfterLogin) {
-    //   setData(depositRequestDataWhenLogin.concat(depositRequestDataAfterLogin));
-    // } else if (depositRequestDataWhenLogin) {
-    //   setData(depositRequestDataWhenLogin);
-    // } else if (depositRequestDataAfterLogin) {
-    //   setData(depositRequestDataAfterLogin);
-    // }
-
-    const mainData = depositRequestDataWhenLogin? depositRequestDataWhenLogin : depositRequestDataAfterLogin
+    const mainData = depositRequestDataWhenLogin
+      ? depositRequestDataWhenLogin
+      : depositRequestDataAfterLogin;
     const getDepositRequestData = Array.isArray(mainData)
-    ? mainData?.slice().reverse() : [];
+      ? mainData?.slice().reverse()
+      : [];
 
-    setData(getDepositRequestData)
-
+    setData(getDepositRequestData);
   }, [depositRequestDataWhenLogin, depositRequestDataAfterLogin]);
 
-  const loading = useSelector((state: RootState) => state?.deposit?.loading);
+  // for  search
+  const handleAmountSearchQueryChange = (event) => {
+    setAmountSearchQuery(event.target.value);
+  };
 
+  const handleBankNameSearchQueryChange = (event) => {
+    setBankNameSearchQuery(event.target.value);
+  };
+
+  const handleTrnIdSearchQueryChange = (event) => {
+    setTrnIdSearchQuery(event.target.value);
+  };
+
+  const filteredData = data.filter(
+    (item) =>
+      item.amount.toString().includes(amountSearchQuery) &&
+      item.bankName.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
+      item.trnId.toString().includes(trnIdSearchQuery.toLowerCase())
+  );
+  // -----------------------------------
+
+  const loading = useSelector((state: RootState) => state?.deposit?.loading);
 
   useEffect(() => {
     // dispatch(getAllDepositReq());
     const storedUserId = localStorage.getItem("userId");
     dispatch(getUser(JSON.parse(storedUserId)));
-
-
-
   }, []);
 
   // edit from validation
@@ -202,7 +218,7 @@ export default function Deposit_request_table() {
       setSubmitting(false);
     }
   };
-console.log("ddd", data);
+  console.log("ddd", data);
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -210,6 +226,26 @@ console.log("ddd", data);
     </div>
   ) : (
     <div>
+      <div className="mb-4 flex gap-4">
+        <TextField
+          label="Search by Amount"
+          variant="outlined"
+          value={amountSearchQuery}
+          onChange={handleAmountSearchQueryChange}
+        />
+        <TextField
+          label="Search by Bank Name"
+          variant="outlined"
+          value={bankNameSearchQuery}
+          onChange={handleBankNameSearchQueryChange}
+        />
+        <TextField
+          label="Search by Transaction ID"
+          variant="outlined"
+          value={trnIdSearchQuery}
+          onChange={handleTrnIdSearchQueryChange}
+        />
+      </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
@@ -219,6 +255,7 @@ console.log("ddd", data);
             <th scope="col" className="px-6 py-3">
               Date
             </th>
+
             <th scope="col" className="px-6 py-3">
               Transaction ID
             </th>
@@ -241,7 +278,7 @@ console.log("ddd", data);
           </tr>
         </thead>
         <tbody>
-          {data?.map((getDepositRequestData) => (
+          {filteredData?.map((getDepositRequestData) => (
             <tr className="bg-white border-b " key={getDepositRequestData.id}>
               {/* <td
             scope="row"
@@ -251,7 +288,7 @@ console.log("ddd", data);
           </td> */}
               <td className="px-6 py-4">{getDepositRequestData?.dpType}</td>
               <td className="px-6 py-4">{getDepositRequestData?.date}</td>
-              <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.trnId}</td>
               <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
               <td className="px-6 py-4">{getDepositRequestData?.bankName}</td>
               <td className="px-6 py-4">
