@@ -66,6 +66,11 @@ export default function Deposit_request_admin_Table() {
   const [status, setStatus] = React.useState(null);
   const [comment, setComment] = React.useState("");
 
+  // for search
+  const [amountSearchQuery, setAmountSearchQuery] = useState("");
+  const [bankNameSearchQuery, setBankNameSearchQuery] = useState("");
+  const [trnIdSearchQuery, setTrnIdSearchQuery] = useState("");
+
   // for modal
   // for view modal
   const [idForDelete, setIdForDelete] = useState(null);
@@ -140,7 +145,28 @@ export default function Deposit_request_admin_Table() {
   }, []);
 
   const getDepositRequestData = Array.isArray(depositRequestData)
-  ? depositRequestData?.slice().reverse() : [];
+    ? depositRequestData?.slice().reverse()
+    : [];
+
+  // for  search
+  const handleAmountSearchQueryChange = (event) => {
+    setAmountSearchQuery(event.target.value);
+  };
+
+  const handleBankNameSearchQueryChange = (event) => {
+    setBankNameSearchQuery(event.target.value);
+  };
+
+  const handleTrnIdSearchQueryChange = (event) => {
+    setTrnIdSearchQuery(event.target.value);
+  };
+
+  const filteredData = getDepositRequestData.filter(
+    (item) =>
+      item.amount.toString().includes(amountSearchQuery) &&
+      item.bankName.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
+      item.trnId.toString().includes(trnIdSearchQuery.toLowerCase())
+  );
 
   // edit from validation for edit
   // const initialValues: UpdateDepositRequestFormValues = {
@@ -188,20 +214,19 @@ export default function Deposit_request_admin_Table() {
 
   const handleUpdate = async () => {
     console.log("Selected Status:", status);
-   const response = await dispatch(
-      updateDepositStatus({ id: selectedDataForView?.id, data: status, comment:  comment})
+    const response = await dispatch(
+      updateDepositStatus({
+        id: selectedDataForView?.id,
+        data: status,
+        comment: comment,
+      })
     );
 
     if (response) {
       setOpenModalForView(false);
       actionDataGet(500);
     }
-
   };
-
-
-
-
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -209,6 +234,26 @@ export default function Deposit_request_admin_Table() {
     </div>
   ) : (
     <div>
+      <div className="mb-4 flex gap-4">
+        <TextField
+          label="Search by Amount"
+          variant="outlined"
+          value={amountSearchQuery}
+          onChange={handleAmountSearchQueryChange}
+        />
+        <TextField
+          label="Search by Bank Name"
+          variant="outlined"
+          value={bankNameSearchQuery}
+          onChange={handleBankNameSearchQueryChange}
+        />
+        <TextField
+          label="Search by Transaction ID"
+          variant="outlined"
+          value={trnIdSearchQuery}
+          onChange={handleTrnIdSearchQueryChange}
+        />
+      </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
@@ -219,7 +264,10 @@ export default function Deposit_request_admin_Table() {
               Date
             </th>
             <th scope="col" className="px-6 py-3">
-            Transaction ID
+              Transaction ID
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Transaction ID
             </th>
             <th scope="col" className="px-6 py-3">
               Amount
@@ -240,7 +288,7 @@ export default function Deposit_request_admin_Table() {
           </tr>
         </thead>
         <tbody>
-          {getDepositRequestData?.map((getDepositRequestData) => (
+          {filteredData?.map((getDepositRequestData) => (
             <tr className="bg-white border-b " key={getDepositRequestData.id}>
               {/* <td
               scope="row"
@@ -250,6 +298,7 @@ export default function Deposit_request_admin_Table() {
             </td> */}
               <td className="px-6 py-4">{getDepositRequestData?.dpType}</td>
               <td className="px-6 py-4">{getDepositRequestData?.date}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.trnId}</td>
               <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
               <td className="px-6 py-4">{getDepositRequestData?.amount}</td>
               <td className="px-6 py-4">{getDepositRequestData?.bankName}</td>

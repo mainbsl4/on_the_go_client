@@ -521,6 +521,25 @@ const style = {
   // justifyContent:"space-between",
   // gridGap:"5px"
 };
+const styleForView = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 1200,
+  height: "80vh",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  //i will set overflow scroll
+  overflow: "auto"
+  // display:"grid",
+  // gridTemplateColumns: "40% 40%",
+  // justifyContent:"space-between",
+  // gridGap:"5px"
+};
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -2100,10 +2119,10 @@ export default function Visa_Application_List_Table() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={styleForView}>
           {selectedDataForView && (
-            <div>
-              <div>
+            <div className="flex">
+              <div className="w-6/12">
                 <div className=" border flex py-2 pl-2">
                   <p>Full Name : </p>
                   <p>{selectedDataForView?.givenName}</p>
@@ -2172,8 +2191,8 @@ export default function Visa_Application_List_Table() {
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
+              <div className="w-6/12">
+                <div className="grid min-h-[140px] w-8/12 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
                   <Image
                     className=" w-full rounded-lg h-96"
                     width={100}

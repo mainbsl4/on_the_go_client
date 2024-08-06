@@ -13,7 +13,6 @@ import { Icon } from "@iconify/react";
 import { Box, CircularProgress } from "@mui/material";
 import { CreateVisaApplyFormValues } from "../../../types/formTypes";
 import { CreateVisaApplySchema } from "../../../utils/validationSchema";
-import dayjs from "dayjs";
 import { createVisaApply } from "../../../lib/features/visaApply/visaApplySlice";
 import { useDispatch } from "react-redux";
 import {
@@ -27,7 +26,11 @@ import { AppDispatch, RootState } from "../../../lib/store/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 
+
+
+const minDate = dayjs().add(6, 'month').startOf('day')
 const gender = [
   { label: "Male" },
   { label: "Female" },
@@ -674,6 +677,7 @@ export default function Visa_Apply_Form() {
                             date ? date.format("YYYY-MM-DD") : ""
                           )
                         }
+                        minDate={minDate}
                         renderInput={(params) => (
                           <TextField
                             required
