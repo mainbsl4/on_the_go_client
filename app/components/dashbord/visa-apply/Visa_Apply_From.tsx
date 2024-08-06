@@ -488,7 +488,7 @@ export default function Visa_Apply_Form() {
         });
         setTimeout(() => {
           // window.location.href = "/dashbord/visa-application-list";
-          router.push("/dashbord/lone-request-list");
+          router.push("/dashbord/visa-application-list");
         }, 3000);
         // success
         // window.location.reload();

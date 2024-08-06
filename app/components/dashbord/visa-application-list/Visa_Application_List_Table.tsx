@@ -828,6 +828,10 @@ export default function Visa_Application_List_Table() {
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+        toast.success(`Passport download successfully`, {
+          position: "top-center",
+        });
+
       })
       .catch(() => alert("An error occurred while downloading the image."));
   };
@@ -848,6 +852,10 @@ export default function Visa_Application_List_Table() {
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+
+        toast.success(`Document download successfully`, {
+          position: "top-center",
+        });
       })
       .catch(() => alert("An error occurred while downloading the image."));
   };
@@ -912,6 +920,10 @@ export default function Visa_Application_List_Table() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      toast.success(`Visa download successfully`, {
+        position: "top-center",
+      });
+
     }
   };
 

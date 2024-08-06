@@ -33,6 +33,8 @@ import { UpdateVisaApplySchema } from "../../../utils/validationSchema";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../lib/store/store";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   deleteVisa,
   getAllVisaApply,
@@ -612,6 +614,9 @@ export default function Visa_Application_List_Table_Admin() {
     );
 
     if (response) {
+      toast.success(`status updated to ${status}`, {
+        position: "top-center",
+      });
       setOpenModalForView(false);
       actionDataGet(500);
     }

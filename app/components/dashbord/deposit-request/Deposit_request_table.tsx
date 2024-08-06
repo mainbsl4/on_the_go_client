@@ -31,6 +31,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { getUser } from "../../../lib/features/users/userSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //for modal style
 const style = {
@@ -220,6 +222,34 @@ export default function Deposit_request_table() {
   };
   console.log("ddd", data);
 
+
+  const handleDownloadDoc = (data: any) => {
+    const imageUrl = data?.slipImage;
+    const fileName = `payment-document.pdf`;
+
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        toast.success(`Document download successfully`, {
+          position: "top-center",
+        });
+      })
+      .catch(() => alert("An error occurred while downloading the image."));
+  };
+
+
+
+
+
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
       <CircularProgress />
@@ -399,12 +429,26 @@ export default function Deposit_request_table() {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col items-start justify-center gap-2">
-                  <Button
+
+                  {selectedDataForView?.slipImage ? (
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:download-sharp" />}
+                      onClick={() => handleDownloadDoc(selectedDataForView)}
+                    >
+                      Document
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+
+
+                  {/* <Button
                     variant="contained"
                     startIcon={<Icon icon="material-symbols:download-sharp" />}
                   >
                     Document
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
