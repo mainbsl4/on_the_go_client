@@ -60,6 +60,12 @@ export default function Lone_request_Admin_Table() {
   const [status, setStatus] = React.useState(null);
   const [comment, setComment] = React.useState("");
 
+  // for search
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [amountSearchQuery, setAmountSearchQuery] = useState("");
+  const [regSearchQuery, setRegSearchQuery] = useState("");
+
   const dispatch: AppDispatch = useDispatch();
   const loading = useSelector((state: RootState) => state?.loan?.loading);
 
@@ -68,7 +74,44 @@ export default function Lone_request_Admin_Table() {
     (state: RootState) => state?.loan?.loan?.data
   );
   const loanList = Array.isArray(loanListAll)
-    ? loanListAll?.slice().reverse() : [];
+    ? loanListAll?.slice().reverse()
+    : [];
+
+  // for search
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value);
+  };
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value);
+  };
+
+  const handleAmountSearchQueryChange = (event) => {
+    setAmountSearchQuery(event.target.value);
+  };
+
+  const handleRegSearchQueryChange = (event) => {
+    setRegSearchQuery(event.target.value);
+  };
+
+  const filteredData = (Array.isArray(loanList) ? loanList : []).filter(
+    (data) => {
+      const itemDate = dayjs(data.settlmentDate);
+      const from = fromDate ? dayjs(fromDate) : null;
+      const to = toDate ? dayjs(toDate) : null;
+
+      return (
+        data.amount.toString().includes(amountSearchQuery) &&
+        data?.user?.regNo
+          .toLowerCase()
+          .includes(regSearchQuery.toLowerCase()) &&
+        (!from ||
+          itemDate.isAfter(from, "day") ||
+          itemDate.isSame(from, "day")) &&
+        (!to || itemDate.isBefore(to, "day") || itemDate.isSame(to, "day"))
+      );
+    }
+  );
 
   React.useEffect(() => {
     dispatch(getAllLoanReq());
@@ -152,22 +195,21 @@ export default function Lone_request_Admin_Table() {
   //   console.log("Comment:", comment);
   // };
 
-
   const handleUpdate = async () => {
     console.log("Selected Status:", status);
     const response = await dispatch(
-      updateLoanStatus({ id: selectedDataForView?.id, data: status, comment: comment })
+      updateLoanStatus({
+        id: selectedDataForView?.id,
+        data: status,
+        comment: comment,
+      })
     );
 
     if (response) {
       setOpenModalForView(false);
       actionDataGet(500);
     }
-
   };
-
-
-
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -175,6 +217,41 @@ export default function Lone_request_Admin_Table() {
     </div>
   ) : (
     <div>
+      <div className="mb-4 flex gap-4">
+        <TextField
+          label="From Date"
+          type="date"
+          variant="outlined"
+          value={fromDate}
+          onChange={handleFromDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="To Date"
+          type="date"
+          variant="outlined"
+          value={toDate}
+          onChange={handleToDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+
+        <TextField
+          label="Search by Amount"
+          variant="outlined"
+          value={amountSearchQuery}
+          onChange={handleAmountSearchQueryChange}
+        />
+        <TextField
+          label="Search by Reg No"
+          variant="outlined"
+          value={regSearchQuery}
+          onChange={handleRegSearchQueryChange}
+        />
+      </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
@@ -209,7 +286,7 @@ export default function Lone_request_Admin_Table() {
           </tr>
         </thead>
         <tbody>
-          {loanList?.map((loanList, index) => (
+          {filteredData?.map((loanList, index) => (
             <tr className="bg-white border-b " key={loanList.id}>
               <td className="px-6 py-4">{index + 1}</td>
               <td className="px-6 py-4">{loanList.reqDate}</td>
