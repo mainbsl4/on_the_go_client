@@ -16,7 +16,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 // for modal style
 const style = {
@@ -42,14 +42,17 @@ const ApproveStatus = [
   // },
 ];
 export default function Users_table() {
+  // for search
+  const [regSearchQuery, setRegSearchQuery] = React.useState("");
+  const [emailSearchQuery, setEmailSearchQuery] = React.useState("");
+  const [phoneSearchQuery, setPhoneSearchQuery] = React.useState("");
+
   // for user status
-  const [id, setId] = React.useState(null)
-  
+  const [id, setId] = React.useState(null);
+
   // get api
-  const loading = useSelector(
-    (state: RootState) => state?.user?.loading
-  );
-  
+  const loading = useSelector((state: RootState) => state?.user?.loading);
+
   const getAllUsers = useSelector(
     (state: RootState) => state?.user?.users?.data
   );
@@ -62,7 +65,7 @@ export default function Users_table() {
   console.log("fffff", getAllUsers);
 
   // get data from dropdown
-  
+
   const handleChange = (event, newValue) => {
     if (newValue?.value === true) {
       dispatch(approveUser(id));
@@ -126,16 +129,60 @@ export default function Users_table() {
     },
   ];
 
-  const rows = getAllUsers;
+  // for search
+  const handleRegSearchQueryChange = (event) => {
+    setRegSearchQuery(event.target.value);
+  };
+
+  const handleEmailSearchQueryChange = (event) => {
+    setEmailSearchQuery(event.target.value);
+  };
+  const handlePhoneSearchQueryChange = (event) => {
+    setPhoneSearchQuery(event.target.value);
+  };
+
+  const filteredData = (Array.isArray(getAllUsers) ? getAllUsers : []).filter(
+    (data) => {
+      return (
+        data?.regNo.toLowerCase().includes(regSearchQuery.toLowerCase()) &&
+        data?.email.toLowerCase().includes(emailSearchQuery.toLowerCase()) &&
+        data?.mobile.toString().includes(phoneSearchQuery.toLowerCase())
+      );
+    }
+  );
+
+  const rows = filteredData;
 
   return (
     <div>
-       {loading ? (
+      {loading ? (
         <div className="flex justify-center items-center h-[90vh]">
           <CircularProgress />
         </div>
       ) : (
-        <DataGridTable rows={rows} columns={columns} />
+        <div>
+          <div className="mb-4 flex gap-4">
+            <TextField
+              label="Search by Reg No"
+              variant="outlined"
+              value={regSearchQuery}
+              onChange={handleRegSearchQueryChange}
+            />
+            <TextField
+              label="Search by Email"
+              variant="outlined"
+              value={emailSearchQuery}
+              onChange={handleEmailSearchQueryChange}
+            />
+            <TextField
+              label="Search by Phone"
+              variant="outlined"
+              value={phoneSearchQuery}
+              onChange={handlePhoneSearchQueryChange}
+            />
+          </div>
+          <DataGridTable rows={rows} columns={columns} />
+        </div>
       )}
 
       {/* for view modal */}
@@ -173,7 +220,7 @@ export default function Users_table() {
                 <p>Address: </p>
                 <p>{selectedDataForView?.bisunessAdd}</p>
               </div>
-              
+
               <div className="border flex py-2 pl-2 mt-1">
                 <p>Status: </p>
                 <p>
