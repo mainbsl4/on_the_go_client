@@ -573,6 +573,13 @@ function a11yProps(index: number) {
 export default function Visa_Application_List_Table() {
   // get data
   const [data, setData] = React.useState([]);
+
+  // for search 
+  const [fromDate, setFromDate] = React.useState("");
+  const [toDate, setToDate] = React.useState("");
+  const [passportNoSearchQuery, setPassportNoSearchQuery] = React.useState("");
+
+
   // const [regNumber, setRegNumber] = React.useState([]);
 
   // loading
@@ -691,6 +698,35 @@ export default function Visa_Application_List_Table() {
     const storedUserId = localStorage.getItem("userId");
     dispatch(getUser(JSON.parse(storedUserId)));
   }, []);
+
+  // for search
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value);
+  };
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value);
+  };
+
+  const handlePassportNoSearchQueryChange = (event) => {
+    setPassportNoSearchQuery(event.target.value);
+  };
+
+
+  const filteredData = data.filter((data) => {
+    const itemDate = dayjs(data.created_at);
+    const from = fromDate ? dayjs(fromDate) : null;
+    const to = toDate ? dayjs(toDate) : null;
+    return (
+      data?.passportNo
+        .toLowerCase()
+        .includes(passportNoSearchQuery.toLowerCase()) &&
+      (!from ||
+        itemDate.isAfter(from, "day") ||
+        itemDate.isSame(from, "day")) &&
+      (!to || itemDate.isBefore(to, "day") || itemDate.isSame(to, "day"))
+    );
+  });
 
   // formik validation
   const initialValues: UpdateVisaApplyFormValues = {
@@ -973,6 +1009,34 @@ export default function Visa_Application_List_Table() {
     </div>
   ) : (
     <div>
+      <div className="mb-4 flex gap-4">
+        <TextField
+          label="From Date"
+          type="date"
+          variant="outlined"
+          value={fromDate}
+          onChange={handleFromDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="To Date"
+          type="date"
+          variant="outlined"
+          value={toDate}
+          onChange={handleToDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="Search by Passport"
+          variant="outlined"
+          value={passportNoSearchQuery}
+          onChange={handlePassportNoSearchQueryChange}
+        />
+      </div>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -996,6 +1060,9 @@ export default function Visa_Application_List_Table() {
               <tr>
                 <th scope="col" className="px-6 py-3">
                   SL
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 {/* <th scope="col" className="px-6 py-3">
                   Reg NO
@@ -1033,7 +1100,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => (
+              {filteredData?.map((reversedgetVesaApplyData, index) => (
                 <tr
                   className="bg-white border-b "
                   key={reversedgetVesaApplyData?.id}
@@ -1043,6 +1110,12 @@ export default function Visa_Application_List_Table() {
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                   >
                     {index + 1}
+                  </td>
+                  <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
                   </td>
                   {/* <td className="px-6 py-4">
                     {regNumber}
@@ -1143,6 +1216,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1175,7 +1251,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "SUBMITTED") {
                   return (
                     <tr
@@ -1188,6 +1264,12 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1284,6 +1366,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1316,7 +1401,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "CANCELLED") {
                   return (
                     <tr
@@ -1329,6 +1414,13 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1425,6 +1517,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1457,7 +1552,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "RECEIVED") {
                   return (
                     <tr
@@ -1470,6 +1565,12 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1566,6 +1667,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1598,7 +1702,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "APPLIED") {
                   return (
                     <tr
@@ -1611,6 +1715,12 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1707,6 +1817,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1739,7 +1852,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "APPROVED") {
                   return (
                     <tr
@@ -1752,6 +1865,12 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1848,6 +1967,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -1880,7 +2002,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "REJECTED") {
                   return (
                     <tr
@@ -1893,6 +2015,12 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1989,6 +2117,9 @@ export default function Visa_Application_List_Table() {
                   SL
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -2021,7 +2152,7 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {data?.map((reversedgetVesaApplyData, index) => {
+              {filteredData?.map((reversedgetVesaApplyData, index) => {
                 if (reversedgetVesaApplyData?.isApproved === "DELIVERED") {
                   return (
                     <tr
@@ -2034,6 +2165,12 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                      <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.created_at)
+                        .toISOString()
+                        .split("T")[0]}
+                  </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
