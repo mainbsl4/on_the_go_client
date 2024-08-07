@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Icon } from "@iconify/react";
 // import '../assets/css/style.css'
 
 interface SigninResponse {
@@ -20,6 +21,15 @@ interface SigninResponse {
 }
 
 export default function page() {
+  // for passwoed
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+
+  // for password
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state?.user);
@@ -88,16 +98,29 @@ export default function page() {
                     <label className="block mb-2 text-sm font-medium text-gray-900 ">
                       Password
                     </label>
-                    <Field
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    />
-                    {touched.password && errors.password && (
-                      <div>{errors.password}</div>
-                    )}
+                    <div className="relative">
+                      <Field
+                        type={passwordVisible ? "text" : "password"}
+                        name="password"
+                        id="password"
+                        placeholder="••••••••"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                      >
+                        {passwordVisible ? (
+                          <Icon icon="carbon:view-off" />
+                        ) : (
+                          <Icon icon="hugeicons:view" />
+                        )}
+                      </button>
+                      {touched.password && errors.password && (
+                        <div>{errors.password}</div>
+                      )}
+                    </div>
                   </div>
                   {/* <div className="flex items-center justify-between">
                     <div className="flex items-start"></div>

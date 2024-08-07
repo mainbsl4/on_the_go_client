@@ -12,6 +12,7 @@ import Link from "next/link";
 import { AppDispatch } from "../lib/store/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Icon } from "@iconify/react";
 
 interface SignupResponse {
   error?: string;
@@ -21,6 +22,20 @@ export default function page() {
   // for acceptTerms
   const [acceptTerms, setAcceptTerms] = React.useState(false);
   const [errorTerms, setErrorTerms] = React.useState(false);
+  //  for passwoed
+  const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] =
+    React.useState(false);
+
+  // for password
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
 
   // const count = useSelector((state: RootState) => state?.counter.value);
   const dispatch: AppDispatch = useDispatch();
@@ -89,10 +104,10 @@ export default function page() {
             >
               {({ isSubmitting, touched, errors }) => (
                 <Form action="#">
-                  <div className="space-y-4 md:space-y-6 grid grid-cols-2 gap-2">
+                  <div className="space-y-4 md:space-y-6 grid md:grid-cols-2 gap-2">
                     <div>
                       <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                        Enter Owner/Representative Name
+                        Owner/Representative Name
                       </label>
                       <Field
                         type="text"
@@ -216,48 +231,64 @@ export default function page() {
                       </Field>
                       {touched.city && errors.city && <div>{errors.city}</div>}
                     </div>
+
                     <div>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                      <label className="block mb-2 text-sm font-medium text-gray-900">
                         Password
                       </label>
+                      <div className="relative">
                       <Field
-                        type="password"
+                        type={passwordVisible ? "text" : "password"}
                         name="password"
                         id="password"
                         placeholder="••••••••"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                      >
+                        {passwordVisible ? (
+                          <Icon icon="carbon:view-off" />
+                        ) : (
+                          <Icon icon="hugeicons:view" />
+                        )}
+                      </button>
                       {touched.password && errors.password && (
                         <div>{errors.password}</div>
                       )}
+                      </div>
                     </div>
-                    {/* <div>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                        Confirm password
+
+                    <div className=" mt-4">
+                      <label className="block mb-2 text-sm font-medium text-gray-900">
+                        Confirm Password
                       </label>
+                      <div className="relative">
                       <Field
-                        type="confirm-password"
-                        name="confirm-password"
-                        id="confirm-password"
+                        type={confirmPasswordVisible ? "text" : "password"}
+                        name="confirmPassword"
+                        id="confirmPassword"
                         placeholder="••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 0"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       />
-                    </div> */}
-                     <div>
-          <label className="block mb-2 text-sm font-medium text-gray-900">
-            Confirm Password
-          </label>
-          <Field
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="••••••••"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-          />
-          {touched.confirmPassword && errors.confirmPassword && (
-            <div>{errors.confirmPassword}</div>
-          )}
-        </div>
+                      <button
+                        type="button"
+                        className="absolute inset-y-0 right-0 top-0 pr-3 flex items-center text-sm leading-5"
+                        onClick={toggleConfirmPasswordVisibility}
+                      >
+                        {confirmPasswordVisible ? (
+                          <Icon icon="carbon:view-off" />
+                        ) : (
+                          <Icon icon="hugeicons:view" />
+                        )}
+                      </button>
+                      {touched.confirmPassword && errors.confirmPassword && (
+                        <div>{errors.confirmPassword}</div>
+                      )}
+                      </div>
+                    </div>
                   </div>
                   <br />
                   <div className="flex flex-col justify-center items-center">
