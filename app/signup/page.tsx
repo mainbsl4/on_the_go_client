@@ -237,27 +237,27 @@ export default function page() {
                         Password
                       </label>
                       <div className="relative">
-                      <Field
-                        type={passwordVisible ? "text" : "password"}
-                        name="password"
-                        id="password"
-                        placeholder="••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      />
-                      <button
-                        type="button"
-                        onClick={togglePasswordVisibility}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                      >
-                        {passwordVisible ? (
-                          <Icon icon="carbon:view-off" />
-                        ) : (
-                          <Icon icon="hugeicons:view" />
+                        <Field
+                          type={passwordVisible ? "text" : "password"}
+                          name="password"
+                          id="password"
+                          placeholder="••••••••"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        />
+                        <button
+                          type="button"
+                          onClick={togglePasswordVisibility}
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                        >
+                          {passwordVisible ? (
+                            <Icon icon="carbon:view-off" />
+                          ) : (
+                            <Icon icon="hugeicons:view" />
+                          )}
+                        </button>
+                        {touched.password && errors.password && (
+                          <div>{errors.password}</div>
                         )}
-                      </button>
-                      {touched.password && errors.password && (
-                        <div>{errors.password}</div>
-                      )}
                       </div>
                     </div>
 
@@ -266,27 +266,27 @@ export default function page() {
                         Confirm Password
                       </label>
                       <div className="relative">
-                      <Field
-                        type={confirmPasswordVisible ? "text" : "password"}
-                        name="confirmPassword"
-                        id="confirmPassword"
-                        placeholder="••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      />
-                      <button
-                        type="button"
-                        className="absolute inset-y-0 right-0 top-0 pr-3 flex items-center text-sm leading-5"
-                        onClick={toggleConfirmPasswordVisibility}
-                      >
-                        {confirmPasswordVisible ? (
-                          <Icon icon="carbon:view-off" />
-                        ) : (
-                          <Icon icon="hugeicons:view" />
+                        <Field
+                          type={confirmPasswordVisible ? "text" : "password"}
+                          name="confirmPassword"
+                          id="confirmPassword"
+                          placeholder="••••••••"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 top-0 pr-3 flex items-center text-sm leading-5"
+                          onClick={toggleConfirmPasswordVisibility}
+                        >
+                          {confirmPasswordVisible ? (
+                            <Icon icon="carbon:view-off" />
+                          ) : (
+                            <Icon icon="hugeicons:view" />
+                          )}
+                        </button>
+                        {touched.confirmPassword && errors.confirmPassword && (
+                          <div>{errors.confirmPassword}</div>
                         )}
-                      </button>
-                      {touched.confirmPassword && errors.confirmPassword && (
-                        <div>{errors.confirmPassword}</div>
-                      )}
                       </div>
                     </div>
                   </div>
