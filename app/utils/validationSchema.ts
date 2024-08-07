@@ -15,11 +15,11 @@ export const SignUpFormSchema = Yup.object().shape({
   city: Yup.string().required("city is required"),
   // password: Yup.string().required("Password is required"),
   password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm password is required'),
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm password is required"),
 });
 
 export const SigninFormSchema = Yup.object().shape({
