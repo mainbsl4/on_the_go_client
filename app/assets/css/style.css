@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.bgImgSignin{
+    background-image: url("https://res.cloudinary.com/db7ovrkki/image/upload/v1722509563/va2c5dl6segwhezrvcwm.png");
+    background-position: center;
+    background-size: cover;
+}
+
+
+.bgImgSignUp{
+    background-image: url("https://res.cloudinary.com/db7ovrkki/image/upload/v1723015530/onthegoSignupBgi_iuwvzb.jpg");
+    background-position: center;
+    background-size: cover;
+}

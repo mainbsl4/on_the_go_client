@@ -5,12 +5,13 @@ export interface MyFormValues {
 export interface SignupFormValues {
   userName: string;
   email: string;
-  password: string;
   mobile: string;
   companyName: string;
   bisunessAdd: string;
   country: string;
   city: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface SigninFormValues {

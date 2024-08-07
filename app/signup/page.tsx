@@ -28,16 +28,16 @@ export default function page() {
   const initialValues: SignupFormValues = {
     userName: "",
     email: "",
-    password: "",
     mobile: "",
     companyName: "",
     bisunessAdd: "",
     country: "",
     city: "",
+    password: "",
+    confirmPassword: "",
   };
 
   const handleSubmit = async (values: SignupFormValues) => {
-
     try {
       // Dispatch the action to log in the user
       const response = (await dispatch(registerUser(values))) as SignupResponse;
@@ -52,7 +52,6 @@ export default function page() {
     } catch (error) {
       console.error("Login failed:", error);
     }
-   
 
     console.log(values);
   };
@@ -70,7 +69,7 @@ export default function page() {
   };
 
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-gray-50 bgImgSignUp">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="#"
@@ -168,7 +167,7 @@ export default function page() {
                     </div>
 
                     <div>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <label className="block mb-2 text-sm font-medium text-gray-900 ">
                         Cuntry
                       </label>
                       <Field
@@ -185,7 +184,7 @@ export default function page() {
                       )}
                     </div>
                     <div>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <label className="block mb-2 text-sm font-medium text-gray-900">
                         City
                       </label>
                       <Field
@@ -244,6 +243,21 @@ export default function page() {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 0"
                       />
                     </div> */}
+                     <div>
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            Confirm Password
+          </label>
+          <Field
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="••••••••"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+          />
+          {touched.confirmPassword && errors.confirmPassword && (
+            <div>{errors.confirmPassword}</div>
+          )}
+        </div>
                   </div>
                   <br />
                   <div className="flex flex-col justify-center items-center">
