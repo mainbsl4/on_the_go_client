@@ -916,6 +916,8 @@ export default function Visa_Application_List_Table() {
   //     .catch(() => alert('An error occurred while downloading the image.'));
   // };
   const router = useRouter();
+
+  
   const handleDownloadVisa = async (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileName = `${data?.givenName}-visa.pdf`;
