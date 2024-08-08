@@ -287,7 +287,7 @@ export default function RootLayout({
     }
   }, [user, dispatch]);
 
-  const [totalBalance, setTotalBalance] = React.useState(0)
+  const [totalBalance, setTotalBalance] = React.useState(0);
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -301,59 +301,70 @@ export default function RootLayout({
           console.log("User IDs match, staying on the current page.");
         }
 
-        const totalDepo = user?.data?.deposit_request ? user?.data?.deposit_request : user?.user?.deposit_request;
+        const totalDepo = user?.data?.deposit_request
+          ? user?.data?.deposit_request
+          : user?.user?.deposit_request;
         console.log(totalDepo);
 
         // Filter deposits to include only those with status 'APPROVED'
-        const approvedDeposits = totalDepo?.filter(depo => depo?.isApproved === 'APPROVED');
+        const approvedDeposits = totalDepo?.filter(
+          (depo) => depo?.isApproved === "APPROVED"
+        );
 
         // Calculate the total deposit amount for approved deposits
-        const totalDepoAmount = approvedDeposits?.reduce((sum, depo) => sum + depo?.amount, 0);
-        console.log('Total Deposit Amount for Approved Deposits:', totalDepoAmount);
+        const totalDepoAmount = approvedDeposits?.reduce(
+          (sum, depo) => sum + depo?.amount,
+          0
+        );
+        console.log(
+          "Total Deposit Amount for Approved Deposits:",
+          totalDepoAmount
+        );
 
-
-        const totalLoan = user?.data?.loan_request ? user?.data?.loan_request : user?.user?.loan_request;
+        const totalLoan = user?.data?.loan_request
+          ? user?.data?.loan_request
+          : user?.user?.loan_request;
         console.log(totalLoan);
 
         // Filter loans to include only those with status 'APPROVED'
-        const approvedLoans = totalLoan?.filter(loan => loan?.isApproved === 'APPROVED');
+        const approvedLoans = totalLoan?.filter(
+          (loan) => loan?.isApproved === "APPROVED"
+        );
 
         // Calculate the total loan amount for approved loans
-        const totalLoanAmount = approvedLoans?.reduce((sum, loan) => sum + loan?.amount, 0);
-        console.log('Total Loan Amount for Approved Loans:', totalLoanAmount);
+        const totalLoanAmount = approvedLoans?.reduce(
+          (sum, loan) => sum + loan?.amount,
+          0
+        );
+        console.log("Total Loan Amount for Approved Loans:", totalLoanAmount);
 
-
-
-        const totalVisa = user?.data?.visa_apply ? user?.data?.visa_apply : user?.user?.visa_apply;
+        const totalVisa = user?.data?.visa_apply
+          ? user?.data?.visa_apply
+          : user?.user?.visa_apply;
         console.log(totalLoan);
 
         // Filter loans to include only those with status 'APPROVED'
-        const deliveredVisa = totalVisa?.filter(visa => visa?.isApproved === 'DELIVERED');
+        const deliveredVisa = totalVisa?.filter(
+          (visa) => visa?.isApproved === "DELIVERED"
+        );
 
         // Calculate the total loan amount for approved loans
-        const totalVisaAmount = deliveredVisa?.reduce((sum, visa) => sum + visa?.sellingPrise, 0);
-        console.log('Total Loan Amount for Approved Loans:', totalVisaAmount);
-
-
-
+        const totalVisaAmount = deliveredVisa?.reduce(
+          (sum, visa) => sum + visa?.sellingPrise,
+          0
+        );
+        console.log("Total Loan Amount for Approved Loans:", totalVisaAmount);
 
         // Calculate the total balance by adding total deposit, loan, and visa amounts
 
-
-        const totalAddedBalance = totalDepoAmount + totalLoanAmount - totalVisaAmount
+        const totalAddedBalance =
+          totalDepoAmount + totalLoanAmount - totalVisaAmount;
         dispatch(setTotalAddedBalance(totalAddedBalance));
-        setTotalBalance(totalAddedBalance)
-
-
-
+        setTotalBalance(totalAddedBalance);
       }, 1000); // 1 seconds delay
 
       // Clean up the timeout if the component unmounts
       return () => clearTimeout(timeoutId);
-
-
-
-
     }
   }, [user, router, dispatch]);
 
@@ -361,7 +372,7 @@ export default function RootLayout({
     router.push(params);
   };
 
-  // logout 
+  // logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -375,9 +386,7 @@ export default function RootLayout({
     }
   }, []);
 
-
-
-  // for profile button 
+  // for profile button
   const [showDetails, setShowDetails] = React.useState(false);
 
   const toggleDetails = () => {
@@ -389,7 +398,7 @@ export default function RootLayout({
       {/* <Icon icon="mdi-light:home" /> */}
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open} >
+        <AppBar position="fixed" open={open}>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             {/* <IconButton
               color="inherit"
@@ -409,22 +418,51 @@ export default function RootLayout({
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Avatar
                 sx={{ bgcolor: deepOrange[500] }}
-                alt={user?.data?.userName ? user?.data?.userName : user?.user?.userName}
+                alt={
+                  user?.data?.userName
+                    ? user?.data?.userName
+                    : user?.user?.userName
+                }
                 src="/broken-image.jpg"
                 onClick={toggleDetails}
               />
               {showDetails && (
-                <div className="p-2 bg-slate-100 shadow border rounded text-black" style={{ marginTop: 2, position: "absolute", top: "65px", right: "0px" }}>
-                  <p className="border-b-2 py-1">Name: {user?.data?.userName ? user?.data?.userName : user?.user?.userName}</p>
-                  <p className="border-b-2 py-1">Register No: {user?.data?.userName ? user?.data?.regNo : user?.user?.regNo}</p>
+                <div
+                  className="p-2 bg-slate-100 shadow border rounded text-black"
+                  style={{
+                    marginTop: 2,
+                    position: "absolute",
+                    top: "65px",
+                    right: "0px",
+                  }}
+                >
+                  <p className="border-b-2 py-1">
+                    Name:{" "}
+                    {user?.data?.userName
+                      ? user?.data?.userName
+                      : user?.user?.userName}
+                  </p>
+                  <p className="border-b-2 py-1">
+                    Register No:{" "}
+                    {user?.data?.userName
+                      ? user?.data?.regNo
+                      : user?.user?.regNo}
+                  </p>
                   <p className="border-b-2 py-1">Balance: {totalBalance}</p>
-                  <div className=" py-1 text-center"><Button variant="contained" color="error" onClick={handleLogout}>Logout</Button></div>
+                  <div className=" py-1 text-center">
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
+                  </div>
                   {/* <Button variant="outlined">Settings</Button> */}
                 </div>
               )}
             </Box>
           </Toolbar>
-
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
