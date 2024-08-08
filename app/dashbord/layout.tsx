@@ -361,6 +361,13 @@ export default function RootLayout({
     router.push(params);
   };
 
+  // logout 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    router.push("/signin");
+  };
+
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       const storedToken = localStorage.getItem("token");
@@ -411,7 +418,7 @@ export default function RootLayout({
                   <p className="border-b-2 py-1">Name: {user?.data?.userName ? user?.data?.userName : user?.user?.userName}</p>
                   <p className="border-b-2 py-1">Register No: {user?.data?.userName ? user?.data?.regNo : user?.user?.regNo}</p>
                   <p className="border-b-2 py-1">Balance: {totalBalance}</p>
-                  <div className=" py-1 text-center"><Button variant="contained" color="error">Logout</Button></div>
+                  <div className=" py-1 text-center"><Button variant="contained" color="error" onClick={handleLogout}>Logout</Button></div>
                   {/* <Button variant="outlined">Settings</Button> */}
                 </div>
               )}
