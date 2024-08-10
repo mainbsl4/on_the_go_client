@@ -119,7 +119,7 @@ export default function Lone_request_table() {
     const to = toDate ? dayjs(toDate) : null;
 
     return (
-      data.amount.toString().includes(amountSearchQuery) &&
+      data?.amount?.toString().includes(amountSearchQuery) &&
       (!from ||
         itemDate.isAfter(from, "day") ||
         itemDate.isSame(from, "day")) &&

@@ -169,9 +169,9 @@ export default function Deposit_request_table() {
 
   const filteredData = data.filter(
     (item) =>
-      item.amount.toString().includes(amountSearchQuery) &&
-      item.bankName.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
-      item.trnId.toString().includes(trnIdSearchQuery.toLowerCase())
+      item?.amount?.toString().includes(amountSearchQuery) &&
+      item?.bankName?.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
+      item?.trnId?.toString().includes(trnIdSearchQuery.toLowerCase())
   );
   // -----------------------------------
 

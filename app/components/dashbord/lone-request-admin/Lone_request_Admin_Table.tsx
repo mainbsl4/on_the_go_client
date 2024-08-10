@@ -103,7 +103,7 @@ export default function Lone_request_Admin_Table() {
       const to = toDate ? dayjs(toDate) : null;
 
       return (
-        data.amount.toString().includes(amountSearchQuery) &&
+        data?.amount?.toString().includes(amountSearchQuery) &&
         data?.user?.regNo
           .toLowerCase()
           .includes(regSearchQuery.toLowerCase()) &&
