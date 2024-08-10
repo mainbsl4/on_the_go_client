@@ -59,19 +59,19 @@ const linkData = [
   {
     id: 33,
     text: "Deposit Request Admin",
-    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
+    icon: <Icon className="text-3xl" icon="carbon:money" />,
     link: "/dashbord/deposit-request-admin",
   },
   {
     id: 9,
     text: "Lone Request Admin",
-    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    icon: <Icon className="text-3xl" icon="icon-park-outline:list-fail" />,
     link: "/dashbord/lone-request-admin",
   },
   {
     id: 7,
     text: "Profit Loss",
-    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    icon: <Icon className="text-3xl" icon="foundation:graph-bar" />,
     link: "/dashbord/profit-loss",
   },
 
@@ -106,21 +106,21 @@ const userLinkData = [
   {
     id: 3,
     text: "Deposit Request",
-    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
+    icon: <Icon className="text-3xl" icon="tdesign:money" />,
     link: "/dashbord/deposit-request",
   },
   {
     id: 33,
     text: "Deposit Request List",
-    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
+    icon: <Icon className="text-3xl" icon="carbon:money" />,
     link: "/dashbord/deposit-request-list",
   },
-  {
-    id: 4,
-    text: "Top Up",
-    icon: <Icon className="text-3xl" icon="solar:circle-top-up-broken" />,
-    link: "/dashbord/top-up",
-  },
+  // {
+  //   id: 4,
+  //   text: "Top Up",
+  //   icon: <Icon className="text-3xl" icon="solar:circle-top-up-broken" />,
+  //   link: "/dashbord/top-up",
+  // },
   // {
   //   id: 5,
   //   text: "Cancel Booking",
@@ -142,7 +142,7 @@ const userLinkData = [
   {
     id: 66,
     text: "Lone Request List",
-    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    icon: <Icon className="text-3xl" icon="icon-park-outline:list-fail" />,
     link: "/dashbord/lone-request-list",
   },
 
