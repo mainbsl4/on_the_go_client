@@ -38,68 +38,12 @@ const linkData = [
     icon: <Icon className="text-3xl" icon="ph:users" />,
     link: "/dashbord/users",
   },
-  {
-    id: 7,
-    text: "Visa Apply",
-    icon: <Icon className="text-3xl" icon="codicon:git-stash-apply" />,
-    link: "/dashbord/visa-apply",
-  },
-  {
-    id: 8,
-    text: "Visa Application List",
-    icon: <Icon className="text-3xl" icon="streamline:task-list" />,
-    link: "/dashbord/visa-application-list",
-  },
   // {
-  //   id: 2,
-  //   text: "Bank Details Admin",
-  //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
-  //   link: "/dashbord/bank-details-admin",
+  //   id: 7,
+  //   text: "Visa Apply",
+  //   icon: <Icon className="text-3xl" icon="codicon:git-stash-apply" />,
+  //   link: "/dashbord/visa-apply",
   // },
-  {
-    id: 3,
-    text: "Deposit Request",
-    icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
-    link: "/dashbord/deposit-request",
-  },
-  {
-    id: 4,
-    text: "Top Up",
-    icon: <Icon className="text-3xl" icon="solar:circle-top-up-broken" />,
-    link: "/dashbord/top-up",
-  },
-  // {
-  //   id: 5,
-  //   text: "Cancel Booking",
-  //   icon: (
-  //     <Icon
-  //       className="text-3xl"
-  //       icon="material-symbols-light:free-cancellation"
-  //     />
-  //   ),
-  //   link: "/dashbord/cancle-booking",
-  // },
-
-  {
-    id: 6,
-    text: "Lone Request",
-    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
-    link: "/dashbord/lone-request",
-  },
-];
-const userLinkData = [
-  {
-    id: 1,
-    text: "Users",
-    icon: <Icon className="text-3xl" icon="ph:users" />,
-    link: "/dashbord/users",
-  },
-  {
-    id: 7,
-    text: "Visa Apply",
-    icon: <Icon className="text-3xl" icon="codicon:git-stash-apply" />,
-    link: "/dashbord/visa-apply",
-  },
   {
     id: 88,
     text: "Visa Application List Admin",
@@ -108,28 +52,57 @@ const userLinkData = [
   },
   {
     id: 8,
-    text: "Visa Application List",
-    icon: <Icon className="text-3xl" icon="streamline:task-list" />,
-    link: "/dashbord/visa-application-list",
-  },
-  {
-    id: 8,
     text: "Bank Details Admin",
     icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
     link: "/dashbord/bank-details-admin",
   },
-  // {
-  //   id: 2,
-  //   text: "Bank Details",
-  //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
-  //   link: "/dashbord/bank-details",
-  // },
   {
     id: 33,
     text: "Deposit Request Admin",
     icon: <Icon className="text-3xl" icon="ph:hand-deposit" />,
     link: "/dashbord/deposit-request-admin",
   },
+  {
+    id: 9,
+    text: "Lone Request Admin",
+    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    link: "/dashbord/lone-request-admin",
+  },
+  {
+    id: 7,
+    text: "Profit Loss",
+    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
+    link: "/dashbord/profit-loss",
+  },
+
+];
+const userLinkData = [
+  // {
+  //   id: 1,
+  //   text: "Users",
+  //   icon: <Icon className="text-3xl" icon="ph:users" />,
+  //   link: "/dashbord/users",
+  // },
+  {
+    id: 7,
+    text: "Visa Apply",
+    icon: <Icon className="text-3xl" icon="codicon:git-stash-apply" />,
+    link: "/dashbord/visa-apply",
+  },
+  {
+    id: 8,
+    text: "Visa Application List",
+    icon: <Icon className="text-3xl" icon="streamline:task-list" />,
+    link: "/dashbord/visa-application-list",
+  },
+ 
+  // {
+  //   id: 2,
+  //   text: "Bank Details",
+  //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
+  //   link: "/dashbord/bank-details",
+  // },
+
   {
     id: 3,
     text: "Deposit Request",
@@ -159,12 +132,7 @@ const userLinkData = [
   //   ),
   //   link: "/dashbord/cancle-booking",
   // },
-  {
-    id: 9,
-    text: "Lone Request Admin",
-    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
-    link: "/dashbord/lone-request-admin",
-  },
+
   {
     id: 6,
     text: "Lone Request",
@@ -177,12 +145,7 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="la:clone-solid" />,
     link: "/dashbord/lone-request-list",
   },
-  {
-    id: 7,
-    text: "Profit Loss",
-    icon: <Icon className="text-3xl" icon="la:clone-solid" />,
-    link: "/dashbord/profit-loss",
-  },
+
 ];
 
 const drawerWidth = 280;

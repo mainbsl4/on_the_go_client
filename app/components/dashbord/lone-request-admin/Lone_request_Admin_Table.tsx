@@ -31,6 +31,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //for modal style
 const style = {
@@ -206,6 +208,10 @@ export default function Lone_request_Admin_Table() {
     );
 
     if (response) {
+
+      toast.success(`status updated to ${status}`, {
+        position: "top-center",
+      });
       setOpenModalForView(false);
       actionDataGet(500);
     }

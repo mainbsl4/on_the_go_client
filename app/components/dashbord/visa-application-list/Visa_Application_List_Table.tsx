@@ -713,7 +713,7 @@ export default function Visa_Application_List_Table() {
   };
 
 
-  const filteredData = data.filter((data) => {
+  const filteredData = data?.filter((data) => {
     const itemDate = dayjs(data.created_at);
     const from = fromDate ? dayjs(fromDate) : null;
     const to = toDate ? dayjs(toDate) : null;
@@ -2346,8 +2346,9 @@ export default function Visa_Application_List_Table() {
                 <div className="grid min-h-[140px] w-8/12 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
                   <Image
                     className=" w-full rounded-lg h-96"
-                    width={100}
-                    height={100}
+                    // width={600}
+                    // height={600}
+                      layout="fill"
                     // src={{()i => mageUrl()}}
                     src={selectedDataForView?.image}
                     alt="nature image"

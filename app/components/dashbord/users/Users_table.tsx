@@ -9,6 +9,7 @@ import DataGridTable from "../../table/DataGridTable";
 import {
   Autocomplete,
   Box,
+  Button,
   Chip,
   IconButton,
   Modal,
@@ -17,6 +18,8 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // for modal style
 const style = {
@@ -36,10 +39,10 @@ const ApproveStatus = [
     label: "Approve",
     value: true,
   },
-  // {
-  //   label: "Reject",
-  //   value: false,
-  // },
+  {
+    label: "Reject",
+    value: false,
+  },
 ];
 export default function Users_table() {
   // for search
@@ -49,6 +52,7 @@ export default function Users_table() {
 
   // for user status
   const [id, setId] = React.useState(null);
+  const [status, setStatus] = React.useState(null);
 
   // get api
   const loading = useSelector((state: RootState) => state?.user?.loading);
@@ -62,17 +66,47 @@ export default function Users_table() {
     dispatch(getUsers());
   }, [dispatch]);
 
+  const actionDataGet = (sec) => {
+    setTimeout(() => {
+      dispatch(getUsers());
+    }, sec);
+  };
+
   console.log("fffff", getAllUsers);
 
   // get data from dropdown
 
   const handleChange = (event, newValue) => {
-    if (newValue?.value === true) {
-      dispatch(approveUser(id));
+      setStatus(newValue?.value)
       // console.log("id", id);
       // console.log(newValue?.value);
-    }
+
   };
+
+
+  const handleUpdate = async () => {
+
+    console.log(status);
+    
+
+    const response = await
+      dispatch(approveUser({
+        id: id,
+        data: status,
+      }));
+    if (response) {
+      toast.success(`status updated to ${status === true ? 'APPROVED' : 'REJECT'}`, {
+        position: "top-center",
+      });
+      setOpenModalForView(false);
+      actionDataGet(500);
+    }
+
+  };
+
+
+
+
 
   // for modal
   // for view modal
@@ -240,13 +274,16 @@ export default function Users_table() {
                   id="combo-box-demo"
                   options={ApproveStatus}
                   sx={{ width: 300 }}
-                  getOptionLabel={(option) => option.label}
+                  getOptionLabel={(option) => option?.label}
                   renderInput={(params) => (
                     <TextField {...params} label="Update user Status" />
                   )}
                   onChange={handleChange}
                 />
               </div>
+              <Button variant="contained" onClick={handleUpdate}>
+                Update
+              </Button>
             </div>
           )}
         </Box>
