@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface BalanceState {
   totalAddedBalance: number;
@@ -9,7 +9,7 @@ const initialState: BalanceState = {
 };
 
 const balanceSlice = createSlice({
-  name: 'balance',
+  name: "balance",
   initialState,
   reducers: {
     setTotalAddedBalance(state, action: PayloadAction<number>) {
@@ -21,8 +21,6 @@ const balanceSlice = createSlice({
 export const { setTotalAddedBalance } = balanceSlice.actions;
 export default balanceSlice.reducer;
 
-
-
 // <Button
 //                       variant="contained"
 //                       size="large"
@@ -33,6 +31,5 @@ export default balanceSlice.reducer;
 //                     >
 //                       Download Your Visa
 //                     </Button>
-
 
 // selectedDataForView?.sellingPrise

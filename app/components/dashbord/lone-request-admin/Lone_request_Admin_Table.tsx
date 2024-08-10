@@ -67,6 +67,7 @@ export default function Lone_request_Admin_Table() {
   const [toDate, setToDate] = useState("");
   const [amountSearchQuery, setAmountSearchQuery] = useState("");
   const [regSearchQuery, setRegSearchQuery] = useState("");
+  const [conpanyNameQuery, setConpanyNameQuery] = useState("");
 
   const dispatch: AppDispatch = useDispatch();
   const loading = useSelector((state: RootState) => state?.loan?.loading);
@@ -95,6 +96,9 @@ export default function Lone_request_Admin_Table() {
   const handleRegSearchQueryChange = (event) => {
     setRegSearchQuery(event.target.value);
   };
+  const handleConpanyNameSearchQueryChange = (event) => {
+    setConpanyNameQuery(event.target.value);
+  };
 
   const filteredData = (Array.isArray(loanList) ? loanList : []).filter(
     (data) => {
@@ -107,6 +111,9 @@ export default function Lone_request_Admin_Table() {
         data?.user?.regNo
           .toLowerCase()
           .includes(regSearchQuery.toLowerCase()) &&
+        data?.user?.companyName
+          .toLowerCase()
+          .includes(conpanyNameQuery.toLowerCase()) &&
         (!from ||
           itemDate.isAfter(from, "day") ||
           itemDate.isSame(from, "day")) &&
@@ -208,7 +215,6 @@ export default function Lone_request_Admin_Table() {
     );
 
     if (response) {
-
       toast.success(`status updated to ${status}`, {
         position: "top-center",
       });
@@ -257,6 +263,12 @@ export default function Lone_request_Admin_Table() {
           value={regSearchQuery}
           onChange={handleRegSearchQueryChange}
         />
+        <TextField
+          label="Company Name"
+          variant="outlined"
+          value={conpanyNameQuery}
+          onChange={handleConpanyNameSearchQueryChange}
+        />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
@@ -266,6 +278,9 @@ export default function Lone_request_Admin_Table() {
             </th>
             <th scope="col" className="px-6 py-3">
               REQ Date
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Company Name
             </th>
             <th scope="col" className="px-6 py-3">
               Reg No
@@ -296,6 +311,7 @@ export default function Lone_request_Admin_Table() {
             <tr className="bg-white border-b " key={loanList.id}>
               <td className="px-6 py-4">{index + 1}</td>
               <td className="px-6 py-4">{loanList.reqDate}</td>
+              <td className="px-6 py-4">{loanList?.user?.companyName}</td>
               <td className="px-6 py-4">{loanList?.user?.regNo}</td>
               <td className="px-6 py-4">{loanList.settlmentDate}</td>
               <td className="px-6 py-4">{loanList.amount}</td>
