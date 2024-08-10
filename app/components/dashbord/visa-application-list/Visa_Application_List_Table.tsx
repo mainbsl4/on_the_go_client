@@ -759,7 +759,7 @@ export default function Visa_Application_List_Table() {
     (state: RootState) => state?.balance?.totalAddedBalance
   );
 
-  console.log("balance", balance);
+  // console.log("balance", balance);
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -946,7 +946,7 @@ export default function Visa_Application_List_Table() {
                           <Icon icon="mingcute:edit-line" />
                         </IconButton>
                       )}
-                      {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                      {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
                         <IconButton
                           aria-label="delete"
                           color="error"
@@ -958,7 +958,7 @@ export default function Visa_Application_List_Table() {
                         >
                           <Icon icon="lets-icons:cancel" />
                         </IconButton>
-                      )}
+                      )} */}
                     </Stack>
                   </td>
                 </tr>
@@ -1100,13 +1100,13 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="mingcute:edit-line" />
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             aria-label="delete"
                             color="error"
                             onClick={handleClickOpenModalForDelete}
                           >
                             <Icon icon="lets-icons:cancel" />
-                          </IconButton>
+                          </IconButton> */}
                         </Stack>
                       </td>
                     </tr>

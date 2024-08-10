@@ -449,7 +449,7 @@ export default function Visa_Apply_Form() {
 
     try {
       const response = await dispatch(createVisaApply(formData)).unwrap();
-      console.log("pagla", response);
+      // console.log("pagla", response);
       if (response?.status === 200) {
         toast.success("Your visa applycation created successfully", {
           position: "top-center",

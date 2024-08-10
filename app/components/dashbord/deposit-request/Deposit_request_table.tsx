@@ -169,9 +169,9 @@ export default function Deposit_request_table() {
 
   const filteredData = data.filter(
     (item) =>
-      item.amount.toString().includes(amountSearchQuery) &&
-      item.bankName.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
-      item.trnId.toString().includes(trnIdSearchQuery.toLowerCase())
+      item?.amount?.toString().includes(amountSearchQuery) &&
+      item?.bankName?.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
+      item?.trnId?.toString().includes(trnIdSearchQuery.toLowerCase())
   );
   // -----------------------------------
 
@@ -220,7 +220,7 @@ export default function Deposit_request_table() {
       setSubmitting(false);
     }
   };
-  console.log("ddd", data);
+  // console.log("ddd", data);
 
 
   const handleDownloadDoc = (data: any) => {
@@ -360,7 +360,7 @@ export default function Deposit_request_table() {
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton>
-                  <IconButton
+                  {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() =>
@@ -368,7 +368,7 @@ export default function Deposit_request_table() {
                     }
                   >
                     <Icon icon="lets-icons:cancel" />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </td>
             </tr>

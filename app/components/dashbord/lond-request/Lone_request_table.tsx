@@ -119,7 +119,7 @@ export default function Lone_request_table() {
     const to = toDate ? dayjs(toDate) : null;
 
     return (
-      data.amount.toString().includes(amountSearchQuery) &&
+      data?.amount?.toString().includes(amountSearchQuery) &&
       (!from ||
         itemDate.isAfter(from, "day") ||
         itemDate.isSame(from, "day")) &&
@@ -312,13 +312,13 @@ export default function Lone_request_table() {
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton>
-                  <IconButton
+                  {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() => handleClickOpenModalForDelete(loanList?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </td>
             </tr>

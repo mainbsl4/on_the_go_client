@@ -72,41 +72,36 @@ export default function Users_table() {
     }, sec);
   };
 
-  console.log("fffff", getAllUsers);
+  // console.log("fffff", getAllUsers);
 
   // get data from dropdown
 
   const handleChange = (event, newValue) => {
-      setStatus(newValue?.value)
-      // console.log("id", id);
-      // console.log(newValue?.value);
-
+    setStatus(newValue?.value);
+    // console.log("id", id);
+    // console.log(newValue?.value);
   };
 
-
   const handleUpdate = async () => {
+    // console.log(status);
 
-    console.log(status);
-    
-
-    const response = await
-      dispatch(approveUser({
+    const response = await dispatch(
+      approveUser({
         id: id,
         data: status,
-      }));
+      })
+    );
     if (response) {
-      toast.success(`status updated to ${status === true ? 'APPROVED' : 'REJECT'}`, {
-        position: "top-center",
-      });
+      toast.success(
+        `status updated to ${status === true ? "APPROVED" : "REJECT"}`,
+        {
+          position: "top-center",
+        }
+      );
       setOpenModalForView(false);
       actionDataGet(500);
     }
-
   };
-
-
-
-
 
   // for modal
   // for view modal

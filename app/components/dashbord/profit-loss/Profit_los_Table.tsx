@@ -15,7 +15,7 @@ export default function Profit_los_Table() {
   );
 
   const revarseVisaData = getVesaApplyData?.slice().reverse();
-console.log("profit", revarseVisaData);
+  // console.log("profit", revarseVisaData);
 
   const dispatch: AppDispatch = useDispatch();
   React.useEffect(() => {

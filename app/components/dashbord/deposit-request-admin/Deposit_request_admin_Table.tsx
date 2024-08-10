@@ -165,9 +165,9 @@ export default function Deposit_request_admin_Table() {
 
   const filteredData = getDepositRequestData.filter(
     (item) =>
-      item.amount.toString().includes(amountSearchQuery) &&
-      item.bankName.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
-      item.trnId.toString().includes(trnIdSearchQuery.toLowerCase())
+      item?.amount?.toString().includes(amountSearchQuery) &&
+      item?.bankName?.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
+      item?.trnId?.toString().includes(trnIdSearchQuery.toLowerCase())
   );
 
   // edit from validation for edit
@@ -215,7 +215,7 @@ export default function Deposit_request_admin_Table() {
   // };
 
   const handleUpdate = async () => {
-    console.log("Selected Status:", status);
+    // console.log("Selected Status:", status);
     const response = await dispatch(
       updateDepositStatus({
         id: selectedDataForView?.id,
@@ -225,7 +225,6 @@ export default function Deposit_request_admin_Table() {
     );
 
     if (response) {
-
       toast.success(`status updated to ${status}`, {
         position: "top-center",
       });
@@ -234,8 +233,6 @@ export default function Deposit_request_admin_Table() {
       actionDataGet(500);
     }
   };
-
-
 
   const handleDownloadDoc = (data: any) => {
     const imageUrl = data?.slipImage;
@@ -259,7 +256,6 @@ export default function Deposit_request_admin_Table() {
       })
       .catch(() => alert("An error occurred while downloading the image."));
   };
-
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -373,7 +369,7 @@ export default function Deposit_request_admin_Table() {
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton> */}
-                  <IconButton
+                  {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() =>
@@ -381,7 +377,7 @@ export default function Deposit_request_admin_Table() {
                     }
                   >
                     <Icon icon="lets-icons:cancel" />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </td>
             </tr>
@@ -470,12 +466,12 @@ export default function Deposit_request_admin_Table() {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col items-start justify-center gap-2">
-
-
-                {selectedDataForView?.slipImage ? (
+                  {selectedDataForView?.slipImage ? (
                     <Button
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:download-sharp" />}
+                      startIcon={
+                        <Icon icon="material-symbols:download-sharp" />
+                      }
                       onClick={() => handleDownloadDoc(selectedDataForView)}
                     >
                       Document
@@ -483,7 +479,6 @@ export default function Deposit_request_admin_Table() {
                   ) : (
                     <></>
                   )}
-
 
                   {/* <Button
                     variant="contained"

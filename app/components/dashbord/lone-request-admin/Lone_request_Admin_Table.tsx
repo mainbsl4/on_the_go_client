@@ -103,7 +103,7 @@ export default function Lone_request_Admin_Table() {
       const to = toDate ? dayjs(toDate) : null;
 
       return (
-        data.amount.toString().includes(amountSearchQuery) &&
+        data?.amount?.toString().includes(amountSearchQuery) &&
         data?.user?.regNo
           .toLowerCase()
           .includes(regSearchQuery.toLowerCase()) &&
@@ -198,7 +198,7 @@ export default function Lone_request_Admin_Table() {
   // };
 
   const handleUpdate = async () => {
-    console.log("Selected Status:", status);
+    // console.log("Selected Status:", status);
     const response = await dispatch(
       updateLoanStatus({
         id: selectedDataForView?.id,
@@ -336,13 +336,13 @@ export default function Lone_request_Admin_Table() {
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton> */}
-                  <IconButton
+                  {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() => handleClickOpenModalForDelete(loanList?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </td>
             </tr>

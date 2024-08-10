@@ -197,7 +197,7 @@ export default function page() {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       >
                         <option value="">Choose Your country</option>
-                        <option value="US">Bangladesh</option>
+                        <option value="BAN">Bangladesh</option>
                       </Field>
                       {touched.country && errors.country && (
                         <div>{errors.country}</div>
