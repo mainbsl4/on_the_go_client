@@ -85,11 +85,30 @@ export const getUsers = createAsyncThunk(
   }
 );
 
+// export const approveUser = createAsyncThunk(
+//   "user/approveUser",
+//   async ({id, data}:{id: any, data: any}, { rejectWithValue }) => {
+//     console.log(data);
+    
+//     try {
+//       const response = await axios.put(`${base_url}user/userApprove/${id}`, data);
+//       console.log(response);
+//       return response.data;
+//     } catch (err: any) {
+//       return rejectWithValue(err.response.data);
+//     }
+//   }
+// );
+
+
 export const approveUser = createAsyncThunk(
   "user/approveUser",
-  async (id: any, { rejectWithValue }) => {
+  async ({ id, data }: { id: any; data: any,  }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}user/userApprove/${id}`);
+      const response = await axios.put(
+        `${base_url}user/userApprove/${id}`,
+        { status: data }
+      );
       console.log(response);
       return response.data;
     } catch (err: any) {
@@ -97,6 +116,9 @@ export const approveUser = createAsyncThunk(
     }
   }
 );
+
+
+
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",

@@ -13,6 +13,7 @@ import { AppDispatch } from "../lib/store/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/navigation";
 
 interface SignupResponse {
   error?: string;
@@ -26,6 +27,8 @@ export default function page() {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] =
     React.useState(false);
+
+    const router = useRouter();
 
   // for password
 
@@ -61,6 +64,8 @@ export default function page() {
         toast.success("Account created successfully", {
           position: "top-center",
         });
+        router.push("/signin");
+
       } else {
         console.error("Login failed:", response.error);
       }
