@@ -16,7 +16,6 @@ import {
   Modal,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 
@@ -44,39 +43,23 @@ import {
   uploadImg,
   uploadPassImage,
 } from "../../../lib/features/upload/uploadSlice";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import { getUser } from "../../../lib/features/users/userSlice";
 import { useRouter } from "next/navigation";
 
-const gender = [
-  { label: "Male" },
-  { label: "Female" },
-  { label: "Non-binary" },
-  { label: "Genderqueer" },
-  { label: "Genderfluid" },
-  { label: "Agender" },
-  { label: "Bigender" },
-  { label: "Demiboy" },
-  { label: "Demigirl" },
-  { label: "Two-Spirit" },
-  { label: "Pangender" },
-  { label: "Androgynous" },
-  { label: "Intersex" },
-  { label: "Transgender" },
-  { label: "Transmasculine" },
-  { label: "Transfeminine" },
-  { label: "Cisgender" },
-  { label: "Neutrois" },
-  { label: "Polygender" },
-  { label: "Third Gender" },
-  { label: "Questioning" },
+const gender = [{ label: "MALE" }, { label: "FEMALE" }, { label: "OTHERS" }];
+const nationality = [{ label: "BANGLADESHI" }, { label: "OTHERS" }];
+
+const religion = [
+  { label: "ISLAM" },
+  { label: "HINDUISM" },
+  { label: "CHRISTIANITY" },
+  { label: "BUDDHISM" },
 ];
-const nationality = [
+
+const whichCountry = [
   { label: "AFGHANISTAN" },
   { label: "ALBANIA" },
   { label: "ALGERIA" },
@@ -275,225 +258,6 @@ const nationality = [
   { label: "ZIMBABWE" },
 ];
 
-const religion = [
-  { label: "Christianity" },
-  { label: "Islam" },
-  { label: "Hinduism" },
-  { label: "Buddhism" },
-  { label: "Sikhism" },
-  { label: "Judaism" },
-  { label: "Bahá'í" },
-  { label: "Jainism" },
-  { label: "Shinto" },
-  { label: "Taoism" },
-  { label: "Zoroastrianism" },
-  { label: "Confucianism" },
-  { label: "Rastafarianism" },
-  { label: "Paganism" },
-  { label: "Animism" },
-  { label: "New Age" },
-  { label: "Unitarian Universalism" },
-  { label: "Tenrikyo" },
-  { label: "Druze" },
-  { label: "Cao Dai" },
-  { label: "Falun Gong" },
-];
-const whichCountry = [
-  { label: "AFGHAN" },
-  { label: "ALBANIAN" },
-  { label: "ALGERIAN" },
-  { label: "AMERICAN" },
-  { label: "ANDORRAN" },
-  { label: "ANGOLAN" },
-  { label: "ANTIGUANS" },
-  { label: "ARGENTINEAN" },
-  { label: "ARMENIAN" },
-  { label: "AUSTRALIAN" },
-  { label: "AUSTRIAN" },
-  { label: "AZERBAIJANI" },
-  { label: "BAHAMIAN" },
-  { label: "BAHRAINI" },
-  { label: "BANGLADESHI" },
-  { label: "BARBADIAN" },
-  { label: "BARBUDANS" },
-  { label: "BATSWANA" },
-  { label: "BELARUSIAN" },
-  { label: "BELGIAN" },
-  { label: "BELIZEAN" },
-  { label: "BENINESE" },
-  { label: "BHUTANESE" },
-  { label: "BOLIVIAN" },
-  { label: "BOSNIAN" },
-  { label: "BRAZILIAN" },
-  { label: "BRITISH" },
-  { label: "BRUNEIAN" },
-  { label: "BULGARIAN" },
-  { label: "BURKINABE" },
-  { label: "BURMESE" },
-  { label: "BURUNDIAN" },
-  { label: "CABO VERDEAN" },
-  { label: "CAMBODIAN" },
-  { label: "CAMEROONIAN" },
-  { label: "CANADIAN" },
-  { label: "CENTRAL AFRICAN" },
-  { label: "CHADIAN" },
-  { label: "CHILEAN" },
-  { label: "CHINESE" },
-  { label: "COLOMBIAN" },
-  { label: "COMORAN" },
-  { label: "CONGOLESE" },
-  { label: "COSTA RICAN" },
-  { label: "CROATIAN" },
-  { label: "CUBAN" },
-  { label: "CYPRIOT" },
-  { label: "CZECH" },
-  { label: "DANISH" },
-  { label: "DJIBOUTI" },
-  { label: "DOMINICAN" },
-  { label: "DUTCH" },
-  { label: "EAST TIMORESE" },
-  { label: "ECUADOREAN" },
-  { label: "EGYPTIAN" },
-  { label: "EMIRIAN" },
-  { label: "EQUATORIAL GUINEAN" },
-  { label: "ERITREAN" },
-  { label: "ESTONIAN" },
-  { label: "ETHIOPIAN" },
-  { label: "FIJIAN" },
-  { label: "FILIPINO" },
-  { label: "FINNISH" },
-  { label: "FRENCH" },
-  { label: "GABONESE" },
-  { label: "GAMBIAN" },
-  { label: "GEORGIAN" },
-  { label: "GERMAN" },
-  { label: "GHANAIAN" },
-  { label: "GREEK" },
-  { label: "GRENADIAN" },
-  { label: "GUATEMALAN" },
-  { label: "GUINEA-BISSAUAN" },
-  { label: "GUINEAN" },
-  { label: "GUYANESE" },
-  { label: "HAITIAN" },
-  { label: "HERZEGOVINIAN" },
-  { label: "HONDURAN" },
-  { label: "HUNGARIAN" },
-  { label: "I-KIRIBATI" },
-  { label: "ICELANDER" },
-  { label: "INDIAN" },
-  { label: "INDONESIAN" },
-  { label: "IRANIAN" },
-  { label: "IRAQI" },
-  { label: "IRISH" },
-  { label: "ISRAELI" },
-  { label: "ITALIAN" },
-  { label: "IVORIAN" },
-  { label: "JAMAICAN" },
-  { label: "JAPANESE" },
-  { label: "JORDANIAN" },
-  { label: "KAZAKHSTANI" },
-  { label: "KENYAN" },
-  { label: "KITTIAN AND NEVISIAN" },
-  { label: "KUWAITI" },
-  { label: "KYRGYZ" },
-  { label: "LAOTIAN" },
-  { label: "LATVIAN" },
-  { label: "LEBANESE" },
-  { label: "LIBERIAN" },
-  { label: "LIBYAN" },
-  { label: "LIECHTENSTEINER" },
-  { label: "LITHUANIAN" },
-  { label: "LUXEMBOURGER" },
-  { label: "MACEDONIAN" },
-  { label: "MADAGASY" },
-  { label: "MALAWIAN" },
-  { label: "MALAYSIAN" },
-  { label: "MALDIVIAN" },
-  { label: "MALIAN" },
-  { label: "MALTESE" },
-  { label: "MARSHALLESE" },
-  { label: "MAURITANIAN" },
-  { label: "MAURITIAN" },
-  { label: "MEXICAN" },
-  { label: "MICRONESIAN" },
-  { label: "MOLDOVAN" },
-  { label: "MONACAN" },
-  { label: "MONGOLIAN" },
-  { label: "MOROCCAN" },
-  { label: "MOSOTHO" },
-  { label: "MOTSWANA" },
-  { label: "MOZAMBICAN" },
-  { label: "NAMIBIAN" },
-  { label: "NAURUAN" },
-  { label: "NEPALESE" },
-  { label: "NEW ZEALANDER" },
-  { label: "NI-VANUATU" },
-  { label: "NICARAGUAN" },
-  { label: "NIGERIEN" },
-  { label: "NORTH KOREAN" },
-  { label: "NORTHERN IRISH" },
-  { label: "NORWEGIAN" },
-  { label: "OMANI" },
-  { label: "PAKISTANI" },
-  { label: "PALAUAN" },
-  { label: "PANAMANIAN" },
-  { label: "PAPUA NEW GUINEAN" },
-  { label: "PARAGUAYAN" },
-  { label: "PERUVIAN" },
-  { label: "POLISH" },
-  { label: "PORTUGUESE" },
-  { label: "QATARI" },
-  { label: "ROMANIAN" },
-  { label: "RUSSIAN" },
-  { label: "RWANDAN" },
-  { label: "SAINT LUCIAN" },
-  { label: "SALVADORAN" },
-  { label: "SAMOAN" },
-  { label: "SAN MARINESE" },
-  { label: "SAO TOMEAN" },
-  { label: "SAUDI" },
-  { label: "SCOTTISH" },
-  { label: "SENEGALESE" },
-  { label: "SERBIAN" },
-  { label: "SEYCHELLOIS" },
-  { label: "SIERRA LEONEAN" },
-  { label: "SINGAPOREAN" },
-  { label: "SLOVAKIAN" },
-  { label: "SLOVENIAN" },
-  { label: "SOLOMON ISLANDER" },
-  { label: "SOMALI" },
-  { label: "SOUTH AFRICAN" },
-  { label: "SOUTH KOREAN" },
-  { label: "SPANISH" },
-  { label: "SRI LANKAN" },
-  { label: "SUDANESE" },
-  { label: "SURINAMER" },
-  { label: "SWAZI" },
-  { label: "SWEDISH" },
-  { label: "SWISS" },
-  { label: "SYRIAN" },
-  { label: "TAIWANESE" },
-  { label: "TAJIK" },
-  { label: "TANZANIAN" },
-  { label: "THAI" },
-  { label: "TOGOLESE" },
-  { label: "TONGAN" },
-  { label: "TRINIDADIAN OR TOBAGONIAN" },
-  { label: "TUNISIAN" },
-  { label: "TURKISH" },
-  { label: "TUVALUAN" },
-  { label: "UGANDAN" },
-  { label: "UKRAINIAN" },
-  { label: "URUGUAYAN" },
-  { label: "UZBEKISTANI" },
-  { label: "VENEZUELAN" },
-  { label: "VIETNAMESE" },
-  { label: "WELSH" },
-  { label: "YEMENITE" },
-  { label: "ZAMBIAN" },
-  { label: "ZIMBABWEAN" },
-];
-
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -533,13 +297,12 @@ const styleForView = {
   boxShadow: 24,
   p: 4,
   //i will set overflow scroll
-  overflow: "auto"
+  overflow: "auto",
   // display:"grid",
   // gridTemplateColumns: "40% 40%",
   // justifyContent:"space-between",
   // gridGap:"5px"
 };
-
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -574,11 +337,10 @@ export default function Visa_Application_List_Table() {
   // get data
   const [data, setData] = React.useState([]);
 
-  // for search 
+  // for search
   const [fromDate, setFromDate] = React.useState("");
   const [toDate, setToDate] = React.useState("");
   const [passportNoSearchQuery, setPassportNoSearchQuery] = React.useState("");
-
 
   // const [regNumber, setRegNumber] = React.useState([]);
 
@@ -712,7 +474,6 @@ export default function Visa_Application_List_Table() {
     setPassportNoSearchQuery(event.target.value);
   };
 
-
   const filteredData = data?.filter((data) => {
     const itemDate = dayjs(data.created_at);
     const from = fromDate ? dayjs(fromDate) : null;
@@ -740,7 +501,6 @@ export default function Visa_Application_List_Table() {
     dob: selectedDataForEdit?.dob || "",
     religion: selectedDataForEdit?.religion || "",
     applyForCountry: selectedDataForEdit?.applyForCountry || "",
-
   };
   const handleSubmit = async (
     values: UpdateVisaApplyFormValues,
@@ -770,7 +530,6 @@ export default function Visa_Application_List_Table() {
         const storedUserId = localStorage.getItem("userId");
         dispatch(getUser(JSON.parse(storedUserId)));
       }
-
     } catch (error) {
       console.error("API Error:", error);
       // Handle error response
@@ -809,10 +568,10 @@ export default function Visa_Application_List_Table() {
   }
 
   if (previousPassState && previousPassState.length > 0) {
-    previousPass = previousPassState[0].url ?  previousPassState[0].url : selectedDataForEdit?.previousPassPdf;
+    previousPass = previousPassState[0].url
+      ? previousPassState[0].url
+      : selectedDataForEdit?.previousPassPdf;
   }
-
-  
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -867,7 +626,6 @@ export default function Visa_Application_List_Table() {
         toast.success(`Passport download successfully`, {
           position: "top-center",
         });
-
       })
       .catch(() => alert("An error occurred while downloading the image."));
   };
@@ -917,7 +675,6 @@ export default function Visa_Application_List_Table() {
   // };
   const router = useRouter();
 
-  
   const handleDownloadVisa = async (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileName = `${data?.givenName}-visa.pdf`;
@@ -961,7 +718,6 @@ export default function Visa_Application_List_Table() {
       toast.success(`Visa download successfully`, {
         position: "top-center",
       });
-
     }
   };
 
@@ -1267,11 +1023,11 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1418,11 +1174,11 @@ export default function Visa_Application_List_Table() {
                       </td>
 
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1568,11 +1324,11 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1718,11 +1474,11 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -1868,11 +1624,11 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -2018,11 +1774,11 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -2168,11 +1924,11 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toISOString()
+                            .split("T")[0]}
+                      </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
@@ -2346,10 +2102,8 @@ export default function Visa_Application_List_Table() {
                 <div className="grid min-h-[140px] w-8/12 place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
                   <Image
                     className=" w-full rounded-lg h-96"
-                    // width={600}
-                    // height={600}
-                      layout="fill"
-                    // src={{()i => mageUrl()}}
+                    width={600}
+                    height={600}
                     src={selectedDataForView?.image}
                     alt="nature image"
                   />
@@ -2549,31 +2303,33 @@ export default function Visa_Application_List_Table() {
                       )}
                     </Field>
                     <Field name="applyForCountry">
-                {({ field, form }) => (
-                  <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={whichCountry.map((option) => option.label)}
-                    onChange={(event, value) =>
-                      form.setFieldValue(field.name, value)
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        required
-                        {...field}
-                        {...params}
-                        label="Which country for visa"
-                        error={
-                          touched.applyForCountry && !!errors.applyForCountry
-                        }
-                        helperText={
-                          touched.applyForCountry && errors.applyForCountry
-                        }
-                      />
-                    )}
-                  />
-                )}
-              </Field>
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={whichCountry.map((option) => option.label)}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              required
+                              {...field}
+                              {...params}
+                              label="Which country for visa"
+                              error={
+                                touched.applyForCountry &&
+                                !!errors.applyForCountry
+                              }
+                              helperText={
+                                touched.applyForCountry &&
+                                errors.applyForCountry
+                              }
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
                     <Field name="passportNo">
                       {({ field }) => (
                         <TextField
@@ -2733,7 +2489,7 @@ export default function Visa_Application_List_Table() {
                         />
                       )}
                     </Field>
-            
+
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}

@@ -48,30 +48,10 @@ import {
   uploadPassImage,
 } from "../../../lib/features/upload/uploadSlice";
 
-const gender = [
-  { label: "Male" },
-  { label: "Female" },
-  { label: "Non-binary" },
-  { label: "Genderqueer" },
-  { label: "Genderfluid" },
-  { label: "Agender" },
-  { label: "Bigender" },
-  { label: "Demiboy" },
-  { label: "Demigirl" },
-  { label: "Two-Spirit" },
-  { label: "Pangender" },
-  { label: "Androgynous" },
-  { label: "Intersex" },
-  { label: "Transgender" },
-  { label: "Transmasculine" },
-  { label: "Transfeminine" },
-  { label: "Cisgender" },
-  { label: "Neutrois" },
-  { label: "Polygender" },
-  { label: "Third Gender" },
-  { label: "Questioning" },
-];
-const nationality = [
+const gender = [{ label: "MALE" }, { label: "FEMALE" }, { label: "OTHERS" }];
+const nationality = [{ label: "BANGLADESHI" }, { label: "OTHERS" }];
+
+const whichCountry = [
   { label: "AFGHANISTAN" },
   { label: "ALBANIA" },
   { label: "ALGERIA" },
@@ -271,27 +251,10 @@ const nationality = [
 ];
 
 const religion = [
-  { label: "Christianity" },
-  { label: "Islam" },
-  { label: "Hinduism" },
-  { label: "Buddhism" },
-  { label: "Sikhism" },
-  { label: "Judaism" },
-  { label: "Bahá'í" },
-  { label: "Jainism" },
-  { label: "Shinto" },
-  { label: "Taoism" },
-  { label: "Zoroastrianism" },
-  { label: "Confucianism" },
-  { label: "Rastafarianism" },
-  { label: "Paganism" },
-  { label: "Animism" },
-  { label: "New Age" },
-  { label: "Unitarian Universalism" },
-  { label: "Tenrikyo" },
-  { label: "Druze" },
-  { label: "Cao Dai" },
-  { label: "Falun Gong" },
+  { label: "ISLAM" },
+  { label: "HINDUISM" },
+  { label: "CHRISTIANITY" },
+  { label: "BUDDHISM" },
 ];
 
 const statusCatagory = [

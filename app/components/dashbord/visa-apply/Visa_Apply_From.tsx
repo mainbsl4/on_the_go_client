@@ -31,31 +31,16 @@ import dayjs from "dayjs";
 
 
 const minDate = dayjs().add(6, 'month').startOf('day')
+
 const gender = [
-  { label: "Male" },
-  { label: "Female" },
-  { label: "Others" },
-  // { label: "Non-binary" },
-  // { label: "Genderqueer" },
-  // { label: "Genderfluid" },
-  // { label: "Agender" },
-  // { label: "Bigender" },
-  // { label: "Demiboy" },
-  // { label: "Demigirl" },
-  // { label: "Two-Spirit" },
-  // { label: "Pangender" },
-  // { label: "Androgynous" },
-  // { label: "Intersex" },
-  // { label: "Transgender" },
-  // { label: "Transmasculine" },
-  // { label: "Transfeminine" },
-  // { label: "Cisgender" },
-  // { label: "Neutrois" },
-  // { label: "Polygender" },
-  // { label: "Third Gender" },
-  // { label: "Questioning" },
+  { label: "MALE" },
+  { label: "FEMALE" },
+  { label: "OTHERS" },
 ];
-const nationality = [{ label: "Bangladeshi" }, { label: "Others" }];
+const nationality = [
+  { label: "BANGLADESHI" },
+  { label: "OTHERS" },
+];
 
 
 
@@ -259,27 +244,10 @@ const whichCountry = [
 ];
 
 const religion = [
-  { label: "Islam" },
-  { label: "Hinduism" },
-  { label: "Christianity" },
-  { label: "Buddhism" },
-  // { label: "Sikhism" },
-  // { label: "Judaism" },
-  // { label: "Bahá'í" },
-  // { label: "Jainism" },
-  // { label: "Shinto" },
-  // { label: "Taoism" },
-  // { label: "Zoroastrianism" },
-  // { label: "Confucianism" },
-  // { label: "Rastafarianism" },
-  // { label: "Paganism" },
-  // { label: "Animism" },
-  // { label: "New Age" },
-  // { label: "Unitarian Universalism" },
-  // { label: "Tenrikyo" },
-  // { label: "Druze" },
-  // { label: "Cao Dai" },
-  // { label: "Falun Gong" },
+  { label: "ISLAM" },
+  { label: "HINDUISM" },
+  { label: "CHRISTIANITY" },
+  { label: "BUDDHISM" },
 ];
 
 const VisuallyHiddenInput = styled("input")({
