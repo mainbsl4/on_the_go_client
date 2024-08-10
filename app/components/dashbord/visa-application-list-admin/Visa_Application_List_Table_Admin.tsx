@@ -893,7 +893,7 @@ export default function Visa_Application_List_Table_Admin() {
                           <Icon icon="mingcute:edit-line" />
                         </IconButton>
                       )}
-                      {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                      {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
                         <IconButton
                           aria-label="delete"
                           color="error"
@@ -905,7 +905,7 @@ export default function Visa_Application_List_Table_Admin() {
                         >
                           <Icon icon="lets-icons:cancel" />
                         </IconButton>
-                      )}
+                      )} */}
                     </Stack>
                   </td>
                 </tr>
@@ -1053,13 +1053,13 @@ export default function Visa_Application_List_Table_Admin() {
                           >
                             <Icon icon="mingcute:edit-line" />
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             aria-label="delete"
                             color="error"
                             onClick={handleClickOpenModalForDelete}
                           >
                             <Icon icon="lets-icons:cancel" />
-                          </IconButton>
+                          </IconButton> */}
                         </Stack>
                       </td>
                     </tr>

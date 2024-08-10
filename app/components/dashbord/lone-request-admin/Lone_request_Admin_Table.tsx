@@ -336,13 +336,13 @@ export default function Lone_request_Admin_Table() {
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton> */}
-                  <IconButton
+                  {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() => handleClickOpenModalForDelete(loanList?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </td>
             </tr>

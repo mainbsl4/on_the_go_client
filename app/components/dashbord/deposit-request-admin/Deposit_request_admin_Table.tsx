@@ -373,7 +373,7 @@ export default function Deposit_request_admin_Table() {
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton> */}
-                  <IconButton
+                  {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() =>
@@ -381,7 +381,7 @@ export default function Deposit_request_admin_Table() {
                     }
                   >
                     <Icon icon="lets-icons:cancel" />
-                  </IconButton>
+                  </IconButton> */}
                 </Stack>
               </td>
             </tr>
