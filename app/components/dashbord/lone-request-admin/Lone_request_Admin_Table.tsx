@@ -198,7 +198,7 @@ export default function Lone_request_Admin_Table() {
   // };
 
   const handleUpdate = async () => {
-    console.log("Selected Status:", status);
+    // console.log("Selected Status:", status);
     const response = await dispatch(
       updateLoanStatus({
         id: selectedDataForView?.id,

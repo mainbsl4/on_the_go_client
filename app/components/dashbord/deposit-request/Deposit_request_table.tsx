@@ -220,7 +220,7 @@ export default function Deposit_request_table() {
       setSubmitting(false);
     }
   };
-  console.log("ddd", data);
+  // console.log("ddd", data);
 
 
   const handleDownloadDoc = (data: any) => {

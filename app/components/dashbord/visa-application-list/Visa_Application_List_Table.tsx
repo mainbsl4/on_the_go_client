@@ -759,7 +759,7 @@ export default function Visa_Application_List_Table() {
     (state: RootState) => state?.balance?.totalAddedBalance
   );
 
-  console.log("balance", balance);
+  // console.log("balance", balance);
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">

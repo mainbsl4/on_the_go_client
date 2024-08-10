@@ -215,7 +215,7 @@ export default function Deposit_request_admin_Table() {
   // };
 
   const handleUpdate = async () => {
-    console.log("Selected Status:", status);
+    // console.log("Selected Status:", status);
     const response = await dispatch(
       updateDepositStatus({
         id: selectedDataForView?.id,

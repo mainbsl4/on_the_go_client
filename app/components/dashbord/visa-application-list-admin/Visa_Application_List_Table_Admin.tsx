@@ -603,7 +603,7 @@ export default function Visa_Application_List_Table_Admin() {
   };
 
   const handleUpdate = async () => {
-    console.log("Selected Status:", status);
+    // console.log("Selected Status:", status);
     const response = await dispatch(
       updateVisaApplyStatus({
         id: selectedDataForView?.id,

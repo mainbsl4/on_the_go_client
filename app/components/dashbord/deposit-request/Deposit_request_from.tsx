@@ -129,7 +129,7 @@ export default function Deposit_request_from() {
     // dispatch(getAllDepositReq())
   }, []);
 
-  console.log("pagla", userId);
+  // console.log("pagla", userId);
 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
@@ -165,7 +165,7 @@ export default function Deposit_request_from() {
       // Log formData to check if amount is correctly converted
 
       const response = await dispatch(createDepositReq(formData)).unwrap();
-      console.log("rajakar", response);
+      // console.log("rajakar", response);
       if (response?.status === 200) {
         toast.success("Your deposite request successfully", {
           position: "top-center",
