@@ -69,9 +69,13 @@ export default function Deposit_request_admin_Table() {
   const [comment, setComment] = React.useState("");
 
   // for search
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [amountSearchQuery, setAmountSearchQuery] = useState("");
   const [bankNameSearchQuery, setBankNameSearchQuery] = useState("");
   const [trnIdSearchQuery, setTrnIdSearchQuery] = useState("");
+  const [conpanyNameSearchQuery, setConpanyNameSearchQuery] = useState("");
+
 
   // for modal
   // for view modal
@@ -151,6 +155,14 @@ export default function Deposit_request_admin_Table() {
     : [];
 
   // for  search
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value);
+  };
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value);
+  };
+
   const handleAmountSearchQueryChange = (event) => {
     setAmountSearchQuery(event.target.value);
   };
@@ -162,12 +174,27 @@ export default function Deposit_request_admin_Table() {
   const handleTrnIdSearchQueryChange = (event) => {
     setTrnIdSearchQuery(event.target.value);
   };
+  const handleConpanyNameSearchQueryChange = (event) => {
+    setConpanyNameSearchQuery(event.target.value);
+  };
 
   const filteredData = getDepositRequestData.filter(
-    (item) =>
-      item?.amount?.toString().includes(amountSearchQuery) &&
-      item?.bankName?.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
-      item?.trnId?.toString().includes(trnIdSearchQuery.toLowerCase())
+
+    (item) =>{
+      const itemDate = dayjs(item?.date);
+      const from = fromDate ? dayjs(fromDate) : null;
+      const to = toDate ? dayjs(toDate) : null;
+      return(
+        item?.amount?.toString().includes(amountSearchQuery) &&
+        item?.bankName?.toLowerCase().includes(bankNameSearchQuery.toLowerCase()) &&
+        item?.trnId?.toString().includes(trnIdSearchQuery.toLowerCase())&&
+        item?.user?.companyName?.toLowerCase().includes(conpanyNameSearchQuery.toLowerCase())&&
+        (!from ||
+          itemDate.isAfter(from, "day") ||
+          itemDate.isSame(from, "day")) &&
+        (!to || itemDate.isBefore(to, "day") || itemDate.isSame(to, "day"))
+      )
+    }
   );
 
   // edit from validation for edit
@@ -178,6 +205,7 @@ export default function Deposit_request_admin_Table() {
   //   amount: selectedDataForEdit?.amount || 0,
   //   bankName: selectedDataForEdit?.bankName || "",
   // };
+  
 
   const handleSubmit = async (
     values: UpdateDepositRequestFormValues,
@@ -264,6 +292,26 @@ export default function Deposit_request_admin_Table() {
   ) : (
     <div>
       <div className="mb-4 flex gap-4">
+      <TextField
+          label="From Date"
+          type="date"
+          variant="outlined"
+          value={fromDate}
+          onChange={handleFromDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="To Date"
+          type="date"
+          variant="outlined"
+          value={toDate}
+          onChange={handleToDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
         <TextField
           label="Search by Amount"
           variant="outlined"
@@ -282,10 +330,22 @@ export default function Deposit_request_admin_Table() {
           value={trnIdSearchQuery}
           onChange={handleTrnIdSearchQueryChange}
         />
+        <TextField
+          label="Search by Company Name"
+          variant="outlined"
+          value={conpanyNameSearchQuery}
+          onChange={handleConpanyNameSearchQueryChange}
+        />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
+            <th scope="col" className="px-6 py-3">
+              Company Name
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Reg No
+            </th>
             <th scope="col" className="px-6 py-3">
               MOD
             </th>
@@ -325,6 +385,8 @@ export default function Deposit_request_admin_Table() {
             >
               Key
             </td> */}
+              <td className="px-6 py-4">{getDepositRequestData?.user?.companyName}</td>
+              <td className="px-6 py-4">{getDepositRequestData?.user?.regNo}</td>
               <td className="px-6 py-4">{getDepositRequestData?.dpType}</td>
               <td className="px-6 py-4">{getDepositRequestData?.date}</td>
               <td className="px-6 py-4">{getDepositRequestData?.trnId}</td>

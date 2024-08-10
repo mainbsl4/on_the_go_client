@@ -347,6 +347,7 @@ export default function Visa_Application_List_Table_Admin() {
   const [toDate, setToDate] = React.useState("");
   const [passportNoSearchQuery, setPassportNoSearchQuery] = React.useState("");
   const [regNoSearchQuery, setRegNoSearchQuery] = React.useState("");
+  const [conpanyNameSearchQuery, setConpanyNameSearchQuery] = React.useState("");
 
   // file information
   const [fileInfo3, setFileInfo3] = React.useState(null);
@@ -485,6 +486,9 @@ export default function Visa_Application_List_Table_Admin() {
   const handleRegSearchQueryChange = (e) => {
     setRegNoSearchQuery(e.target.value);
   };
+  const handleCompanyNameSearchQueryChange = (e) => {
+    setConpanyNameSearchQuery(e.target.value);
+  };
 
   const filteredData = reversedgetVesaApplyData.filter((data) => {
     const itemDate = dayjs(data.created_at);
@@ -497,6 +501,9 @@ export default function Visa_Application_List_Table_Admin() {
       data?.user?.regNo
         .toLowerCase()
         .includes(regNoSearchQuery.toLowerCase()) &&
+        data?.user?.companyName
+        .toLowerCase()
+        .includes(conpanyNameSearchQuery.toLowerCase()) &&
       (!from ||
         itemDate.isAfter(from, "day") ||
         itemDate.isSame(from, "day")) &&
@@ -735,12 +742,23 @@ export default function Visa_Application_List_Table_Admin() {
           value={passportNoSearchQuery}
           onChange={handlePassportNoSearchQueryChange}
         />
+
         <TextField
           label="Search by Reg No"
           variant="outlined"
           value={regNoSearchQuery}
           onChange={handleRegSearchQueryChange}
         />
+        
+        <TextField
+          label="company name"
+          variant="outlined"
+          value={conpanyNameSearchQuery}
+          onChange={handleCompanyNameSearchQueryChange}
+        />
+
+
+
       </div>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -766,11 +784,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+              
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -817,14 +839,18 @@ export default function Visa_Application_List_Table_Admin() {
                   >
                     {index + 1}
                   </td>
+                 
+                  <td className="px-6 py-4">
+                    {reversedgetVesaApplyData?.user?.companyName}
+                  </td>
+                  <td className="px-6 py-4">
+                    {reversedgetVesaApplyData?.user?.regNo}
+                  </td>
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData &&
                       new Date(reversedgetVesaApplyData.created_at)
                         .toISOString()
                         .split("T")[0]}
-                  </td>
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData?.user?.regNo}
                   </td>
 
                   <td className="px-6 py-4">
@@ -920,11 +946,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+              
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -973,15 +1003,19 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+                  
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
                       </td>
 
                       <td className="px-6 py-4">
@@ -1076,11 +1110,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+           
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -1129,16 +1167,19 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+                   
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
-                      </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
@@ -1232,11 +1273,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+          
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -1284,16 +1329,19 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+                  
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
-                      </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
@@ -1386,14 +1434,17 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+             
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
 
                 <th scope="col" className="px-6 py-3">
                   Reg NO
                 </th>
-
+                <th scope="col" className="px-6 py-3">
+                  DATE
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
@@ -1440,16 +1491,19 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+                 
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
-                      </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
@@ -1542,11 +1596,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+           
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -1594,16 +1652,20 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+
+                   
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
-                      </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
@@ -1696,11 +1758,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+               
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -1748,16 +1814,19 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+                  
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
-                      </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
@@ -1850,11 +1919,15 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+          
                 <th scope="col" className="px-6 py-3">
-                  DATE
+                  Company Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Reg NO
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  DATE
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Full Name
@@ -1902,16 +1975,19 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
+                  
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData?.user?.regNo}
+                      </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData?.user?.regNo}
-                      </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>

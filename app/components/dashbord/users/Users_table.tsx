@@ -180,8 +180,8 @@ export default function Users_table() {
     }
   );
 
-  const rows = filteredData;
-
+  const rows = filteredData;  
+  
   return (
     <div>
       {loading ? (
