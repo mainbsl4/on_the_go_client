@@ -27,22 +27,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
+import "dayjs/locale/en-gb";
 
+// Set the locale globally for dayjs
+dayjs.locale("en-gb");
 
+const minDate = dayjs().add(6, "month").startOf("day");
 
-const minDate = dayjs().add(6, 'month').startOf('day')
-
-const gender = [
-  { label: "MALE" },
-  { label: "FEMALE" },
-  { label: "OTHERS" },
-];
-const nationality = [
-  { label: "BANGLADESHI" },
-  { label: "OTHERS" },
-];
-
-
+const gender = [{ label: "MALE" }, { label: "FEMALE" }, { label: "OTHERS" }];
+const nationality = [{ label: "BANGLADESHI" }, { label: "OTHERS" }];
 
 const whichCountry = [
   { label: "AFGHANISTAN" },
@@ -628,7 +621,10 @@ export default function Visa_Apply_Form() {
                 )}
               </Field>
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
                 <DemoContainer
                   components={["DatePicker"]}
                   sx={{ padding: "0px" }}
@@ -664,7 +660,10 @@ export default function Visa_Apply_Form() {
                 </DemoContainer>
               </LocalizationProvider>
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
                 <DemoContainer
                   components={["DatePicker"]}
                   sx={{ padding: "0px" }}
