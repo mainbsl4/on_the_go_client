@@ -183,6 +183,7 @@ export default function Lone_request_from() {
                 {({ field }) => (
                   <TextField
                     {...field}
+                    required
                     id="outlined-basic"
                     label="Amount"
                     variant="outlined"

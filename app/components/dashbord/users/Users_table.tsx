@@ -140,6 +140,9 @@ export default function Users_table() {
           <Chip label="REJECTED" color="error" />
         ),
     },
+
+    { field: "balance", headerName: "Balance", width: 150 },
+
     {
       field: "action",
       headerName: "Action",
@@ -180,7 +183,12 @@ export default function Users_table() {
     }
   );
 
-  const rows = filteredData;  
+  const rows = filteredData;
+
+  // get balance
+  const balance = useSelector((state: RootState) => state);
+console.log("dddd",balance);
+
   
   return (
     <div>
