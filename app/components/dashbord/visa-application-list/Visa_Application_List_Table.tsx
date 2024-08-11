@@ -609,7 +609,9 @@ export default function Visa_Application_List_Table() {
 
   const handleDownloadPass = (data: any) => {
     const imageUrl = data?.passportPdf;
-    const fileName = `${data?.givenName}-passport.pdf`;
+
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `${data?.givenName}-passport.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -632,7 +634,34 @@ export default function Visa_Application_List_Table() {
 
   const handleDownloadDoc = (data: any) => {
     const imageUrl = data?.otherDocumentPdf;
-    const fileName = `${data?.givenName}-document.pdf`;
+
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `${data?.givenName}-document.${fileExtension}`;
+
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        toast.success(`Document download successfully`, {
+          position: "top-center",
+        });
+      })
+      .catch(() => alert("An error occurred while downloading the image."));
+  };
+  const handleDownloadPrevDoc = (data: any) => {
+    const imageUrl = data?.previousPassPdf;
+
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `${data?.givenName}-previous-visa.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -677,7 +706,8 @@ export default function Visa_Application_List_Table() {
 
   const handleDownloadVisa = async (data: any) => {
     const imageUrl = data?.deliveredVisa;
-    const fileName = `${data?.givenName}-visa.pdf`;
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `${data?.givenName}-visa.${fileExtension}`;
 
     // Call the API to notify success
     const status = "DELIVERED";
@@ -720,6 +750,34 @@ export default function Visa_Application_List_Table() {
       });
     }
   };
+
+
+  const handleDownloadVisa2 = (data: any) => {
+    const imageUrl = data?.deliveredVisa;
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `${data?.givenName}-visa.${fileExtension}`;
+
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        toast.success(`Document download successfully`, {
+          position: "top-center",
+        });
+      })
+      .catch(() => alert("An error occurred while downloading the image."));
+  };
+
+
 
   // const handleDownload = async (data) => {
   //   try {
@@ -1033,19 +1091,19 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                
+
                       <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(
-                        reversedgetVesaApplyData.created_at
-                      ).toLocaleDateString("en-GB")}
-                  </td>
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
+                      </td>
 
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                    
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
@@ -1077,7 +1135,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1193,7 +1251,7 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
 
-                
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(
@@ -1204,7 +1262,7 @@ export default function Visa_Application_List_Table() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                      
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
@@ -1215,14 +1273,14 @@ export default function Visa_Application_List_Table() {
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
-                    
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(
                             reversedgetVesaApplyData.passExpiryDate
                           ).toLocaleDateString("en-GB")}
                       </td>
-                      
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
                       </td>
@@ -1238,7 +1296,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1406,7 +1464,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1531,7 +1589,7 @@ export default function Visa_Application_List_Table() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                  
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
@@ -1563,7 +1621,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1693,9 +1751,9 @@ export default function Visa_Application_List_Table() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                 
+
                       <td className="px-6 py-4">
-                      {reversedgetVesaApplyData &&
+                        {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.dob)
                             .toLocaleDateString("en-GB")}
                       </td>
@@ -1724,7 +1782,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -1854,9 +1912,9 @@ export default function Visa_Application_List_Table() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                     
+
                       <td className="px-6 py-4">
-                      {reversedgetVesaApplyData &&
+                        {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.dob)
                             .toLocaleDateString("en-GB")}
                       </td>
@@ -1864,7 +1922,7 @@ export default function Visa_Application_List_Table() {
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
-                    
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passExpiryDate &&
                           new Date(reversedgetVesaApplyData.passExpiryDate)
@@ -1887,7 +1945,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -2017,7 +2075,7 @@ export default function Visa_Application_List_Table() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                  
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.dob)
@@ -2050,7 +2108,7 @@ export default function Visa_Application_List_Table() {
                         </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
-                        "SUBMITTED" ? (
+                          "SUBMITTED" ? (
                           <Chip label="SUBMITTED" color="default" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "CANCELLED" ? (
@@ -2144,7 +2202,7 @@ export default function Visa_Application_List_Table() {
                   <p>
                     {selectedDataForView?.dob &&
                       new Date(selectedDataForView.dob)
-                       .toLocaleDateString("en-GB")}
+                        .toLocaleDateString("en-GB")}
                   </p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
@@ -2157,7 +2215,7 @@ export default function Visa_Application_List_Table() {
                   <p>
                     {selectedDataForView?.passExpiryDate &&
                       new Date(selectedDataForView.passExpiryDate)
-                       .toLocaleDateString("en-GB")}
+                        .toLocaleDateString("en-GB")}
                   </p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
@@ -2234,6 +2292,23 @@ export default function Visa_Application_List_Table() {
                     Download Other Documents
                   </Button>
 
+                  {selectedDataForView?.previousPassPdf ? (
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={<Icon icon="material-symbols:download-sharp" />}
+                      onClick={() => handleDownloadPrevDoc(selectedDataForView)}
+                    >
+                      Download Previous Visa
+                    </Button>
+                  ) : (
+                    <></>
+                  )
+
+                  }
+
+
+
                   {selectedDataForView?.isApproved === "APPROVED" ? (
                     balance >= selectedDataForView?.sellingPrise ? (
                       <>
@@ -2302,6 +2377,25 @@ export default function Visa_Application_List_Table() {
                   ) : (
                     <></>
                   )}
+
+
+                  {selectedDataForView?.isApproved === "DELIVERED" ? (
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={
+                        <Icon icon="material-symbols:download-sharp" />
+                      }
+                      onClick={() =>
+                        handleDownloadVisa(selectedDataForView)}
+                    >
+                      Download Your Visa
+                    </Button>
+                  ) : (
+                    <></>
+                  )
+
+                  }
                 </div>
               </div>
             </div>

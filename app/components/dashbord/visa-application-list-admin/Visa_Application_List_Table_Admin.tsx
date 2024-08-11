@@ -686,6 +686,36 @@ export default function Visa_Application_List_Table_Admin() {
       .catch(() => alert("An error occurred while downloading the image."));
   };
 
+
+  const handleDownloadPrevDoc = (data: any) => {
+    const imageUrl = data?.previousPassPdf;
+
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `${data?.givenName}-previous-visa.${fileExtension}`;
+
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        toast.success(`Document download successfully`, {
+          position: "top-center",
+        });
+      })
+      .catch(() => alert("An error occurred while downloading the image."));
+  };
+
+
+
+
   const handleDownloadVisa = (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileName = `${data?.givenName}-visa.pdf`;
@@ -2557,6 +2587,23 @@ export default function Visa_Application_List_Table_Admin() {
                     Download Other Documents
                   </Button>
 
+                  
+                  {selectedDataForView?.previousPassPdf ? (
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={<Icon icon="material-symbols:download-sharp" />}
+                      onClick={() => handleDownloadPrevDoc(selectedDataForView)}
+                    >
+                      Download Previous Visa
+                    </Button>
+                  ) : (
+                    <></>
+                  )
+
+                  }
+
+
                   {selectedDataForView?.isApproved === "APPROVED" ||
                   selectedDataForView?.isApproved === "DELIVERED" ? (
                     <Button
@@ -2572,6 +2619,7 @@ export default function Visa_Application_List_Table_Admin() {
                   ) : (
                     <></>
                   )}
+
                 </div>
               </div>
             </div>

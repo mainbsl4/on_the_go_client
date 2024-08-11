@@ -264,7 +264,8 @@ export default function Deposit_request_admin_Table() {
 
   const handleDownloadDoc = (data: any) => {
     const imageUrl = data?.slipImage;
-    const fileName = `payment-document.pdf`;
+    const fileExtension = imageUrl.split('.').pop() || 'file';
+    const fileName = `payment-document.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
