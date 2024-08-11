@@ -869,12 +869,14 @@ export default function Visa_Application_List_Table() {
                   >
                     {index + 1}
                   </td>
+
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
+                      new Date(
+                        reversedgetVesaApplyData.created_at
+                      ).toLocaleDateString("en-GB")}
                   </td>
+
                   {/* <td className="px-6 py-4">
                     {regNumber}
                   </td> */}
@@ -882,13 +884,22 @@ export default function Visa_Application_List_Table() {
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData?.givenName}
                   </td>
-                  <td className="px-6 py-4">{reversedgetVesaApplyData.dob}</td>
+                  {/* <td className="px-6 py-4">{reversedgetVesaApplyData.dob}</td> */}
+                  <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
+                        "en-GB"
+                      )}
+                  </td>
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData.passportNo}
                   </td>
 
                   <td className="px-6 py-4">
-                    {reversedgetVesaApplyData.passExpiryDate}
+                    {reversedgetVesaApplyData &&
+                      new Date(
+                        reversedgetVesaApplyData.passExpiryDate
+                      ).toLocaleDateString("en-GB")}
                   </td>
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData.nationality}
@@ -1022,25 +1033,34 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+                
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
-                      </td>
+                    {reversedgetVesaApplyData &&
+                      new Date(
+                        reversedgetVesaApplyData.created_at
+                      ).toLocaleDateString("en-GB")}
+                  </td>
+
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+                    
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
+                            "en-GB"
+                          )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.passExpiryDate
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1173,26 +1193,36 @@ export default function Visa_Application_List_Table() {
                         {index + 1}
                       </td>
 
+                
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+                      
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
+                            "en-GB"
+                          )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
+                    
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.passExpiryDate
+                          ).toLocaleDateString("en-GB")}
                       </td>
+                      
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
                       </td>
@@ -1323,25 +1353,43 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData.dob}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
+                            "en-GB"
+                          )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passExpiryDate}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.passExpiryDate
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1483,15 +1531,22 @@ export default function Visa_Application_List_Table() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+                  
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
+                            "en-GB"
+                          )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.passExpiryDate
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1623,25 +1678,36 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toLocaleDateString("en-GB")}
                       </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+                 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                      {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob)
+                            .toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.passExpiryDate
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1773,26 +1839,39 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toLocaleDateString("en-GB")}
                       </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+                     
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                      {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob)
+                            .toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
+                    
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {reversedgetVesaApplyData.passExpiryDate &&
+                          new Date(reversedgetVesaApplyData.passExpiryDate)
+                            .toLocaleDateString("en-GB")}
                       </td>
+
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
                       </td>
@@ -1923,25 +2002,38 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.created_at)
+                            .toLocaleDateString("en-GB")}
                       </td>
 
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+                  
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.dob)
+                            .toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passExpiryDate}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(reversedgetVesaApplyData.passExpiryDate)
+                            .toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -2048,7 +2140,12 @@ export default function Visa_Application_List_Table() {
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>DOB : </p>
-                  <p>{selectedDataForView?.dob}</p>
+                  {/* <p>{selectedDataForView?.dob}</p> */}
+                  <p>
+                    {selectedDataForView?.dob &&
+                      new Date(selectedDataForView.dob)
+                       .toLocaleDateString("en-GB")}
+                  </p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Passport Number : </p>
@@ -2056,7 +2153,12 @@ export default function Visa_Application_List_Table() {
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Passport EXP : </p>
-                  <p>{selectedDataForView?.passExpiryDate}</p>
+                  {/* <p>{selectedDataForView?.passExpiryDate}</p> */}
+                  <p>
+                    {selectedDataForView?.passExpiryDate &&
+                      new Date(selectedDataForView.passExpiryDate)
+                       .toLocaleDateString("en-GB")}
+                  </p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Religion : </p>

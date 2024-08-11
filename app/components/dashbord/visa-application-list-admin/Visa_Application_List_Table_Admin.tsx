@@ -347,7 +347,8 @@ export default function Visa_Application_List_Table_Admin() {
   const [toDate, setToDate] = React.useState("");
   const [passportNoSearchQuery, setPassportNoSearchQuery] = React.useState("");
   const [regNoSearchQuery, setRegNoSearchQuery] = React.useState("");
-  const [conpanyNameSearchQuery, setConpanyNameSearchQuery] = React.useState("");
+  const [conpanyNameSearchQuery, setConpanyNameSearchQuery] =
+    React.useState("");
 
   // file information
   const [fileInfo3, setFileInfo3] = React.useState(null);
@@ -501,7 +502,7 @@ export default function Visa_Application_List_Table_Admin() {
       data?.user?.regNo
         .toLowerCase()
         .includes(regNoSearchQuery.toLowerCase()) &&
-        data?.user?.companyName
+      data?.user?.companyName
         .toLowerCase()
         .includes(conpanyNameSearchQuery.toLowerCase()) &&
       (!from ||
@@ -749,16 +750,13 @@ export default function Visa_Application_List_Table_Admin() {
           value={regNoSearchQuery}
           onChange={handleRegSearchQueryChange}
         />
-        
+
         <TextField
           label="company name"
           variant="outlined"
           value={conpanyNameSearchQuery}
           onChange={handleCompanyNameSearchQueryChange}
         />
-
-
-
       </div>
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -784,7 +782,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-              
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -839,30 +837,42 @@ export default function Visa_Application_List_Table_Admin() {
                   >
                     {index + 1}
                   </td>
-                 
+
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData?.user?.companyName}
                   </td>
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData?.user?.regNo}
                   </td>
+
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.created_at)
-                        .toISOString()
-                        .split("T")[0]}
+                      new Date(
+                        reversedgetVesaApplyData.created_at
+                      ).toLocaleDateString("en-GB")}
                   </td>
 
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData?.givenName}
                   </td>
-                  <td className="px-6 py-4">{reversedgetVesaApplyData.dob}</td>
+                  {/* <td className="px-6 py-4">{reversedgetVesaApplyData.dob}</td> */}
+                  <td className="px-6 py-4">
+                    {reversedgetVesaApplyData &&
+                      new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
+                        "en-GB"
+                      )}
+                  </td>
+
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData.passportNo}
                   </td>
                   <td className="px-6 py-4">
-                    {reversedgetVesaApplyData.passExpiryDate}
+                    {reversedgetVesaApplyData &&
+                      new Date(
+                        reversedgetVesaApplyData.passExpiryDate
+                      ).toLocaleDateString("en-GB")}
                   </td>
+
                   <td className="px-6 py-4">
                     {reversedgetVesaApplyData.nationality}
                   </td>
@@ -946,7 +956,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-              
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1003,7 +1013,7 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
-                  
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
@@ -1011,11 +1021,11 @@ export default function Visa_Application_List_Table_Admin() {
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.regNo}
                       </td>
+
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                        {new Date(
+                          reversedgetVesaApplyData.created_at
+                        ).toLocaleDateString("en-GB")}
                       </td>
 
                       <td className="px-6 py-4">
@@ -1023,13 +1033,23 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.dob
+                          ).toLocaleDateString("en-GB")}
                       </td>
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passExpiryDate}
+                      </td> */}
+
+                      <td className="px-6 py-4">
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1076,24 +1096,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          <IconButton
-                            aria-label="edit"
-                            color="info"
-                            onClick={handleOpenModalForEdit}
-                          >
-                            <Icon icon="mingcute:edit-line" />
-                          </IconButton>
-                          {/* <IconButton
-                            aria-label="delete"
-                            color="error"
-                            onClick={handleClickOpenModalForDelete}
-                          >
-                            <Icon icon="lets-icons:cancel" />
-                          </IconButton> */}
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
+                              aria-label="edit"
+                              color="info"
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
+                            >
+                              <Icon icon="mingcute:edit-line" />
+                            </IconButton>
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -1110,7 +1144,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-           
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1167,31 +1201,42 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
-                   
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.regNo}
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(reversedgetVesaApplyData.created_at)
                             .toISOString()
                             .split("T")[0]}
+                      </td> */}
+                      <td className="px-6 py-4">
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {new Date(
+                          reversedgetVesaApplyData.dob
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1239,24 +1284,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -1273,7 +1332,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-          
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1329,31 +1388,36 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
-                  
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.regNo}
                       </td>
+
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                        {new Date(
+                          reversedgetVesaApplyData.created_at
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {new Date(
+                          reversedgetVesaApplyData.dob
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1400,24 +1464,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -1434,7 +1512,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-             
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1491,7 +1569,7 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
-                 
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
@@ -1500,22 +1578,29 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
+
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {reversedgetVesaApplyData &&
+                          new Date(
+                            reversedgetVesaApplyData.dob
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1562,24 +1647,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -1596,7 +1695,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-           
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1653,7 +1752,6 @@ export default function Visa_Application_List_Table_Admin() {
                         {index + 1}
                       </td>
 
-                   
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
@@ -1662,22 +1760,27 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {new Date(
+                          reversedgetVesaApplyData.dob
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1724,24 +1827,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -1758,7 +1875,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-               
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1814,7 +1931,7 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
-                  
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
@@ -1823,22 +1940,26 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {new Date(
+                          reversedgetVesaApplyData.dob
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -1885,24 +2006,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -1919,7 +2054,7 @@ export default function Visa_Application_List_Table_Admin() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
-          
+
                 <th scope="col" className="px-6 py-3">
                   Company Name
                 </th>
@@ -1975,7 +2110,7 @@ export default function Visa_Application_List_Table_Admin() {
                       >
                         {index + 1}
                       </td>
-                  
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.user?.companyName}
                       </td>
@@ -1984,22 +2119,26 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
+                        {new Date(
+                          reversedgetVesaApplyData.dob
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.passportNo}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
+                        {new Date(
+                          reversedgetVesaApplyData.passExpiryDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData.nationality}
@@ -2046,24 +2185,38 @@ export default function Visa_Application_List_Table_Admin() {
                           <IconButton
                             aria-label="view"
                             color="success"
-                            onClick={handleOpenModalForView}
+                            onClick={() =>
+                              handleOpenModalForView(reversedgetVesaApplyData)
+                            }
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
+                          {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                        <IconButton
+                          aria-label="delete"
+                          color="error"
+                          onClick={() =>
+                            handleClickOpenModalForDelete(
+                              reversedgetVesaApplyData?.id
+                            )
+                          }
+                        >
+                          <Icon icon="lets-icons:cancel" />
+                        </IconButton>
+                      )} */}
                         </Stack>
                       </td>
                     </tr>
@@ -2104,7 +2257,12 @@ export default function Visa_Application_List_Table_Admin() {
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>DOB : </p>
-                  <p>{selectedDataForView?.dob}</p>
+                  {/* <p>{selectedDataForView?.dob}</p> */}
+                  <p>
+                    {new Date(selectedDataForView.dob).toLocaleDateString(
+                      "en-GB"
+                    )}
+                  </p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Passport Number : </p>
@@ -2112,7 +2270,12 @@ export default function Visa_Application_List_Table_Admin() {
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Passport EXP : </p>
-                  <p>{selectedDataForView?.passExpiryDate}</p>
+                  {/* <p>{selectedDataForView?.passExpiryDate}</p> */}
+                  <p>
+                    {new Date(
+                      selectedDataForView.passExpiryDate
+                    ).toLocaleDateString("en-GB")}
+                  </p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
                   <p>Religion : </p>
