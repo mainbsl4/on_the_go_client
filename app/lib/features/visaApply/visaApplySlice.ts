@@ -55,6 +55,8 @@ export const updateVisaApplyStatus = createAsyncThunk(
       sellingPrise,
       trackingId,
       deliveredVisa,
+      applicationCopy,
+      paymentReceive,
     }: {
       id: any;
       data: any;
@@ -63,6 +65,8 @@ export const updateVisaApplyStatus = createAsyncThunk(
       sellingPrise: number;
       trackingId: any;
       deliveredVisa: any;
+      applicationCopy: any;
+      paymentReceive: any;
     },
     { rejectWithValue }
   ) => {
@@ -76,6 +80,8 @@ export const updateVisaApplyStatus = createAsyncThunk(
           sellingPrise: sellingPrise,
           trackingId: trackingId,
           deliveredVisa: deliveredVisa,
+          applicationCopy: applicationCopy,
+          paymentReceive: paymentReceive,
         }
       );
       console.log(response);

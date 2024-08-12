@@ -9,6 +9,8 @@ interface UploadState {
     uploadImg: any;
     uploadImgIf: any;
     deliveredVisa: any;
+    applicationCopy: any;
+    paymentReceive: any;
     uploadSlip: any;
     loading: boolean;
     error: string | null;
@@ -20,6 +22,8 @@ const initialState: UploadState = {
     uploadImg: null,
     uploadImgIf: null,
     deliveredVisa: null,
+    applicationCopy: null,
+    paymentReceive: null,
     uploadSlip: null,
     loading: false,
     error: null,
@@ -170,6 +174,56 @@ export const uploadSlipImg = createAsyncThunk(
 );
 
 
+export const applicationCopyImg = createAsyncThunk(
+    "upload/applicationCopyImg",
+    async (file: File, { rejectWithValue }) => {
+        try {
+            const formData = new FormData();
+            formData.append("images", file);
+
+            const response = await axios.post(
+                `${base_url}upload/application-img`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+
+export const paymentReceiveImg = createAsyncThunk(
+    "upload/paymentReceiveImg",
+    async (file: File, { rejectWithValue }) => {
+        try {
+            const formData = new FormData();
+            formData.append("images", file);
+
+            const response = await axios.post(
+                `${base_url}upload/payment-img`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            return response.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+
 const uploadSlice = createSlice({
     name: "upload",
     initialState,
@@ -245,6 +299,30 @@ const uploadSlice = createSlice({
                 state.deliveredVisa = action.payload;
             })
             .addCase(deliveredVisaPdf.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(applicationCopyImg.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(applicationCopyImg.fulfilled, (state, action) => {
+                state.loading = false;
+                state.applicationCopy = action.payload;
+            })
+            .addCase(applicationCopyImg.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(paymentReceiveImg.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(paymentReceiveImg.fulfilled, (state, action) => {
+                state.loading = false;
+                state.paymentReceive = action.payload;
+            })
+            .addCase(paymentReceiveImg.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })

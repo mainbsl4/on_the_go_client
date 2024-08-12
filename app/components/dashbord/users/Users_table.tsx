@@ -120,6 +120,92 @@ export default function Users_table() {
     setOpenModalForView(false);
   };
 
+
+  // const userDepositTotals = getAllUsers?.map(user => {
+  //   const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
+  //     return sum + deposit.amount;
+  //   }, 0);
+  
+  //   return {
+  //     userName: user.userName,
+  //     totalDeposit
+  //   };
+  // });
+
+
+  // const userLoanTotals = getAllUsers?.map(user => {
+  //   const totalLoan = user?.loan_request?.reduce((sum, loan) => {
+  //     return sum + loan.amount;
+  //   }, 0);
+  
+  //   return {
+  //     userName: user.userName,
+  //     totalLoan
+  //   };
+  // });
+  
+  // console.log(userDepositTotals);
+  // console.log(userLoanTotals);
+
+
+  // const userTotals = getAllUsers?.map(user => {
+  //   const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
+  //     return sum + deposit.amount;
+  //   }, 0);
+  
+  //   const totalLoan = user?.loan_request?.reduce((sum, loan) => {
+  //     return sum + loan.amount;
+  //   }, 0);
+  
+  //   const total = totalDeposit + totalLoan;
+  
+  //   return {
+  //     userName: user.userName,
+  //     totalDeposit,
+  //     totalLoan,
+  //     total
+  //   };
+  // });
+  
+  // console.log(userTotals);
+
+
+   // Calculate user totals
+   const userTotals = getAllUsers?.map((user) => {
+    const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
+      return deposit?.isApproved === "APPROVED" ? sum + (deposit.amount || 0) : sum;
+    }, 0);
+
+    const totalLoan = user?.loan_request?.reduce((sum, loan) => {
+      return loan?.isApproved === "APPROVED" ? sum + (loan.amount || 0) : sum;
+    }, 0);
+
+    const totalSellingPrice = user?.visa_apply?.reduce((sum, visa) => {
+      return visa?.isApproved === "DELIVERED" ? sum + (visa?.sellingPrise || 0) : sum;
+    }, 0);
+
+    const total = totalDeposit + totalLoan - totalSellingPrice;
+
+    return {
+      ...user, 
+      totalDeposit,
+      totalLoan,
+      totalSellingPrice,
+      total,
+    };
+  });
+
+
+  const rows = (Array.isArray(userTotals) ? userTotals : []).filter(
+    (data) => {
+      return (
+        data?.regNo.toLowerCase().includes(regSearchQuery.toLowerCase()) &&
+        data?.email.toLowerCase().includes(emailSearchQuery.toLowerCase()) &&
+        data?.mobile.toString().includes(phoneSearchQuery.toLowerCase())
+      );
+    }
+  );
+
   const columns = [
     { field: "regNo", headerName: "Reg No", width: 100 },
     { field: "companyName", headerName: "Company", width: 150 },
@@ -127,6 +213,7 @@ export default function Users_table() {
     { field: "email", headerName: "Email", width: 150 },
     { field: "bisunessAdd", headerName: "Address", width: 150 },
     { field: "country", headerName: "Country", width: 150 },
+    { field: "total", headerName: "Balance", width: 150 },
     {
       field: "isApproved",
       headerName: "Status",
@@ -140,8 +227,6 @@ export default function Users_table() {
           <Chip label="REJECTED" color="error" />
         ),
     },
-
-    { field: "balance", headerName: "Balance", width: 150 },
 
     {
       field: "action",
@@ -161,6 +246,7 @@ export default function Users_table() {
     },
   ];
 
+
   // for search
   const handleRegSearchQueryChange = (event) => {
     setRegSearchQuery(event.target.value);
@@ -173,21 +259,7 @@ export default function Users_table() {
     setPhoneSearchQuery(event.target.value);
   };
 
-  const filteredData = (Array.isArray(getAllUsers) ? getAllUsers : []).filter(
-    (data) => {
-      return (
-        data?.regNo.toLowerCase().includes(regSearchQuery.toLowerCase()) &&
-        data?.email.toLowerCase().includes(emailSearchQuery.toLowerCase()) &&
-        data?.mobile.toString().includes(phoneSearchQuery.toLowerCase())
-      );
-    }
-  );
 
-  const rows = filteredData;
-
-  // get balance
-  const balance = useSelector((state: RootState) => state);
-console.log("dddd",balance);
 
   
   return (

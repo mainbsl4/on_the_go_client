@@ -721,6 +721,8 @@ export default function Visa_Application_List_Table() {
         sellingPrise: +data?.sellingPrise,
         trackingId: data?.trackingId,
         deliveredVisa: data?.deliveredVisa,
+        applicationCopy: data?.applicationCopy,
+        paymentReceive:  data?.paymentReceive,
       })
     );
     if (updateStatus.payload.status === 200) {
