@@ -354,6 +354,11 @@ export default function Visa_Application_List_Table_Admin() {
 
   // file information
   const [fileInfo3, setFileInfo3] = React.useState(null);
+  const [fileInfo4, setFileInfo4] = React.useState(null);
+  const [fileInfo5, setFileInfo5] = React.useState(null);
+  const [fileInfo6, setFileInfo6] = React.useState(null);
+
+
 
   // for get data from status and comment
   const [status, setStatus] = React.useState(null);
@@ -385,7 +390,7 @@ export default function Visa_Application_List_Table_Admin() {
     // file information
     const file = event.target.files[0];
     if (file) {
-      setFileInfo3({
+      setFileInfo4({
         name: file.name,
         size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
       });
@@ -402,7 +407,7 @@ export default function Visa_Application_List_Table_Admin() {
     // file information
     const file = event.target.files[0];
     if (file) {
-      setFileInfo3({
+      setFileInfo5({
         name: file.name,
         size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
       });
@@ -419,7 +424,7 @@ export default function Visa_Application_List_Table_Admin() {
     // file information
     const file = event.target.files[0];
     if (file) {
-      setFileInfo3({
+      setFileInfo6({
         name: file.name,
         size: (file.size / 1024).toFixed(2), // Convert size to KB and format it
       });
@@ -2494,6 +2499,52 @@ export default function Visa_Application_List_Table_Admin() {
                         defaultValue={selectedDataForView?.trackingId}
                         onChange={(e) => setTrackingId(e.target.value)}
                       />
+                       <div className=" mt-3">
+                        <Button
+                          component="label"
+                          role={undefined}
+                          variant="contained"
+                          color="info"
+                          tabIndex={-1}
+                          startIcon={<Icon icon="ep:upload-filled" />}
+                          sx={{ width: "100%" }}
+                        >
+                          Upload Application Copy
+                          <VisuallyHiddenInput
+                            type="file"
+                            onChange={handleFileChange5}
+                          />
+                        </Button>
+                        {fileInfo5 && (
+                          <div>
+                            <p>File Name: {fileInfo5.name}</p>
+                            <p>File Size: {fileInfo5.size} KB</p>
+                          </div>
+                        )}
+                      </div>
+                      <div className=" mt-3">
+                        <Button
+                          component="label"
+                          role={undefined}
+                          variant="contained"
+                          color="info"
+                          tabIndex={-1}
+                          startIcon={<Icon icon="ep:upload-filled" />}
+                          sx={{ width: "100%" }}
+                        >
+                          Upload Payment Received
+                          <VisuallyHiddenInput
+                            type="file"
+                            onChange={handleFileChange6}
+                          />
+                        </Button>
+                        {fileInfo6 && (
+                          <div>
+                            <p>File Name: {fileInfo6.name}</p>
+                            <p>File Size: {fileInfo6.size} KB</p>
+                          </div>
+                        )}
+                      </div>
                     </>
                   )}
                   {status === "APPROVED" && (
@@ -2547,14 +2598,14 @@ export default function Visa_Application_List_Table_Admin() {
                             onChange={handleFileChange4}
                           />
                         </Button>
-                        {fileInfo3 && (
+                        {fileInfo4 && (
                           <div>
-                            <p>File Name: {fileInfo3.name}</p>
-                            <p>File Size: {fileInfo3.size} KB</p>
+                            <p>File Name: {fileInfo4.name}</p>
+                            <p>File Size: {fileInfo4.size} KB</p>
                           </div>
                         )}
                       </div>
-                      <div className=" mt-3">
+                      {/* <div className=" mt-3">
                         <Button
                           component="label"
                           role={undefined}
@@ -2576,8 +2627,8 @@ export default function Visa_Application_List_Table_Admin() {
                             <p>File Size: {fileInfo3.size} KB</p>
                           </div>
                         )}
-                      </div>
-                      <div className=" mt-3">
+                      </div> */}
+                      {/* <div className=" mt-3">
                         <Button
                           component="label"
                           role={undefined}
@@ -2599,7 +2650,7 @@ export default function Visa_Application_List_Table_Admin() {
                             <p>File Size: {fileInfo3.size} KB</p>
                           </div>
                         )}
-                      </div>
+                      </div> */}
                     </>
                   )}
 
