@@ -683,7 +683,6 @@ export default function Visa_Application_List_Table() {
       .catch(() => alert("An error occurred while downloading the image."));
   };
 
-
   // paymentReceive
   const handleDownloadpaymentReceive = (data: any) => {
     const imageUrl = data?.paymentReceive;
@@ -710,7 +709,6 @@ export default function Visa_Application_List_Table() {
       })
       .catch(() => alert("An error occurred while downloading the image."));
   };
-
 
   // applicationCopy
   const handleDownloadApplicationCopy = (data: any) => {
@@ -873,9 +871,6 @@ export default function Visa_Application_List_Table() {
   );
 
   // console.log("balance", balance);
-
-  console.log("XXX", selectedDataForView);
-  
 
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
@@ -2370,49 +2365,40 @@ export default function Visa_Application_List_Table() {
                     <></>
                   )}
 
+                  {selectedDataForView?.isApproved === "APPLIED" ? (
+                    <>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        startIcon={
+                          <Icon icon="material-symbols:download-sharp" />
+                        }
+                        // onClick={() => handleDownloadVisa(selectedDataForView)}
+                        onClick={() =>
+                          handleDownloadpaymentReceive(selectedDataForView)
+                        }
+                      >
+                        Download Your Payment Receive
+                      </Button>
 
-
-{selectedDataForView?.isApproved === "APPLIED" ? (
-                   
-                        <>
-                          <Button
-                          variant="contained"
-                          size="large"
-                          startIcon={
-                            <Icon icon="material-symbols:download-sharp" />
-                          }
-                          // onClick={() => handleDownloadVisa(selectedDataForView)}
-                          onClick={() => handleDownloadpaymentReceive(selectedDataForView)}
-                        >
-                          Download Your Payment Receive
-                        </Button>
-
-                          <Button
-                          variant="contained"
-                          size="large"
-                          startIcon={
-                            <Icon icon="material-symbols:download-sharp" />
-                          }
-                          // onClick={() => handleDownloadVisa(selectedDataForView)}
-                          onClick={() => handleDownloadApplicationCopy(selectedDataForView)}
-                        >
-                          Download Your Application Copy
-                        </Button>
-                        
-                        </>
-                    ) : (
-                      <p>sorry</p>
-                      // <p>p>
-                    )
-                   }
-
-
-
-
-
-
-
-
+                      <Button
+                        variant="contained"
+                        size="large"
+                        startIcon={
+                          <Icon icon="material-symbols:download-sharp" />
+                        }
+                        // onClick={() => handleDownloadVisa(selectedDataForView)}
+                        onClick={() =>
+                          handleDownloadApplicationCopy(selectedDataForView)
+                        }
+                      >
+                        Download Your Application Copy
+                      </Button>
+                    </>
+                  ) : (
+                    <p>sorry</p>
+                    // <p>p>
+                  )}
 
                   {selectedDataForView?.isApproved === "APPROVED" ? (
                     balance >= selectedDataForView?.sellingPrise ? (
