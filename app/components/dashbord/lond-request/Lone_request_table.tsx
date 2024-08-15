@@ -305,13 +305,13 @@ export default function Lone_request_table() {
                   >
                     <Icon icon="hugeicons:view" />
                   </IconButton>
-                  <IconButton
+                  {/* <IconButton
                     aria-label="edit"
                     color="info"
                     onClick={() => handleOpenModalForEdit(loanList)}
                   >
                     <Icon icon="mingcute:edit-line" />
-                  </IconButton>
+                  </IconButton> */}
                   {/* <IconButton
                     aria-label="delete"
                     color="error"
