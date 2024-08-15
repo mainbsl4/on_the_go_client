@@ -16,6 +16,8 @@ export default function Profit_los_Table() {
   const [fromDate, setFromDate] = React.useState("");
   const [toDate, setToDate] = React.useState("");
   const [passportNoSearchQuery, setPassportNoSearchQuery] = React.useState("");
+  const [regNumberSearchQuery, setRegNumberSearchQuery] = React.useState("");
+  const [companyNameSearchQuery, setCompanyNameSearchQuery] = React.useState("");
 
   const getVesaApplyData = useSelector(
     (state: RootState) => state?.visaApply?.visaApply?.data || []
@@ -24,6 +26,8 @@ export default function Profit_los_Table() {
   const revarseVisaData = getVesaApplyData?.slice().reverse();
   // console.log("profit", revarseVisaData);
 
+
+  
   const dispatch: AppDispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllVisaApply());
@@ -40,6 +44,12 @@ export default function Profit_los_Table() {
   const handlePassportNoSearchQuery = (event) => {
     setPassportNoSearchQuery(event.target.value);
   };
+  const handleRegNumberSearchQuery = (event) => {
+    setRegNumberSearchQuery(event.target.value);
+  };
+  const handleCompanyNameSearchQuery = (event) => {
+    setCompanyNameSearchQuery(event.target.value);
+  };
 
   const filteredData = revarseVisaData?.filter((data) => {
     const itemDate = dayjs(data.created_at);
@@ -49,6 +59,10 @@ export default function Profit_los_Table() {
       data?.passportNo
        .toLowerCase()
         .includes(passportNoSearchQuery.toLowerCase()) &&
+        data?.user?.regNo
+         .includes(regNumberSearchQuery.toLowerCase()) &&
+         data?.user?.companyName.toLowerCase()
+         .includes(companyNameSearchQuery.toLowerCase()) &&
       (!from ||
         itemDate.isAfter(from, "day") ||
         itemDate.isSame(from, "day")) &&
@@ -88,6 +102,20 @@ export default function Profit_los_Table() {
           value={passportNoSearchQuery}
           onChange={handlePassportNoSearchQuery}
           />
+          <TextField
+          label="Reg Number"
+          type="text"
+          variant="outlined"
+          value={regNumberSearchQuery}
+          onChange={handleRegNumberSearchQuery}
+          />
+          <TextField
+          label="Company Name"
+          type="text"
+          variant="outlined"
+          value={companyNameSearchQuery}
+          onChange={handleCompanyNameSearchQuery}
+          />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
         <thead className="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
@@ -97,6 +125,9 @@ export default function Profit_los_Table() {
             </th>
             <th scope="col" className="px-6 py-3">
               Reg NO
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Company Name
             </th>
             <th scope="col" className="px-6 py-3">
               Date
@@ -135,6 +166,12 @@ export default function Profit_los_Table() {
                 className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
               >
                 {getVesaApplyData?.user?.regNo}
+              </td>
+              <td
+                scope="row"
+                className="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100"
+              >
+                {getVesaApplyData?.user?.companyName}
               </td>
 
               <td
