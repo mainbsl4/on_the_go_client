@@ -372,7 +372,6 @@ export default function Visa_Apply_Form() {
       toast.error("Please select an image file less than 5MB.", {
         position: "top-center",
       });
-
       return;
     }
 
