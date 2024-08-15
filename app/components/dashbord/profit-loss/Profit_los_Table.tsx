@@ -115,6 +115,14 @@ export default function Profit_los_Table() {
           onChange={handleCompanyNameSearchQuery}
           />
       </div>
+      <div>
+      {/* sum Buying Price */}
+        <p>Total Buying Price : {filteredData?.reduce((total, num) => total + Math.round(num.buyingPrise), 0)}</p>
+        {/* sum Selling Price */}
+        <p>Total Selling Price : {filteredData?.reduce((total, num) => total + num.sellingPrise, 0)}</p>
+        {/* sum Profit/Loss */}
+        <p>Total Profit/Loss : {filteredData?.reduce((total, num) => total + (num.sellingPrise - num.buyingPrise), 0)}</p>
+      </div>
       <table className="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
         <thead className="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
           <tr>
@@ -197,14 +205,7 @@ export default function Profit_los_Table() {
         </tbody>
       </table>
 
-      <div>
-      {/* sum Buying Price */}
-        <p>Total Buying Price : {filteredData?.reduce((total, num) => total + Math.round(num.buyingPrise), 0)}</p>
-        {/* sum Selling Price */}
-        <p>Total Selling Price : {filteredData?.reduce((total, num) => total + num.sellingPrise, 0)}</p>
-        {/* sum Profit/Loss */}
-        <p>Total Profit/Loss : {filteredData?.reduce((total, num) => total + (num.sellingPrise - num.buyingPrise), 0)}</p>
-      </div>
+    
     </div>
   );
 }
