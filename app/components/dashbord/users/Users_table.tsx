@@ -60,7 +60,7 @@ export default function Users_table() {
   const getAllUsers = useSelector(
     (state: RootState) => state?.user?.users?.data
   );
-  
+
   const dispatch: AppDispatch = useDispatch();
 
   React.useEffect(() => {
@@ -72,8 +72,6 @@ export default function Users_table() {
       dispatch(getUsers());
     }, sec);
   };
-
-  console.log("fffff", getAllUsers);
 
   // get data from dropdown
 
@@ -121,45 +119,42 @@ export default function Users_table() {
     setOpenModalForView(false);
   };
 
-
   // const userDepositTotals = getAllUsers?.map(user => {
   //   const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
   //     return sum + deposit.amount;
   //   }, 0);
-  
+
   //   return {
   //     userName: user.userName,
   //     totalDeposit
   //   };
   // });
 
-
   // const userLoanTotals = getAllUsers?.map(user => {
   //   const totalLoan = user?.loan_request?.reduce((sum, loan) => {
   //     return sum + loan.amount;
   //   }, 0);
-  
+
   //   return {
   //     userName: user.userName,
   //     totalLoan
   //   };
   // });
-  
+
   // console.log(userDepositTotals);
   // console.log(userLoanTotals);
-
 
   // const userTotals = getAllUsers?.map(user => {
   //   const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
   //     return sum + deposit.amount;
   //   }, 0);
-  
+
   //   const totalLoan = user?.loan_request?.reduce((sum, loan) => {
   //     return sum + loan.amount;
   //   }, 0);
-  
+
   //   const total = totalDeposit + totalLoan;
-  
+
   //   return {
   //     userName: user.userName,
   //     totalDeposit,
@@ -167,45 +162,48 @@ export default function Users_table() {
   //     total
   //   };
   // });
-  
+
   // console.log(userTotals);
 
+  // Calculate user totals
+  const userTotals = getAllUsers
+    ?.slice()
+    ?.reverse()
+    ?.map((user) => {
+      const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
+        return deposit?.isApproved === "APPROVED"
+          ? sum + (deposit.amount || 0)
+          : sum;
+      }, 0);
 
-   // Calculate user totals
-   const userTotals = getAllUsers?.slice()?.reverse()?.map((user) => {
-    const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
-      return deposit?.isApproved === "APPROVED" ? sum + (deposit.amount || 0) : sum;
-    }, 0);
+      const totalLoan = user?.loan_request?.reduce((sum, loan) => {
+        return loan?.isApproved === "APPROVED" ? sum + (loan.amount || 0) : sum;
+      }, 0);
 
-    const totalLoan = user?.loan_request?.reduce((sum, loan) => {
-      return loan?.isApproved === "APPROVED" ? sum + (loan.amount || 0) : sum;
-    }, 0);
+      const totalSellingPrice = user?.visa_apply?.reduce((sum, visa) => {
+        return visa?.isApproved === "DELIVERED"
+          ? sum + (visa?.sellingPrise || 0)
+          : sum;
+      }, 0);
 
-    const totalSellingPrice = user?.visa_apply?.reduce((sum, visa) => {
-      return visa?.isApproved === "DELIVERED" ? sum + (visa?.sellingPrise || 0) : sum;
-    }, 0);
+      const total = totalDeposit + totalLoan - totalSellingPrice;
 
-    const total = totalDeposit + totalLoan - totalSellingPrice;
+      return {
+        ...user,
+        totalDeposit,
+        totalLoan,
+        totalSellingPrice,
+        total,
+      };
+    });
 
-    return {
-      ...user, 
-      totalDeposit,
-      totalLoan,
-      totalSellingPrice,
-      total,
-    };
+  const rows = (Array.isArray(userTotals) ? userTotals : []).filter((data) => {
+    return (
+      data?.regNo.toLowerCase().includes(regSearchQuery.toLowerCase()) &&
+      data?.email.toLowerCase().includes(emailSearchQuery.toLowerCase()) &&
+      data?.mobile.toString().includes(phoneSearchQuery.toLowerCase())
+    );
   });
-
-
-  const rows = (Array.isArray(userTotals) ? userTotals : []).filter(
-    (data) => {
-      return (
-        data?.regNo.toLowerCase().includes(regSearchQuery.toLowerCase()) &&
-        data?.email.toLowerCase().includes(emailSearchQuery.toLowerCase()) &&
-        data?.mobile.toString().includes(phoneSearchQuery.toLowerCase())
-      );
-    }
-  );
 
   const columns = [
     { field: "regNo", headerName: "Reg No", width: 100 },
@@ -247,7 +245,6 @@ export default function Users_table() {
     },
   ];
 
-
   // for search
   const handleRegSearchQueryChange = (event) => {
     setRegSearchQuery(event.target.value);
@@ -260,9 +257,6 @@ export default function Users_table() {
     setPhoneSearchQuery(event.target.value);
   };
 
-
-
-  
   return (
     <div>
       {loading ? (
