@@ -70,8 +70,6 @@ export default function Profit_los_Table() {
     );
   });
 
-  console.log("sisir", revarseVisaData);
-
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="mt-4 mb-4 flex gap-4">
