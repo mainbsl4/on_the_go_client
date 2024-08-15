@@ -96,12 +96,12 @@ const userLinkData = [
     link: "/dashbord/visa-application-list",
   },
  
-  // {
-  //   id: 2,
-  //   text: "Bank Details",
-  //   icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
-  //   link: "/dashbord/bank-details",
-  // },
+  {
+    id: 2,
+    text: "Bank Details",
+    icon: <Icon className="text-3xl" icon="mdi:bank-outline" />,
+    link: "/dashbord/bank-details",
+  },
 
   {
     id: 3,

@@ -7,7 +7,7 @@ import Bank_Details_Table from "../../components/dashbord/bank-details/Bank_Deta
 export default function page() {
   return (
     <div>
-      <Bank_Details_Table_for_admin />
+      {/* <Bank_Details_Table_for_admin /> */}
       <Bank_Details_Table />
     </div>
   );
