@@ -361,7 +361,20 @@ export default function Visa_Apply_Form() {
   };
 
   const handleFileChange1 = async (event) => {
-    const selectedFile = event.target.files[0];
+    // const selectedFile = event.target.files[0];
+    const selectedFile = event.target.files && event.target.files[0];
+
+    // for image validation
+    const isImage = selectedFile.type.startsWith("image/");
+    const isValidSize = selectedFile.size < 5 * 1024 * 1024;
+    if (!isImage || !isValidSize) {
+      // fostify alert
+      toast.error("Please select an image file less than 5MB.", {
+        position: "top-center",
+      });
+      return;
+    }
+
     if (selectedFile) {
       setLoadingBtn1(true);
       await dispatch(uploadImg(selectedFile));
@@ -774,6 +787,7 @@ export default function Visa_Apply_Form() {
 
                   <VisuallyHiddenInput
                     type="file"
+                    accept="image/*"
                     onChange={handleFileChange1}
                   />
                 </Button>
