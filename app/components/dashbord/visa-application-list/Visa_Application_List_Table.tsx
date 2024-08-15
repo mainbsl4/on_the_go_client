@@ -2396,7 +2396,7 @@ export default function Visa_Application_List_Table() {
                       </Button>
                     </>
                   ) : (
-                    <p>sorry</p>
+                    <p></p>
                     // <p>p>
                   )}
 
