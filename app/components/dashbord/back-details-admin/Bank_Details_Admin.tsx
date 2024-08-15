@@ -247,9 +247,9 @@ export default function Bank_Details_Admin() {
                 </td>
                 <td className="px-6 py-4">{listItem.accName}</td>
                 <td className="px-6 py-4">{listItem.accNo}</td>
+                <td className="px-6 py-4">{listItem.district}</td>
                 <td className="px-6 py-4">{listItem.branch}</td>
-                <td className="px-6 py-4">{listItem.branch}</td>
-                <td className="px-6 py-4">{listItem.branch}</td>
+                <td className="px-6 py-4">{listItem.routingNo}</td>
                 <td className="px-6 py-4">
                   <Stack direction="row" spacing={1}>
                     <IconButton

@@ -60,6 +60,7 @@ export default function Users_table() {
   const getAllUsers = useSelector(
     (state: RootState) => state?.user?.users?.data
   );
+  
   const dispatch: AppDispatch = useDispatch();
 
   React.useEffect(() => {
@@ -72,7 +73,7 @@ export default function Users_table() {
     }, sec);
   };
 
-  // console.log("fffff", getAllUsers);
+  console.log("fffff", getAllUsers);
 
   // get data from dropdown
 
@@ -171,7 +172,7 @@ export default function Users_table() {
 
 
    // Calculate user totals
-   const userTotals = getAllUsers?.map((user) => {
+   const userTotals = getAllUsers?.slice()?.reverse()?.map((user) => {
     const totalDeposit = user?.deposit_request?.reduce((sum, deposit) => {
       return deposit?.isApproved === "APPROVED" ? sum + (deposit.amount || 0) : sum;
     }, 0);

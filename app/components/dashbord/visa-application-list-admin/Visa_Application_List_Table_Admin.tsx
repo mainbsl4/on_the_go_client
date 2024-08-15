@@ -2504,10 +2504,24 @@ export default function Visa_Application_List_Table_Admin() {
                           variant="contained"
                           color="info"
                           tabIndex={-1}
-                          startIcon={<Icon icon="ep:upload-filled" />}
+                          startIcon={
+                            loadingBtn5 ? (
+                              <></>
+                            ) : (
+                              <Icon icon="ep:upload-filled" />
+                            )
+                          }
                           sx={{ width: "100%" }}
                         >
-                          Upload Application Copy
+                          {loadingBtn5 ? (
+                            <Icon
+                              icon="line-md:loading-twotone-loop"
+                              className="text-2xl"
+                            />
+                          ) : (
+                            "Upload Application Copy"
+                          )}
+
                           <VisuallyHiddenInput
                             type="file"
                             onChange={handleFileChange5}
@@ -2527,10 +2541,25 @@ export default function Visa_Application_List_Table_Admin() {
                           variant="contained"
                           color="info"
                           tabIndex={-1}
-                          startIcon={<Icon icon="ep:upload-filled" />}
+                          startIcon={
+                            loadingBtn6 ? (
+                              <></>
+                            ) : (
+                              <Icon icon="ep:upload-filled" />
+                            )
+                          }
+                          // startIcon={<Icon icon="ep:upload-filled" />}
                           sx={{ width: "100%" }}
                         >
-                          Upload Payment Received
+                          {loadingBtn6 ? (
+                            <Icon
+                              icon="line-md:loading-twotone-loop"
+                              className="text-2xl"
+                            />
+                          ) : (
+                            "Upload Payment Received"
+                          )}
+                          {/* Upload Payment Received */}
                           <VisuallyHiddenInput
                             type="file"
                             onChange={handleFileChange6}
@@ -2587,10 +2616,25 @@ export default function Visa_Application_List_Table_Admin() {
                           variant="contained"
                           color="info"
                           tabIndex={-1}
-                          startIcon={<Icon icon="ep:upload-filled" />}
+                          startIcon={
+                            loadingBtn4 ? (
+                              <></>
+                            ) : (
+                              <Icon icon="ep:upload-filled" />
+                            )
+                          }
+                          // startIcon={<Icon icon="ep:upload-filled" />}
                           sx={{ width: "100%" }}
                         >
-                          Upload Visa
+                          {loadingBtn4 ? (
+                            <Icon
+                              icon="line-md:loading-twotone-loop"
+                              className="text-2xl"
+                            />
+                          ) : (
+                            "Upload Visa"
+                          )}
+                          {/* Upload Visa */}
                           <VisuallyHiddenInput
                             type="file"
                             onChange={handleFileChange4}
