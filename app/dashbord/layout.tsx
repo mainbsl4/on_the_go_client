@@ -31,6 +31,7 @@ import { Avatar, Button } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import { setTotalAddedBalance } from "../lib/features/balance/balanceSlice";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 const linkData = [
   {
     id: 1,
@@ -74,7 +75,6 @@ const linkData = [
     icon: <Icon className="text-3xl" icon="foundation:graph-bar" />,
     link: "/dashbord/profit-loss",
   },
-
 ];
 const userLinkData = [
   // {
@@ -95,7 +95,7 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="streamline:task-list" />,
     link: "/dashbord/visa-application-list",
   },
- 
+
   {
     id: 2,
     text: "Bank Details",
@@ -145,7 +145,6 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="icon-park-outline:list-fail" />,
     link: "/dashbord/lone-request-list",
   },
-
 ];
 
 const drawerWidth = 280;
@@ -363,7 +362,7 @@ export default function RootLayout({
         <CssBaseline />
         <AppBar position="fixed" open={open}>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            {/* <IconButton
+            <IconButton
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
@@ -374,7 +373,7 @@ export default function RootLayout({
               }}
             >
               <Icon icon="material-symbols-light:menu" />
-            </IconButton> */}
+            </IconButton>
             <Typography variant="h6" noWrap component="div">
               ON THE GO
             </Typography>
@@ -429,6 +428,12 @@ export default function RootLayout({
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
+            <Image
+              alt="Logo"
+              src="https://res.cloudinary.com/db7ovrkki/image/upload/v1723719706/onthegoLogoRmBG_rcxyxr.png"
+              width={200}
+              height={30}
+            />
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
                 <Icon icon="ant-design:right-outlined" />
