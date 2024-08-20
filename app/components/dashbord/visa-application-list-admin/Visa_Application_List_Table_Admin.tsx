@@ -683,10 +683,10 @@ export default function Visa_Application_List_Table_Admin() {
         buyingPrise: +buyingPrise
           ? +buyingPrise
           : selectedDataForView?.buyingPrise,
-          applyerEmail: +applyerEmail
+        applyerEmail: +applyerEmail
           ? +applyerEmail
           : selectedDataForView?.applyerEmail,
-          applyerEmailPass: +applyerEmailPass
+        applyerEmailPass: +applyerEmailPass
           ? +applyerEmailPass
           : selectedDataForView?.applyerEmailPass,
         sellingPrise: +sellingPrise
