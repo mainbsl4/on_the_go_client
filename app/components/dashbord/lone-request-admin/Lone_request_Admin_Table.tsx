@@ -332,7 +332,7 @@ export default function Lone_request_Admin_Table() {
                 ) : loanList?.isApproved === "REJECTED" ? (
                   <Chip label="REJECTED" color="error" />
                 ) : loanList?.isApproved === "PAID" ? (
-                  <Chip label="PAID" color="info" />
+                  <Chip label="PAID" color="success" />
                 ) : (
                   <Chip label="REJECTED" color="error" />
                 )}
@@ -416,7 +416,7 @@ export default function Lone_request_Admin_Table() {
                   ) : selectedDataForView?.isApproved === "REJECTED" ? (
                     <Chip label="REJECTED" color="error" />
                   ) : selectedDataForView?.isApproved === "PAID" ? (
-                    <Chip label="PAID" color="info" />
+                    <Chip label="PAID" color="success" />
                   ) : (
                     <Chip label="REJECTED" color="error" />
                   )}
