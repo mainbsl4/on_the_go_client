@@ -673,35 +673,61 @@ export default function Visa_Application_List_Table_Admin() {
     }
   };
 
+  // const handleUpdate = async () => {
+  //   // console.log("Selected Status:", status);
+  //   const response = await dispatch(
+  //     updateVisaApplyStatus({
+  //       id: selectedDataForView?.id,
+  //       data: status,
+  //       comment: comment ? comment : selectedDataForView?.comment,
+  //       buyingPrise: +buyingPrise
+  //         ? +buyingPrise
+  //         : selectedDataForView?.buyingPrise,
+  //       applyerEmail: applyerEmail ? applyerEmail : selectedDataForView?.applyerEmail,
+  //       applyerEmailPass: applyerEmailPass
+  //         ? applyerEmailPass
+  //         : selectedDataForView?.applyerEmailPass,
+  //       sellingPrise: +sellingPrise
+  //         ? +sellingPrise
+  //         : selectedDataForView?.sellingPrise,
+  //       trackingId: trackingId ? trackingId : selectedDataForView?.trackingId,
+  //       deliveredVisa: deliveredVisa
+  //         ? deliveredVisa
+  //         : selectedDataForView?.deliveredVisa,
+  //       applicationCopy: applicationCopy
+  //         ? applicationCopy
+  //         : selectedDataForView?.applicationCopy,
+  //       paymentReceive: paymentReceive
+  //         ? paymentReceive
+  //         : selectedDataForView?.paymentReceive,
+  //     })
+  //   );
+
+  //   if (response) {
+  //     toast.success(`status updated to ${status}`, {
+  //       position: "top-center",
+  //     });
+  //     setOpenModalForView(false);
+  //     actionDataGet(500);
+  //   }
+  // };
+
   const handleUpdate = async () => {
-    // console.log("Selected Status:", status);
     const response = await dispatch(
       updateVisaApplyStatus({
         id: selectedDataForView?.id,
         data: status,
-        comment: comment ? comment : selectedDataForView?.comment,
-        buyingPrise: +buyingPrise
-          ? +buyingPrise
-          : selectedDataForView?.buyingPrise,
-        applyerEmail: applyerEmail
-          ? applyerEmail
-          : selectedDataForView?.applyerEmail,
-        applyerEmailPass: applyerEmailPass
-          ? applyerEmailPass
-          : selectedDataForView?.applyerEmailPass,
-        sellingPrise: +sellingPrise
-          ? +sellingPrise
-          : selectedDataForView?.sellingPrise,
-        trackingId: trackingId ? trackingId : selectedDataForView?.trackingId,
-        deliveredVisa: deliveredVisa
-          ? deliveredVisa
-          : selectedDataForView?.deliveredVisa,
-        applicationCopy: applicationCopy
-          ? applicationCopy
-          : selectedDataForView?.applicationCopy,
-        paymentReceive: paymentReceive
-          ? paymentReceive
-          : selectedDataForView?.paymentReceive,
+        comment: comment || selectedDataForView?.comment,
+        buyingPrise: +buyingPrise || +selectedDataForView?.buyingPrise,
+        applyerEmail: applyerEmail || selectedDataForView?.applyerEmail,
+        applyerEmailPass:
+          applyerEmailPass || selectedDataForView?.applyerEmailPass,
+        sellingPrise: +sellingPrise || +selectedDataForView?.sellingPrise,
+        trackingId: trackingId || selectedDataForView?.trackingId,
+        deliveredVisa: deliveredVisa || selectedDataForView?.deliveredVisa,
+        applicationCopy:
+          applicationCopy || selectedDataForView?.applicationCopy,
+        paymentReceive: paymentReceive || selectedDataForView?.paymentReceive,
       })
     );
 
