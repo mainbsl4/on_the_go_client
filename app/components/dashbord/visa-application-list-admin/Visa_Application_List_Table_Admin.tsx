@@ -683,11 +683,11 @@ export default function Visa_Application_List_Table_Admin() {
         buyingPrise: +buyingPrise
           ? +buyingPrise
           : selectedDataForView?.buyingPrise,
-        applyerEmail: +applyerEmail
-          ? +applyerEmail
+        applyerEmail: applyerEmail
+          ? applyerEmail
           : selectedDataForView?.applyerEmail,
-        applyerEmailPass: +applyerEmailPass
-          ? +applyerEmailPass
+        applyerEmailPass: applyerEmailPass
+          ? applyerEmailPass
           : selectedDataForView?.applyerEmailPass,
         sellingPrise: +sellingPrise
           ? +sellingPrise
@@ -2522,7 +2522,7 @@ export default function Visa_Application_List_Table_Admin() {
                         type="text"
                         // value={trackingId}
                         defaultValue={selectedDataForView?.applyerEmail}
-                        onChange={(e) => setTrackingId(e.target.value)}
+                        onChange={(e) => setapplyerEmail(e.target.value)}
                       />
                       <br />
                       <TextField
@@ -2533,7 +2533,7 @@ export default function Visa_Application_List_Table_Admin() {
                         type="text"
                         // value={trackingId}
                         defaultValue={selectedDataForView?.applyerEmailPass}
-                        onChange={(e) => setTrackingId(e.target.value)}
+                        onChange={(e) => setapplyerEmailPass(e.target.value)}
                       />
                       <div className=" mt-3">
                         <Button
