@@ -362,6 +362,8 @@ export default function Visa_Application_List_Table_Admin() {
   const [status, setStatus] = React.useState(null);
   const [comment, setComment] = React.useState("");
   const [buyingPrise, setbuyingPrise] = React.useState(null);
+  const [applyerEmail, setapplyerEmail] = React.useState(null);
+  const [applyerEmailPass, setapplyerEmailPass] = React.useState(null);
   const [sellingPrise, setsellingPrise] = React.useState(null);
   const [trackingId, setTrackingId] = React.useState(null);
   const [loadingBtn4, setLoadingBtn4] = React.useState(false);
@@ -681,6 +683,12 @@ export default function Visa_Application_List_Table_Admin() {
         buyingPrise: +buyingPrise
           ? +buyingPrise
           : selectedDataForView?.buyingPrise,
+          applyerEmail: +applyerEmail
+          ? +applyerEmail
+          : selectedDataForView?.applyerEmail,
+          applyerEmailPass: +applyerEmailPass
+          ? +applyerEmailPass
+          : selectedDataForView?.applyerEmailPass,
         sellingPrise: +sellingPrise
           ? +sellingPrise
           : selectedDataForView?.sellingPrise,
@@ -2386,6 +2394,14 @@ export default function Visa_Application_List_Table_Admin() {
                   <p>{selectedDataForView?.sellingPrise}</p>
                 </div>
                 <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Email : </p>
+                  <p>{selectedDataForView?.applyerEmail}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
+                  <p>Password : </p>
+                  <p>{selectedDataForView?.applyerEmailPass}</p>
+                </div>
+                <div className=" border flex py-2 pl-2 mt-1">
                   <p>Comment : </p>
                   <p>{selectedDataForView?.comment}</p>
                 </div>
@@ -2495,6 +2511,28 @@ export default function Visa_Application_List_Table_Admin() {
                         type="text"
                         // value={trackingId}
                         defaultValue={selectedDataForView?.trackingId}
+                        onChange={(e) => setTrackingId(e.target.value)}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input3"
+                        label="Email"
+                        sx={{ marginTop: "10px" }}
+                        type="text"
+                        // value={trackingId}
+                        defaultValue={selectedDataForView?.applyerEmail}
+                        onChange={(e) => setTrackingId(e.target.value)}
+                      />
+                      <br />
+                      <TextField
+                        required
+                        id="input3"
+                        label="Password"
+                        sx={{ marginTop: "10px" }}
+                        type="text"
+                        // value={trackingId}
+                        defaultValue={selectedDataForView?.applyerEmailPass}
                         onChange={(e) => setTrackingId(e.target.value)}
                       />
                       <div className=" mt-3">
