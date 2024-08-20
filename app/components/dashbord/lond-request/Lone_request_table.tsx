@@ -291,6 +291,8 @@ export default function Lone_request_table() {
                   <Chip label="APPROVED" color="info" />
                 ) : loanList?.isApproved === "REJECTED" ? (
                   <Chip label="REJECTED" color="error" />
+                ) : loanList?.isApproved === "PAID" ? (
+                  <Chip label="PAID" color="info" />
                 ) : (
                   <Chip label="REJECTED" color="error" />
                 )}
@@ -372,6 +374,8 @@ export default function Lone_request_table() {
                     <Chip label="APPROVED" color="info" />
                   ) : selectedDataForView?.isApproved === "REJECTED" ? (
                     <Chip label="REJECTED" color="error" />
+                  ) : selectedDataForView?.isApproved === "PAID" ? (
+                    <Chip label="PAID" color="info" />
                   ) : (
                     <Chip label="REJECTED" color="error" />
                   )}
