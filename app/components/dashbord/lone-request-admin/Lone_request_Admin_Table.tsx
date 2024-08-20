@@ -55,6 +55,7 @@ const style = {
 const statusCatagory = [
   { label: "APPROVED", value: "approved" },
   { label: "REJECTED", value: "rejected" },
+  { label: "PAID", value: "paid" },
 ];
 
 export default function Lone_request_Admin_Table() {
@@ -330,6 +331,8 @@ export default function Lone_request_Admin_Table() {
                   <Chip label="APPROVED" color="info" />
                 ) : loanList?.isApproved === "REJECTED" ? (
                   <Chip label="REJECTED" color="error" />
+                ) : loanList?.isApproved === "REJECTED" ? (
+                  <Chip label="PAID" color="info" />
                 ) : (
                   <Chip label="REJECTED" color="error" />
                 )}
