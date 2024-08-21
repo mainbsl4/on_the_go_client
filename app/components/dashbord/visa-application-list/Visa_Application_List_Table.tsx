@@ -772,6 +772,8 @@ export default function Visa_Application_List_Table() {
         data: status,
         comment: data?.comment,
         buyingPrise: +data?.buyingPrise,
+        applyerEmail: data?.applyerEmail,
+        applyerEmailPass: data?.applyerEmailPass,
         sellingPrise: +data?.sellingPrise,
         trackingId: data?.trackingId,
         deliveredVisa: data?.deliveredVisa,
