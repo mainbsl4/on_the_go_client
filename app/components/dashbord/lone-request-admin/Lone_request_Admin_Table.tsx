@@ -34,6 +34,39 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// for tabs
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+
+// for tabs
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 //for modal style
 const style = {
   position: "absolute" as "absolute",
@@ -69,6 +102,9 @@ export default function Lone_request_Admin_Table() {
   const [amountSearchQuery, setAmountSearchQuery] = useState("");
   const [regSearchQuery, setRegSearchQuery] = useState("");
   const [conpanyNameQuery, setConpanyNameQuery] = useState("");
+
+  // for tabs
+  const [value, setValue] = React.useState(0);
 
   const dispatch: AppDispatch = useDispatch();
   const loading = useSelector((state: RootState) => state?.loan?.loading);
@@ -224,6 +260,11 @@ export default function Lone_request_Admin_Table() {
     }
   };
 
+  // for tabs
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return loading ? (
     <div className="flex justify-center items-center h-[90vh]">
       <CircularProgress />
@@ -271,103 +312,436 @@ export default function Lone_request_Admin_Table() {
           onChange={handleConpanyNameSearchQueryChange}
         />
       </div>
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-200">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              SL
-            </th>
-            <th scope="col" className="px-6 py-3">
-              REQ Date
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Company Name
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Reg No
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Settlement Date
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Amount
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Remarks
-            </th>
 
-            <th scope="col" className="px-6 py-3">
-              Status
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Commnet
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData?.map((loanList, index) => (
-            <tr className="bg-white border-b " key={loanList.id}>
-              <td className="px-6 py-4">{index + 1}</td>
-              <td className="px-6 py-4">{loanList.reqDate}</td>
-              <td className="px-6 py-4">{loanList?.user?.companyName}</td>
-              <td className="px-6 py-4">{loanList?.user?.regNo}</td>
-              <td className="px-6 py-4">{loanList.settlmentDate}</td>
-              <td className="px-6 py-4">{loanList.amount}</td>
-              <td className="px-6 py-4">{loanList.remarks}</td>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="ALL" {...a11yProps(0)} />
+            <Tab label="APPROVED" {...a11yProps(1)} />
+            <Tab label="REJECTED" {...a11yProps(2)} />
+            <Tab label="PAID" {...a11yProps(3)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  SL
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  REQ Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Company Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Reg No
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Settlement Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Amount
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Remarks
+                </th>
 
-              <td className="px-6 py-4">
-                {loanList?.isApproved === "SUBMITTED" ? (
-                  <Chip label="SUBMITTED" color="default" />
-                ) : loanList?.isApproved === "CANCELLED" ? (
-                  <Chip label="CANCELLED" color="warning" />
-                ) : loanList?.isApproved === "RECEIVED" ? (
-                  <Chip label="RECEIVED" color="success" />
-                ) : loanList?.isApproved === "APPLIED" ? (
-                  <Chip label="APPLIED" color="primary" />
-                ) : loanList?.isApproved === "APPROVED" ? (
-                  <Chip label="APPROVED" color="info" />
-                ) : loanList?.isApproved === "REJECTED" ? (
-                  <Chip label="REJECTED" color="error" />
-                ) : loanList?.isApproved === "PAID" ? (
-                  <Chip label="PAID" color="success" />
-                ) : (
-                  <Chip label="REJECTED" color="error" />
-                )}
-              </td>
-              <td className="px-6 py-4">{loanList.comment}</td>
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Commnet
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData?.map((loanList, index) => (
+                <tr className="bg-white border-b " key={loanList.id}>
+                  <td className="px-6 py-4">{index + 1}</td>
+                  <td className="px-6 py-4">{loanList.reqDate}</td>
+                  <td className="px-6 py-4">{loanList?.user?.companyName}</td>
+                  <td className="px-6 py-4">{loanList?.user?.regNo}</td>
+                  <td className="px-6 py-4">{loanList.settlmentDate}</td>
+                  <td className="px-6 py-4">{loanList.amount}</td>
+                  <td className="px-6 py-4">{loanList.remarks}</td>
 
-              <td className="px-6 py-4">
-                <Stack direction="row" spacing={1}>
-                  <IconButton
-                    aria-label="view"
-                    color="success"
-                    onClick={() => handleOpenModalForView(loanList)}
-                  >
-                    <Icon icon="hugeicons:view" />
-                  </IconButton>
-                  {/* <IconButton
+                  <td className="px-6 py-4">
+                    {loanList?.isApproved === "SUBMITTED" ? (
+                      <Chip label="SUBMITTED" color="default" />
+                    ) : loanList?.isApproved === "CANCELLED" ? (
+                      <Chip label="CANCELLED" color="warning" />
+                    ) : loanList?.isApproved === "RECEIVED" ? (
+                      <Chip label="RECEIVED" color="success" />
+                    ) : loanList?.isApproved === "APPLIED" ? (
+                      <Chip label="APPLIED" color="primary" />
+                    ) : loanList?.isApproved === "APPROVED" ? (
+                      <Chip label="APPROVED" color="info" />
+                    ) : loanList?.isApproved === "REJECTED" ? (
+                      <Chip label="REJECTED" color="error" />
+                    ) : loanList?.isApproved === "PAID" ? (
+                      <Chip label="PAID" color="success" />
+                    ) : (
+                      <Chip label="REJECTED" color="error" />
+                    )}
+                  </td>
+                  <td className="px-6 py-4">{loanList.comment}</td>
+
+                  <td className="px-6 py-4">
+                    <Stack direction="row" spacing={1}>
+                      <IconButton
+                        aria-label="view"
+                        color="success"
+                        onClick={() => handleOpenModalForView(loanList)}
+                      >
+                        <Icon icon="hugeicons:view" />
+                      </IconButton>
+                      {/* <IconButton
                     aria-label="edit"
                     color="info"
                     onClick={() => handleOpenModalForEdit(loanList)}
                   >
                     <Icon icon="mingcute:edit-line" />
                   </IconButton> */}
-                  {/* <IconButton
+                      {/* <IconButton
                     aria-label="delete"
                     color="error"
                     onClick={() => handleClickOpenModalForDelete(loanList?.id)}
                   >
                     <Icon icon="lets-icons:cancel" />
                   </IconButton> */}
-                </Stack>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                    </Stack>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  SL
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  REQ Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Company Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Reg No
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Settlement Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Amount
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Remarks
+                </th>
+
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Commnet
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData?.map((loanList, index) => {
+                if (loanList?.isApproved === "APPROVED") {
+                  return (
+                    <tr className="bg-white border-b " key={loanList.id}>
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{loanList.reqDate}</td>
+                      <td className="px-6 py-4">
+                        {loanList?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">{loanList?.user?.regNo}</td>
+                      <td className="px-6 py-4">{loanList.settlmentDate}</td>
+                      <td className="px-6 py-4">{loanList.amount}</td>
+                      <td className="px-6 py-4">{loanList.remarks}</td>
+
+                      <td className="px-6 py-4">
+                        {loanList?.isApproved === "SUBMITTED" ? (
+                          <Chip label="SUBMITTED" color="default" />
+                        ) : loanList?.isApproved === "CANCELLED" ? (
+                          <Chip label="CANCELLED" color="warning" />
+                        ) : loanList?.isApproved === "RECEIVED" ? (
+                          <Chip label="RECEIVED" color="success" />
+                        ) : loanList?.isApproved === "APPLIED" ? (
+                          <Chip label="APPLIED" color="primary" />
+                        ) : loanList?.isApproved === "APPROVED" ? (
+                          <Chip label="APPROVED" color="info" />
+                        ) : loanList?.isApproved === "REJECTED" ? (
+                          <Chip label="REJECTED" color="error" />
+                        ) : loanList?.isApproved === "PAID" ? (
+                          <Chip label="PAID" color="success" />
+                        ) : (
+                          <Chip label="REJECTED" color="error" />
+                        )}
+                      </td>
+                      <td className="px-6 py-4">{loanList.comment}</td>
+
+                      <td className="px-6 py-4">
+                        <Stack direction="row" spacing={1}>
+                          <IconButton
+                            aria-label="view"
+                            color="success"
+                            onClick={() => handleOpenModalForView(loanList)}
+                          >
+                            <Icon icon="hugeicons:view" />
+                          </IconButton>
+                          {/* <IconButton
+                    aria-label="edit"
+                    color="info"
+                    onClick={() => handleOpenModalForEdit(loanList)}
+                  >
+                    <Icon icon="mingcute:edit-line" />
+                  </IconButton> */}
+                          {/* <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={() => handleClickOpenModalForDelete(loanList?.id)}
+                  >
+                    <Icon icon="lets-icons:cancel" />
+                  </IconButton> */}
+                        </Stack>
+                      </td>
+                    </tr>
+                  );
+                }
+              })}
+            </tbody>
+          </table>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  SL
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  REQ Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Company Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Reg No
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Settlement Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Amount
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Remarks
+                </th>
+
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Commnet
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData?.map((loanList, index) => {
+                if (loanList?.isApproved === "REJECTED") {
+                  return (
+                    <tr className="bg-white border-b " key={loanList.id}>
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{loanList.reqDate}</td>
+                      <td className="px-6 py-4">
+                        {loanList?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">{loanList?.user?.regNo}</td>
+                      <td className="px-6 py-4">{loanList.settlmentDate}</td>
+                      <td className="px-6 py-4">{loanList.amount}</td>
+                      <td className="px-6 py-4">{loanList.remarks}</td>
+
+                      <td className="px-6 py-4">
+                        {loanList?.isApproved === "SUBMITTED" ? (
+                          <Chip label="SUBMITTED" color="default" />
+                        ) : loanList?.isApproved === "CANCELLED" ? (
+                          <Chip label="CANCELLED" color="warning" />
+                        ) : loanList?.isApproved === "RECEIVED" ? (
+                          <Chip label="RECEIVED" color="success" />
+                        ) : loanList?.isApproved === "APPLIED" ? (
+                          <Chip label="APPLIED" color="primary" />
+                        ) : loanList?.isApproved === "APPROVED" ? (
+                          <Chip label="APPROVED" color="info" />
+                        ) : loanList?.isApproved === "REJECTED" ? (
+                          <Chip label="REJECTED" color="error" />
+                        ) : loanList?.isApproved === "PAID" ? (
+                          <Chip label="PAID" color="success" />
+                        ) : (
+                          <Chip label="REJECTED" color="error" />
+                        )}
+                      </td>
+                      <td className="px-6 py-4">{loanList.comment}</td>
+
+                      <td className="px-6 py-4">
+                        <Stack direction="row" spacing={1}>
+                          <IconButton
+                            aria-label="view"
+                            color="success"
+                            onClick={() => handleOpenModalForView(loanList)}
+                          >
+                            <Icon icon="hugeicons:view" />
+                          </IconButton>
+                          {/* <IconButton
+                    aria-label="edit"
+                    color="info"
+                    onClick={() => handleOpenModalForEdit(loanList)}
+                  >
+                    <Icon icon="mingcute:edit-line" />
+                  </IconButton> */}
+                          {/* <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={() => handleClickOpenModalForDelete(loanList?.id)}
+                  >
+                    <Icon icon="lets-icons:cancel" />
+                  </IconButton> */}
+                        </Stack>
+                      </td>
+                    </tr>
+                  );
+                }
+              })}
+            </tbody>
+          </table>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  SL
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  REQ Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Company Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Reg No
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Settlement Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Amount
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Remarks
+                </th>
+
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Commnet
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData?.map((loanList, index) => {
+                if (loanList?.isApproved === "PAID") {
+                  return (
+                    <tr className="bg-white border-b " key={loanList.id}>
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{loanList.reqDate}</td>
+                      <td className="px-6 py-4">
+                        {loanList?.user?.companyName}
+                      </td>
+                      <td className="px-6 py-4">{loanList?.user?.regNo}</td>
+                      <td className="px-6 py-4">{loanList.settlmentDate}</td>
+                      <td className="px-6 py-4">{loanList.amount}</td>
+                      <td className="px-6 py-4">{loanList.remarks}</td>
+
+                      <td className="px-6 py-4">
+                        {loanList?.isApproved === "SUBMITTED" ? (
+                          <Chip label="SUBMITTED" color="default" />
+                        ) : loanList?.isApproved === "CANCELLED" ? (
+                          <Chip label="CANCELLED" color="warning" />
+                        ) : loanList?.isApproved === "RECEIVED" ? (
+                          <Chip label="RECEIVED" color="success" />
+                        ) : loanList?.isApproved === "APPLIED" ? (
+                          <Chip label="APPLIED" color="primary" />
+                        ) : loanList?.isApproved === "APPROVED" ? (
+                          <Chip label="APPROVED" color="info" />
+                        ) : loanList?.isApproved === "REJECTED" ? (
+                          <Chip label="REJECTED" color="error" />
+                        ) : loanList?.isApproved === "PAID" ? (
+                          <Chip label="PAID" color="success" />
+                        ) : (
+                          <Chip label="REJECTED" color="error" />
+                        )}
+                      </td>
+                      <td className="px-6 py-4">{loanList.comment}</td>
+
+                      <td className="px-6 py-4">
+                        <Stack direction="row" spacing={1}>
+                          <IconButton
+                            aria-label="view"
+                            color="success"
+                            onClick={() => handleOpenModalForView(loanList)}
+                          >
+                            <Icon icon="hugeicons:view" />
+                          </IconButton>
+                          {/* <IconButton
+                    aria-label="edit"
+                    color="info"
+                    onClick={() => handleOpenModalForEdit(loanList)}
+                  >
+                    <Icon icon="mingcute:edit-line" />
+                  </IconButton> */}
+                          {/* <IconButton
+                    aria-label="delete"
+                    color="error"
+                    onClick={() => handleClickOpenModalForDelete(loanList?.id)}
+                  >
+                    <Icon icon="lets-icons:cancel" />
+                  </IconButton> */}
+                        </Stack>
+                      </td>
+                    </tr>
+                  );
+                }
+              })}
+            </tbody>
+          </table>
+        </CustomTabPanel>
+      </Box>
+
       {/* for view modal  */}
       <Modal
         open={openModalForView}
