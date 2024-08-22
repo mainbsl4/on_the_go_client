@@ -971,7 +971,21 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.map((reversedgetVesaApplyData, index) => (
+              {filteredData?.sort((a, b) => {
+                  const order = [
+                    "SUBMITTED",
+                    "RECEIVED",
+                    "APPLIED",
+                    "APPROVED",
+                    "DELIVERED",
+                    "CANCELLED",
+                    "REJECTED",
+                  ];
+                  return (
+                    order.indexOf(a.isApproved) - order.indexOf(b.isApproved)
+                  );
+                })
+              ?.map((reversedgetVesaApplyData, index) => (
                 <tr
                   className="bg-white border-b "
                   key={reversedgetVesaApplyData?.id}
