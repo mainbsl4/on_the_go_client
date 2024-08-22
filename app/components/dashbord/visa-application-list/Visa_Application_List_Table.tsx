@@ -932,36 +932,25 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Reg NO
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -971,7 +960,8 @@ export default function Visa_Application_List_Table() {
               </tr>
             </thead>
             <tbody>
-              {filteredData?.sort((a, b) => {
+              {filteredData
+                ?.sort((a, b) => {
                   const order = [
                     "SUBMITTED",
                     "RECEIVED",
@@ -985,122 +975,99 @@ export default function Visa_Application_List_Table() {
                     order.indexOf(a.isApproved) - order.indexOf(b.isApproved)
                   );
                 })
-              ?.map((reversedgetVesaApplyData, index) => (
-                <tr
-                  className="bg-white border-b "
-                  key={reversedgetVesaApplyData?.id}
-                >
-                  <td
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                ?.map((reversedgetVesaApplyData, index) => (
+                  <tr
+                    className="bg-white border-b "
+                    key={reversedgetVesaApplyData?.id}
                   >
-                    {index + 1}
-                  </td>
+                    <td
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      {index + 1}
+                    </td>
 
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(
-                        reversedgetVesaApplyData.created_at
-                      ).toLocaleDateString("en-GB")}
-                  </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData &&
+                        new Date(
+                          reversedgetVesaApplyData.created_at
+                        ).toLocaleDateString("en-GB")}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.givenName}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.applyForCountry}
+                    </td>
 
-                  {/* <td className="px-6 py-4">
-                    {regNumber}
-                  </td> */}
-
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData?.givenName}
-                  </td>
-                  {/* <td className="px-6 py-4">{reversedgetVesaApplyData.dob}</td> */}
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(reversedgetVesaApplyData.dob).toLocaleDateString(
-                        "en-GB"
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.passportNo}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.trackingId}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.comment}
+                    </td>
+                    <td className="px-6 py-4">
+                      {reversedgetVesaApplyData?.isApproved === "SUBMITTED" ? (
+                        <Chip label="SUBMITTED" color="default" />
+                      ) : reversedgetVesaApplyData?.isApproved ===
+                        "CANCELLED" ? (
+                        <Chip label="CANCELLED" color="warning" />
+                      ) : reversedgetVesaApplyData?.isApproved ===
+                        "RECEIVED" ? (
+                        <Chip label="RECEIVED" color="primary" />
+                      ) : reversedgetVesaApplyData?.isApproved === "APPLIED" ? (
+                        <Chip
+                          label="APPLIED"
+                          sx={{ backgroundColor: "#f6e58d" }}
+                        />
+                      ) : reversedgetVesaApplyData?.isApproved ===
+                        "APPROVED" ? (
+                        <Chip label="APPROVED" color="success" />
+                      ) : reversedgetVesaApplyData?.isApproved ===
+                        "REJECTED" ? (
+                        <Chip label="REJECTED" color="error" />
+                      ) : reversedgetVesaApplyData?.isApproved ===
+                        "DELIVERED" ? (
+                        <Chip
+                          label="DELIVERED"
+                          sx={{ backgroundColor: "#7ed6df" }}
+                        />
+                      ) : (
+                        <Chip label="REJECTED" color="error" />
                       )}
-                  </td>
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData.passportNo}
-                  </td>
-
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData &&
-                      new Date(
-                        reversedgetVesaApplyData.passExpiryDate
-                      ).toLocaleDateString("en-GB")}
-                  </td>
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData.nationality}
-                  </td>
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData.gender}
-                  </td>
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData.religion}
-                  </td>
-
-                  {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
-                  <td className="px-6 py-4">
-                    {reversedgetVesaApplyData?.isApproved === "SUBMITTED" ? (
-                      <Chip label="SUBMITTED" color="default" />
-                    ) : reversedgetVesaApplyData?.isApproved === "CANCELLED" ? (
-                      <Chip label="CANCELLED" color="warning" />
-                    ) : reversedgetVesaApplyData?.isApproved === "RECEIVED" ? (
-                      <Chip label="RECEIVED" color="success" />
-                    ) : reversedgetVesaApplyData?.isApproved === "APPLIED" ? (
-                      <Chip label="APPLIED" color="primary" />
-                    ) : reversedgetVesaApplyData?.isApproved === "APPROVED" ? (
-                      <Chip label="APPROVED" color="info" />
-                    ) : reversedgetVesaApplyData?.isApproved === "REJECTED" ? (
-                      <Chip label="REJECTED" color="error" />
-                    ) : reversedgetVesaApplyData?.isApproved === "DELIVERED" ? (
-                      <Chip label="DELIVERED" color="success" />
-                    ) : (
-                      <Chip label="REJECTED" color="error" />
-                    )}
-                    {/* <Chip label={reversedgetVesaApplyData?.isApproved} color="default" /> */}
-                  </td>
-                  <td className="px-6 py-4">
-                    <Stack direction="row" spacing={1}>
-                      <IconButton
-                        aria-label="view"
-                        color="success"
-                        onClick={() =>
-                          handleOpenModalForView(reversedgetVesaApplyData)
-                        }
-                      >
-                        <Icon icon="hugeicons:view" />
-                      </IconButton>
-
-                      {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
+                      {/* <Chip label={reversedgetVesaApplyData?.isApproved} color="default" /> */}
+                    </td>
+                    <td className="px-6 py-4">
+                      <Stack direction="row" spacing={1}>
                         <IconButton
-                          aria-label="edit"
-                          color="info"
+                          aria-label="view"
+                          color="success"
                           onClick={() =>
-                            handleOpenModalForEdit(reversedgetVesaApplyData)
+                            handleOpenModalForView(reversedgetVesaApplyData)
                           }
                         >
-                          <Icon icon="mingcute:edit-line" />
+                          <Icon icon="hugeicons:view" />
                         </IconButton>
-                      )}
-                      {/* {reversedgetVesaApplyData?.isApproved === "SUBMITTED" && (
-                        <IconButton
-                          aria-label="delete"
-                          color="error"
-                          onClick={() =>
-                            handleClickOpenModalForDelete(
-                              reversedgetVesaApplyData?.id
-                            )
-                          }
-                        >
-                          <Icon icon="lets-icons:cancel" />
-                        </IconButton>
-                      )} */}
-                    </Stack>
-                  </td>
-                </tr>
-              ))}
+
+                        {reversedgetVesaApplyData?.isApproved ===
+                          "SUBMITTED" && (
+                          <IconButton
+                            aria-label="edit"
+                            color="info"
+                            onClick={() =>
+                              handleOpenModalForEdit(reversedgetVesaApplyData)
+                            }
+                          >
+                            <Icon icon="mingcute:edit-line" />
+                          </IconButton>
+                        )}
+                      </Stack>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </CustomTabPanel>
@@ -1111,6 +1078,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -1118,26 +1086,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1167,40 +1126,22 @@ export default function Visa_Application_List_Table() {
                             reversedgetVesaApplyData.created_at
                           ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
-                      </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -1210,19 +1151,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1239,20 +1186,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          <IconButton
-                            aria-label="edit"
-                            color="info"
-                            onClick={handleOpenModalForEdit}
-                          >
-                            <Icon icon="mingcute:edit-line" />
-                          </IconButton>
-                          {/* <IconButton
-                            aria-label="delete"
-                            color="error"
-                            onClick={handleClickOpenModalForDelete}
-                          >
-                            <Icon icon="lets-icons:cancel" />
-                          </IconButton> */}
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
+                              aria-label="edit"
+                              color="info"
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
+                            >
+                              <Icon icon="mingcute:edit-line" />
+                            </IconButton>
+                          )}
                         </Stack>
                       </td>
                     </tr>
@@ -1269,6 +1215,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -1276,26 +1223,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1325,41 +1263,22 @@ export default function Visa_Application_List_Table() {
                             reversedgetVesaApplyData.created_at
                           ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -1369,19 +1288,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1398,20 +1323,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
                         </Stack>
                       </td>
                     </tr>
@@ -1428,6 +1352,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -1435,26 +1360,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1477,57 +1393,29 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
-                      </td> */}
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(
                             reversedgetVesaApplyData.created_at
                           ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.dob}
-                      </td> */}
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
-                      </td> */}
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
-                      </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -1537,19 +1425,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1566,20 +1460,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
                         </Stack>
                       </td>
                     </tr>
@@ -1596,6 +1489,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -1603,26 +1497,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1645,46 +1530,29 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
+                          new Date(
+                            reversedgetVesaApplyData.created_at
+                          ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
-                      </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -1694,19 +1562,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1723,20 +1597,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
                         </Stack>
                       </td>
                     </tr>
@@ -1753,6 +1626,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -1760,26 +1634,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1802,52 +1667,29 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
-                      </td> */}
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(
                             reversedgetVesaApplyData.created_at
                           ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
-                      </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -1857,19 +1699,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -1886,20 +1734,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
                         </Stack>
                       </td>
                     </tr>
@@ -1916,6 +1763,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -1923,26 +1771,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -1965,53 +1804,29 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
-                      </td> */}
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(
                             reversedgetVesaApplyData.created_at
                           ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -2021,19 +1836,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -2050,20 +1871,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
                         </Stack>
                       </td>
                     </tr>
@@ -2080,6 +1900,7 @@ export default function Visa_Application_List_Table() {
                 <th scope="col" className="px-6 py-3">
                   SL
                 </th>
+
                 <th scope="col" className="px-6 py-3">
                   DATE
                 </th>
@@ -2087,26 +1908,17 @@ export default function Visa_Application_List_Table() {
                   Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  DOB
+                  VISA APPLY COUNTRY
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Passport NO
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Passport EXP
+                  APPLICATION ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Nationlity
+                  Comment
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Genger
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Religion
-                </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Father Name
-                </th> */}
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
@@ -2129,55 +1941,29 @@ export default function Visa_Application_List_Table() {
                       >
                         {index + 1}
                       </td>
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(reversedgetVesaApplyData.created_at)
-                            .toISOString()
-                            .split("T")[0]}
-                      </td> */}
+
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData &&
                           new Date(
                             reversedgetVesaApplyData.created_at
                           ).toLocaleDateString("en-GB")}
                       </td>
-
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.givenName}
                       </td>
-
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.dob
-                          ).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passportNo}
+                        {reversedgetVesaApplyData?.applyForCountry}
                       </td>
 
-                      {/* <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.passExpiryDate}
-                      </td> */}
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData &&
-                          new Date(
-                            reversedgetVesaApplyData.passExpiryDate
-                          ).toLocaleDateString("en-GB")}
+                        {reversedgetVesaApplyData?.passportNo}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.nationality}
+                        {reversedgetVesaApplyData?.trackingId}
                       </td>
                       <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.gender}
+                        {reversedgetVesaApplyData?.comment}
                       </td>
-                      <td className="px-6 py-4">
-                        {reversedgetVesaApplyData.religion}
-                      </td>
-
-                      {/* <td className="px-6 py-4">
-                          {reversedgetVesaApplyData.surName}
-                        </td> */}
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.isApproved ===
                         "SUBMITTED" ? (
@@ -2187,19 +1973,25 @@ export default function Visa_Application_List_Table() {
                           <Chip label="CANCELLED" color="warning" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "RECEIVED" ? (
-                          <Chip label="RECEIVED" color="success" />
+                          <Chip label="RECEIVED" color="primary" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip
+                            label="APPLIED"
+                            sx={{ backgroundColor: "#f6e58d" }}
+                          />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
-                          <Chip label="APPROVED" color="info" />
+                          <Chip label="APPROVED" color="success" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "REJECTED" ? (
                           <Chip label="REJECTED" color="error" />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "DELIVERED" ? (
-                          <Chip label="DELIVERED" color="success" />
+                          <Chip
+                            label="DELIVERED"
+                            sx={{ backgroundColor: "#7ed6df" }}
+                          />
                         ) : (
                           <Chip label="REJECTED" color="error" />
                         )}
@@ -2216,20 +2008,19 @@ export default function Visa_Application_List_Table() {
                           >
                             <Icon icon="hugeicons:view" />
                           </IconButton>
-                          {/* <IconButton
+
+                          {reversedgetVesaApplyData?.isApproved ===
+                            "SUBMITTED" && (
+                            <IconButton
                               aria-label="edit"
                               color="info"
-                              onClick={handleOpenModalForEdit}
+                              onClick={() =>
+                                handleOpenModalForEdit(reversedgetVesaApplyData)
+                              }
                             >
                               <Icon icon="mingcute:edit-line" />
                             </IconButton>
-                            <IconButton
-                              aria-label="delete"
-                              color="error"
-                              onClick={handleClickOpenModalForDelete}
-                            >
-                              <Icon icon="lets-icons:cancel" />
-                            </IconButton> */}
+                          )}
                         </Stack>
                       </td>
                     </tr>
