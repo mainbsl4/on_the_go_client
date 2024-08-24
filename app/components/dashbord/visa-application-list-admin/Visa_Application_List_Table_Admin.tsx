@@ -654,10 +654,10 @@ export default function Visa_Application_List_Table_Admin() {
       dispatch(uploadImg(selectedFile));
     }
   };
-  const handleFileChange2 = (event) => {
+  const handleFileChange2 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImage(selectedFile));
+      await dispatch(uploadDocImage(selectedFile));
     }
   };
   const handleFileChange3 = (event) => {
@@ -2981,6 +2981,8 @@ export default function Visa_Application_List_Table_Admin() {
                       )}
                     </Field>
                     <Button
+                    component="label"
+                    role={undefined}
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
@@ -2991,16 +2993,21 @@ export default function Visa_Application_List_Table_Admin() {
                       />
                     </Button>
                     <Button
+                    component="label"
+                    role={undefined}
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
                       Update Photo
                       <VisuallyHiddenInput
                         type="file"
+                        accept="image/*"
                         onChange={handleFileChange1}
                       />
                     </Button>
                     <Button
+                      component="label"
+                      role={undefined}
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
@@ -3011,6 +3018,8 @@ export default function Visa_Application_List_Table_Admin() {
                       />
                     </Button>
                     <Button
+                    component="label"
+                    role={undefined}
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
