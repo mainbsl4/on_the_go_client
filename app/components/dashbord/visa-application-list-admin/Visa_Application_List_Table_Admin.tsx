@@ -367,6 +367,11 @@ export default function Visa_Application_List_Table_Admin() {
   const [applyerEmailPass, setapplyerEmailPass] = React.useState(null);
   const [sellingPrise, setsellingPrise] = React.useState(null);
   const [trackingId, setTrackingId] = React.useState(null);
+  // for button loading
+  const [loadingBtn, setLoadingBtn] = React.useState(false);
+  const [loadingBtn1, setLoadingBtn1] = React.useState(false);
+  const [loadingBtn2, setLoadingBtn2] = React.useState(false);
+  const [loadingBtn3, setLoadingBtn3] = React.useState(false);
   const [loadingBtn4, setLoadingBtn4] = React.useState(false);
   const [loadingBtn5, setLoadingBtn5] = React.useState(false);
   const [loadingBtn6, setLoadingBtn6] = React.useState(false);
@@ -642,28 +647,36 @@ export default function Visa_Application_List_Table_Admin() {
     img = imgState[0].url ? imgState[0].url : selectedDataForEdit?.image;
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      dispatch(uploadPassImage(selectedFile));
+      setLoadingBtn(true); // Set loading to true before the API call
+      await dispatch(uploadPassImage(selectedFile));
+      setLoadingBtn(false); // Set loading to false after the API call
     }
   };
-  const handleFileChange1 = (event) => {
+  const handleFileChange1 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadImg(selectedFile));
+      setLoadingBtn1(true); // Set loading to true before the API call
+      await dispatch(uploadImg(selectedFile));
+      setLoadingBtn1(false); // Set loading to false after the API call
     }
   };
   const handleFileChange2 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
+      setLoadingBtn2(true); // Set loading to true before the API call
       await dispatch(uploadDocImage(selectedFile));
+      setLoadingBtn2(false); // Set loading to false after the API call
     }
   };
-  const handleFileChange3 = (event) => {
+  const handleFileChange3 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImageIf(selectedFile));
+      setLoadingBtn3(true); // Set loading to true before the API call
+      await dispatch(uploadDocImageIf(selectedFile));
+      setLoadingBtn3(false); // Set loading to false after the API call
     }
 
     // file information
@@ -2791,7 +2804,6 @@ export default function Visa_Application_List_Table_Admin() {
                       )}
                     </Field>
 
-
                     <Field name="applyForCountry">
                       {({ field, form }) => (
                         <Autocomplete
@@ -2808,17 +2820,18 @@ export default function Visa_Application_List_Table_Admin() {
                               {...params}
                               label="Which Cuntry"
                               error={
-                                touched.applyForCountry && !!errors.applyForCountry
+                                touched.applyForCountry &&
+                                !!errors.applyForCountry
                               }
                               helperText={
-                                touched.applyForCountry && errors.applyForCountry
+                                touched.applyForCountry &&
+                                errors.applyForCountry
                               }
                             />
                           )}
                         />
                       )}
                     </Field>
-
 
                     <Field name="passportNo">
                       {({ field }) => (
@@ -2981,24 +2994,44 @@ export default function Visa_Application_List_Table_Admin() {
                       )}
                     </Field>
                     <Button
-                    component="label"
-                    role={undefined}
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn ? <></> : <Icon icon="ep:upload-filled" />
+                      }
                     >
-                      Update Passport
+                      {loadingBtn ? (
+                    <Icon
+                      icon="line-md:loading-twotone-loop"
+                      className="text-2xl"
+                    />
+                  ) : (
+                    <>Update Passport</>
+                  )}
+                      
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange}
                       />
                     </Button>
                     <Button
-                    component="label"
-                    role={undefined}
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn1 ? <></> : <Icon icon="ep:upload-filled" />
+                      }
+
                     >
-                      Update Photo
+                      {loadingBtn1? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />
+                      ) : (
+                        <>Update Photo</>
+                      )}
                       <VisuallyHiddenInput
                         type="file"
                         accept="image/*"
@@ -3009,21 +3042,43 @@ export default function Visa_Application_List_Table_Admin() {
                       component="label"
                       role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn3 ? <></> : <Icon icon="ep:upload-filled" />
+                      }
+
                     >
-                      Update Pervious visa (if any)
+                      {/* Update Pervious visa (if any) */}
+                      {loadingBtn3? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />) : (
+                        <>Update Previous Visa (If Any)</>
+                      )}
+                      
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange3}
                       />
                     </Button>
                     <Button
-                    component="label"
-                    role={undefined}
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      // startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn2? <></> : <Icon icon="ep:upload-filled" />
+                      }
                     >
-                      Update Other Document (if any)
+                      {loadingBtn2? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />) : (
+                          <>Update Other Document (If Any)</>
+                      )}
+
+
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange2}
