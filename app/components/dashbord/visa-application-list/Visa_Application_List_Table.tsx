@@ -2604,6 +2604,20 @@ export default function Visa_Application_List_Table() {
                         onChange={handleFileChange1}
                       />
                     </Button>
+
+
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:upload" />}
+                    >
+                      Update Privious Visa (if any)
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={handleFileChange3}
+                      />
+                    </Button>
+
+
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
