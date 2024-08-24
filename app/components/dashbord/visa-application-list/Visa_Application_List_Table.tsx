@@ -2352,6 +2352,7 @@ export default function Visa_Application_List_Table() {
                           disablePortal
                           id="combo-box-demo"
                           options={gender.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
@@ -2373,6 +2374,7 @@ export default function Visa_Application_List_Table() {
                           disablePortal
                           id="combo-box-demo"
                           options={nationality.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
@@ -2398,6 +2400,7 @@ export default function Visa_Application_List_Table() {
                           disablePortal
                           id="combo-box-demo"
                           options={whichCountry.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
@@ -2564,6 +2567,7 @@ export default function Visa_Application_List_Table() {
                           disablePortal
                           id="combo-box-demo"
                           options={religion.map((option) => option.label)}
+                          value={field.value}
                           onChange={(event, value) =>
                             form.setFieldValue(field.name, value)
                           }
@@ -2600,6 +2604,20 @@ export default function Visa_Application_List_Table() {
                         onChange={handleFileChange1}
                       />
                     </Button>
+
+
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:upload" />}
+                    >
+                      Update Privious Visa (if any)
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={handleFileChange3}
+                      />
+                    </Button>
+
+
                     <Button
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
