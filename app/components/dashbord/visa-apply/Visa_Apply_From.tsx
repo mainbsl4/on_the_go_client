@@ -460,10 +460,10 @@ export default function Visa_Apply_Form() {
         toast.success("Your visa applycation created successfully", {
           position: "top-center",
         });
-        setTimeout(() => {
+        // setTimeout(() => {
           // window.location.href = "/dashbord/visa-application-list";
           router.push("/dashbord/visa-application-list");
-        }, 3000);
+        // }, 1000);
         // success
         // window.location.reload();
         // window.location.replace("/main")
