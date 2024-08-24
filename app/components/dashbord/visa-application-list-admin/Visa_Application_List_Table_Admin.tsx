@@ -46,6 +46,7 @@ import {
   deliveredVisaPdf,
   paymentReceiveImg,
   uploadDocImage,
+  uploadDocImageIf,
   uploadImg,
   uploadPassImage,
 } from "../../../lib/features/upload/uploadSlice";
@@ -611,6 +612,8 @@ export default function Visa_Application_List_Table_Admin() {
       // Handle error response
     } finally {
       setSubmitting(false);
+      setOpenModalForEdit(false);
+      dispatch(getAllVisaApply());
     }
   };
 
@@ -660,7 +663,7 @@ export default function Visa_Application_List_Table_Admin() {
   const handleFileChange3 = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImage(selectedFile));
+      dispatch(uploadDocImageIf(selectedFile));
     }
 
     // file information
@@ -2731,7 +2734,7 @@ export default function Visa_Application_List_Table_Admin() {
                         <TextField
                           {...field}
                           id="outlined-basic"
-                          label="Sur Name"
+                          label="Father Name"
                           variant="outlined"
                           type="text"
                           error={touched.surName && !!errors.surName}
@@ -2787,6 +2790,36 @@ export default function Visa_Application_List_Table_Admin() {
                         />
                       )}
                     </Field>
+
+
+                    <Field name="applyForCountry">
+                      {({ field, form }) => (
+                        <Autocomplete
+                          disablePortal
+                          id="combo-box-demo"
+                          options={whichCountry.map((option) => option.label)}
+                          value={field.value}
+                          onChange={(event, value) =>
+                            form.setFieldValue(field.name, value)
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              label="Which Cuntry"
+                              error={
+                                touched.applyForCountry && !!errors.applyForCountry
+                              }
+                              helperText={
+                                touched.applyForCountry && errors.applyForCountry
+                              }
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
+
+
                     <Field name="passportNo">
                       {({ field }) => (
                         <TextField
@@ -2971,7 +3004,17 @@ export default function Visa_Application_List_Table_Admin() {
                       variant="contained"
                       startIcon={<Icon icon="material-symbols:upload" />}
                     >
-                      Update Other Document
+                      Update Pervious visa (if any)
+                      <VisuallyHiddenInput
+                        type="file"
+                        onChange={handleFileChange3}
+                      />
+                    </Button>
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon icon="material-symbols:upload" />}
+                    >
+                      Update Other Document (if any)
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange2}
