@@ -2356,7 +2356,7 @@ export default function Visa_Application_List_Table() {
                         <TextField
                           {...field}
                           id="outlined-basic"
-                          label="Sur Name"
+                          label="Father Name"
                           variant="outlined"
                           type="text"
                           error={touched.surName && !!errors.surName}
