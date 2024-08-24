@@ -347,6 +347,13 @@ export default function Visa_Application_List_Table() {
   // loading
   const [loading, setLoading] = React.useState(true);
   const [value, setValue] = React.useState(0);
+
+  // for button loading
+  const [loadingBtn, setLoadingBtn] = React.useState(false);
+  const [loadingBtn1, setLoadingBtn1] = React.useState(false);
+  const [loadingBtn2, setLoadingBtn2] = React.useState(false);
+  const [loadingBtn3, setLoadingBtn3] = React.useState(false);
+
   const dispatch: AppDispatch = useDispatch();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -573,28 +580,38 @@ export default function Visa_Application_List_Table() {
       : selectedDataForEdit?.previousPassPdf;
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      dispatch(uploadPassImage(selectedFile));
+      setLoadingBtn(true); // Set loading to true before the API call
+      await dispatch(uploadPassImage(selectedFile));
+      setLoadingBtn(false); // Set loading to false after the API call
     }
   };
-  const handleFileChange1 = (event) => {
+  const handleFileChange1 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadImg(selectedFile));
+      setLoadingBtn1(true); // Set loading to true before the API call
+      await dispatch(uploadImg(selectedFile));
+      setLoadingBtn1(false); // Set loading to false after the API call
     }
   };
-  const handleFileChange2 = (event) => {
+  const handleFileChange2 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImage(selectedFile));
+      setLoadingBtn2(true); // Set loading to true before the API call
+      await dispatch(uploadDocImage(selectedFile));
+      setLoadingBtn2(false); // Set loading to false after the API call
     }
   };
-  const handleFileChange3 = (event) => {
+  const handleFileChange3 = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      dispatch(uploadDocImageIf(selectedFile));
+      setLoadingBtn3(true); // Set loading to true before the API call
+      await dispatch(uploadDocImageIf(selectedFile));
+      setLoadingBtn3(false); // Set loading to false after the API call
     }
   };
 
@@ -2585,44 +2602,89 @@ export default function Visa_Application_List_Table() {
                     </Field>
 
                     <Button
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn ? <></> : <Icon icon="ep:upload-filled" />
+                      }
                     >
-                      Update Passport
+                      {/* Update Passport */}
+                      {loadingBtn ? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />
+                      ) : (
+                        <>Update Passport</>
+                      )}
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange}
                       />
                     </Button>
                     <Button
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn1 ? <></> : <Icon icon="ep:upload-filled" />
+                      }
                     >
-                      Update Photo
+                      {loadingBtn1 ? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />
+                      ) : (
+                        <>Update Photo</>
+                      )}
                       <VisuallyHiddenInput
                         type="file"
+                        accept="image/*"
                         onChange={handleFileChange1}
                       />
                     </Button>
 
-
                     <Button
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      // startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn3 ? <></> : <Icon icon="ep:upload-filled" />
+                      }
                     >
-                      Update Privious Visa (if any)
+                      {loadingBtn3 ? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />
+                      ) : (
+                        <>Update Previous Visa (If Any)</>
+                      )}
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange3}
                       />
                     </Button>
 
-
                     <Button
+                      component="label"
+                      role={undefined}
                       variant="contained"
-                      startIcon={<Icon icon="material-symbols:upload" />}
+                      startIcon={
+                        loadingBtn2 ? <></> : <Icon icon="ep:upload-filled" />
+                      }
                     >
-                      Update Other Document
+                      {loadingBtn2 ? (
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />
+                      ) : (
+                        <>Update Other Document</>
+                      )}
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange2}
