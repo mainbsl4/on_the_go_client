@@ -56,9 +56,9 @@ export default function Lone_request_from() {
   const handleSubmit = async (values: CreateLoneRequestValues) => {
     // dispatch(createLoanReq(values));
     try {
-      const response = await dispatch(createLoanReq(values))
-      
-      if (response?.payload?.status === 200){
+      const response = await dispatch(createLoanReq(values));
+
+      if (response?.payload?.status === 200) {
         // console.log("pagla", response);
         toast.success("Your  Lone Request successfully", {
           position: "top-center",
@@ -75,9 +75,7 @@ export default function Lone_request_from() {
     }
   };
 
-
-
-  // for loading 
+  // for loading
 
   useEffect(() => {
     // Simulate a loading period
@@ -197,8 +195,9 @@ export default function Lone_request_from() {
                 {({ field }) => (
                   <TextField
                     {...field}
+                    required
                     id="outlined-basic"
-                    label="Remarks (Optional)"
+                    label="Remarks"
                     variant="outlined"
                     type="text"
                     error={touched.remarks && !!errors.remarks}
@@ -234,6 +233,5 @@ export default function Lone_request_from() {
         )}
       </Formik>
     </div>
-  )
-
+  );
 }
