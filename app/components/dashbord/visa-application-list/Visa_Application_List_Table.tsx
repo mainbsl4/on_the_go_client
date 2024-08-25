@@ -509,6 +509,43 @@ export default function Visa_Application_List_Table() {
     religion: selectedDataForEdit?.religion || "",
     applyForCountry: selectedDataForEdit?.applyForCountry || "",
   };
+  // const handleSubmit = async (
+  //   values: UpdateVisaApplyFormValues,
+  //   { setSubmitting }
+  // ) => {
+  //   const formData = new FormData();
+  //   Object.keys(values).forEach((key) => {
+  //     formData.append(key, values[key]);
+  //   });
+
+  //   if (imgPass) formData.append("passportPdf", imgPass);
+  //   if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
+  //   if (img) formData.append("image", img);
+  //   if (img) formData.append("image", img);
+  //   if (previousPass) formData.append("previousPassPdf", previousPass);
+  //   try {
+  //     const response = await dispatch(
+  //       updateVisaApply({ id: selectedDataForEdit?.id, data: formData })
+  //     ).unwrap();
+  //     // Handle successful response
+
+  //     if (response?.status === 200) {
+  //       toast.success("Your visa updated successfully", {
+  //         position: "top-center",
+  //       });
+  //       const storedUserId = localStorage.getItem("userId");
+  //       dispatch(getUser(JSON.parse(storedUserId)));
+  //     }
+  //   } catch (error) {
+  //     console.error("API Error:", error);
+  //     // Handle error response
+  //   } finally {
+  //     setSubmitting(false);
+  //     setOpenModalForEdit(false);
+  //     dispatch(getAllVisaApply());
+  //   }
+  // };
+
   const handleSubmit = async (
     values: UpdateVisaApplyFormValues,
     { setSubmitting }
@@ -521,28 +558,26 @@ export default function Visa_Application_List_Table() {
     if (imgPass) formData.append("passportPdf", imgPass);
     if (imgDoc) formData.append("otherDocumentPdf", imgDoc);
     if (img) formData.append("image", img);
-    if (img) formData.append("image", img);
-    if (previousPass) formData.append("previousPassPdf", previousPass);
+
     try {
       const response = await dispatch(
         updateVisaApply({ id: selectedDataForEdit?.id, data: formData })
       ).unwrap();
       // Handle successful response
-
-      if (response?.status === 200) {
-        toast.success("Your visa updated successfully", {
-          position: "top-center",
-        });
-        const storedUserId = localStorage.getItem("userId");
-        dispatch(getUser(JSON.parse(storedUserId)));
-      }
     } catch (error) {
       console.error("API Error:", error);
       // Handle error response
     } finally {
       setSubmitting(false);
       setOpenModalForEdit(false);
-      dispatch(getAllVisaApply());
+      // dispatch(getAllVisaApply());
+      // i want to call getVesaApplyData in here
+      // actionDataGet(500);
+      // i want to reload data
+      const storedUserId = localStorage.getItem("userId");
+      dispatch(getUser(JSON.parse(storedUserId)));
+      // actionDataGet(500);
+
     }
   };
 
