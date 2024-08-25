@@ -2439,7 +2439,7 @@ export default function Visa_Application_List_Table_Admin() {
                               className="text-2xl"
                             />
                           ) : (
-                            "Upload Payment Received"
+                            "Upload Payment Receipt"
                           )}
                           {/* Upload Payment Received */}
                           <VisuallyHiddenInput

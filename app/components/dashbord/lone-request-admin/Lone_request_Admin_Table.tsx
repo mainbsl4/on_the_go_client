@@ -327,6 +327,16 @@ export default function Lone_request_Admin_Table() {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
+          {/* sum total Amount */}
+          <div className="flex justify-between items-center">
+            <span>
+              Total Amount:{" "}
+              {filteredData?.reduce(
+                (total, num) => total + Math.round(num.amount),
+                0
+              )}
+            </span>
+          </div>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
@@ -441,6 +451,14 @@ export default function Lone_request_Admin_Table() {
           </table>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
+          <div>
+            <strong>Total Approved Amount:</strong>{" "}
+            {filteredData?.reduce(
+              (acc, current) =>
+                current.isApproved === "APPROVED" ? acc + current.amount : acc,
+              0
+            )}
+          </div>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
@@ -546,6 +564,14 @@ export default function Lone_request_Admin_Table() {
           </table>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
+          <div>
+            <strong>Total Approved Amount:</strong>{" "}
+            {filteredData?.reduce(
+              (acc, current) =>
+                current.isApproved === "REJECTED" ? acc + current.amount : acc,
+              0
+            )}
+          </div>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
@@ -651,6 +677,14 @@ export default function Lone_request_Admin_Table() {
           </table>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={3}>
+          <div>
+            <strong>Total Approved Amount:</strong>{" "}
+            {filteredData?.reduce(
+              (acc, current) =>
+                current.isApproved === "PAID" ? acc + current.amount : acc,
+              0
+            )}
+          </div>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
