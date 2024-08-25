@@ -763,7 +763,7 @@ export default function Visa_Application_List_Table_Admin() {
   const handleDownloadPass = (data: any) => {
     const imageUrl = data?.passportPdf;
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}PASSPORT.${fileExtension}`;
+    const fileName = `${data?.givenName} PASSPORT.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -787,7 +787,7 @@ export default function Visa_Application_List_Table_Admin() {
   const handleDownloadDoc = (data: any) => {
     const imageUrl = data?.otherDocumentPdf;
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}DOCUMENT.${fileExtension}`;
+    const fileName = `${data?.givenName} DOCUMENT.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -813,7 +813,7 @@ export default function Visa_Application_List_Table_Admin() {
     const imageUrl = data?.previousPassPdf;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}PERVIOUSVISA.${fileExtension}`;
+    const fileName = `${data?.givenName}PERVIOUS VISA.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -838,7 +838,7 @@ export default function Visa_Application_List_Table_Admin() {
   const handleDownloadVisa = (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}VISA.${fileExtension}`;
+    const fileName = `${data?.givenName} VISA.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
