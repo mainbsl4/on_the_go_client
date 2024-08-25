@@ -570,14 +570,8 @@ export default function Visa_Application_List_Table() {
     } finally {
       setSubmitting(false);
       setOpenModalForEdit(false);
-      // dispatch(getAllVisaApply());
-      // i want to call getVesaApplyData in here
-      // actionDataGet(500);
-      // i want to reload data
       const storedUserId = localStorage.getItem("userId");
       dispatch(getUser(JSON.parse(storedUserId)));
-      // actionDataGet(500);
-
     }
   };
 
@@ -664,7 +658,7 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.passportPdf;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}-passport.${fileExtension}`;
+    const fileName = `${data?.givenName}PASSPORT.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -689,7 +683,7 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.otherDocumentPdf;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}-document.${fileExtension}`;
+    const fileName = `${data?.givenName}DOCUMENT.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -714,7 +708,7 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.previousPassPdf;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}-previous-visa.${fileExtension}`;
+    const fileName = `${data?.givenName}PERVIOUSVISA.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -741,7 +735,7 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.paymentReceive;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}-previous-visa.${fileExtension}`;
+    const fileName = `${data?.givenName}PAYMENTRECEIVE.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -768,7 +762,7 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.applicationCopy;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}-previous-visa.${fileExtension}`;
+    const fileName = `${data?.givenName}APPLICATIONCOPY.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -814,7 +808,7 @@ export default function Visa_Application_List_Table() {
   const handleDownloadVisa = async (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName}-visa.${fileExtension}`;
+    const fileName = `${data?.givenName}VISA.${fileExtension}`;
 
     // Call the API to notify success
     const status = "DELIVERED";
