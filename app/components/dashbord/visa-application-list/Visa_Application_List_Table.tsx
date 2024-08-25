@@ -735,7 +735,7 @@ export default function Visa_Application_List_Table() {
     const imageUrl = data?.paymentReceive;
 
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName} PAYMENT RECEIVE.${fileExtension}`;
+    const fileName = `${data?.givenName} PAYMENT RECEIPT.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -859,7 +859,7 @@ export default function Visa_Application_List_Table() {
   const handleDownloadVisa2 = (data: any) => {
     const imageUrl = data?.deliveredVisa;
     const fileExtension = imageUrl.split(".").pop() || "file";
-    const fileName = `${data?.givenName} VISA.${fileExtension}`;
+    const fileName = `${data?.givenName}VISA.${fileExtension}`;
 
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -1068,7 +1068,7 @@ export default function Visa_Application_List_Table() {
                       ) : reversedgetVesaApplyData?.isApproved === "APPLIED" ? (
                         <Chip
                           label="APPLIED"
-                          sx={{ backgroundColor: "#FFFF00" }}
+                          sx={{ backgroundColor: "#f6e58d" }}
                         />
                       ) : reversedgetVesaApplyData?.isApproved ===
                         "APPROVED" ? (
@@ -1203,7 +1203,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -1340,7 +1340,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -1477,7 +1477,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -1614,7 +1614,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -1751,7 +1751,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -1888,7 +1888,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -2025,7 +2025,7 @@ export default function Visa_Application_List_Table() {
                           "APPLIED" ? (
                           <Chip
                             label="APPLIED"
-                            sx={{ backgroundColor: "#FFFF00" }}
+                            sx={{ backgroundColor: "#f6e58d" }}
                           />
                         ) : reversedgetVesaApplyData?.isApproved ===
                           "APPROVED" ? (
@@ -2232,7 +2232,7 @@ export default function Visa_Application_List_Table() {
                           handleDownloadpaymentReceive(selectedDataForView)
                         }
                       >
-                        Download Your Payment Receive
+                        Download Your Payment Receipt
                       </Button>
 
                       <Button
