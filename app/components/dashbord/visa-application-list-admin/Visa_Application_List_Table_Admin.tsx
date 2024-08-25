@@ -348,6 +348,7 @@ export default function Visa_Application_List_Table_Admin() {
   // for search
   const [fromDate, setFromDate] = React.useState("");
   const [toDate, setToDate] = React.useState("");
+  const [givenNameSearchQuery, setGivenNameSearchQuery] = React.useState("");
   const [passportNoSearchQuery, setPassportNoSearchQuery] = React.useState("");
   const [regNoSearchQuery, setRegNoSearchQuery] = React.useState("");
   const [conpanyNameSearchQuery, setConpanyNameSearchQuery] =
@@ -548,6 +549,9 @@ export default function Visa_Application_List_Table_Admin() {
   const handleToDateChange = (event) => {
     setToDate(event.target.value);
   };
+  const handleGivenNameSearchQueryChange = (event) => {
+    setGivenNameSearchQuery(event.target.value);
+  };
 
   const handlePassportNoSearchQueryChange = (event) => {
     setPassportNoSearchQuery(event.target.value);
@@ -565,6 +569,9 @@ export default function Visa_Application_List_Table_Admin() {
     const from = fromDate ? dayjs(fromDate) : null;
     const to = toDate ? dayjs(toDate) : null;
     return (
+      data?.givenName
+        .toLowerCase()
+        .includes(givenNameSearchQuery.toLowerCase()) &&
       data?.passportNo
         .toLowerCase()
         .includes(passportNoSearchQuery.toLowerCase()) &&
@@ -912,6 +919,12 @@ export default function Visa_Application_List_Table_Admin() {
           }}
         />
         <TextField
+          label="Search by Name"
+          variant="outlined"
+          value={givenNameSearchQuery}
+          onChange={handleGivenNameSearchQueryChange}
+        />
+        <TextField
           label="Search by Passport"
           variant="outlined"
           value={passportNoSearchQuery}
@@ -926,7 +939,7 @@ export default function Visa_Application_List_Table_Admin() {
         />
 
         <TextField
-          label="company name"
+          label="Company Name"
           variant="outlined"
           value={conpanyNameSearchQuery}
           onChange={handleCompanyNameSearchQueryChange}
@@ -1042,33 +1055,41 @@ export default function Visa_Application_List_Table_Admin() {
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData?.passportNo}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 flex justify-between items-center">
                       {reversedgetVesaApplyData?.trackingId}
-                      {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                      {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData?.applyerEmail}
-                      {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                      {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       {reversedgetVesaApplyData?.comment}
@@ -1217,31 +1238,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
@@ -1394,31 +1423,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
@@ -1571,31 +1608,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
@@ -1748,31 +1793,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
@@ -1925,31 +1978,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
@@ -2102,30 +2163,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
@@ -2278,31 +2348,39 @@ export default function Visa_Application_List_Table_Admin() {
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.trackingId}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.trackingId
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.trackingId === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.trackingId
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.applyerEmail}
-                        {<IconButton
-                    aria-label="delete"
-                    color="success"
-                    onClick={() =>
-                      navigator.clipboard.writeText(
-                        reversedgetVesaApplyData?.applyerEmail
-                      )
-                    }
-                  >
-                    <Icon icon="flowbite:file-copy-outline" />
-                  </IconButton>}
+                        {reversedgetVesaApplyData?.applyerEmail === null ? (
+                        <></>
+                      ) : (
+                        <IconButton
+                          aria-label="delete"
+                          color="success"
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              reversedgetVesaApplyData?.applyerEmail
+                            )
+                          }
+                        >
+                          <Icon icon="flowbite:file-copy-outline" />
+                        </IconButton>
+                      )}
                       </td>
                       <td className="px-6 py-4">
                         {reversedgetVesaApplyData?.comment}
