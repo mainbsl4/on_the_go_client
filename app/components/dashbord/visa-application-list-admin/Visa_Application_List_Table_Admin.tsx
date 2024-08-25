@@ -647,7 +647,9 @@ export default function Visa_Application_List_Table_Admin() {
     img = imgState[0].url ? imgState[0].url : selectedDataForEdit?.image;
   }
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       setLoadingBtn(true); // Set loading to true before the API call
@@ -3002,14 +3004,14 @@ export default function Visa_Application_List_Table_Admin() {
                       }
                     >
                       {loadingBtn ? (
-                    <Icon
-                      icon="line-md:loading-twotone-loop"
-                      className="text-2xl"
-                    />
-                  ) : (
-                    <>Update Passport</>
-                  )}
-                      
+                        <Icon
+                          icon="line-md:loading-twotone-loop"
+                          className="text-2xl"
+                        />
+                      ) : (
+                        <>Update Passport</>
+                      )}
+
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange}
@@ -3022,9 +3024,8 @@ export default function Visa_Application_List_Table_Admin() {
                       startIcon={
                         loadingBtn1 ? <></> : <Icon icon="ep:upload-filled" />
                       }
-
                     >
-                      {loadingBtn1? (
+                      {loadingBtn1 ? (
                         <Icon
                           icon="line-md:loading-twotone-loop"
                           className="text-2xl"
@@ -3045,17 +3046,17 @@ export default function Visa_Application_List_Table_Admin() {
                       startIcon={
                         loadingBtn3 ? <></> : <Icon icon="ep:upload-filled" />
                       }
-
                     >
                       {/* Update Pervious visa (if any) */}
-                      {loadingBtn3? (
+                      {loadingBtn3 ? (
                         <Icon
                           icon="line-md:loading-twotone-loop"
                           className="text-2xl"
-                        />) : (
+                        />
+                      ) : (
                         <>Update Previous Visa (If Any)</>
                       )}
-                      
+
                       <VisuallyHiddenInput
                         type="file"
                         onChange={handleFileChange3}
@@ -3067,17 +3068,17 @@ export default function Visa_Application_List_Table_Admin() {
                       variant="contained"
                       // startIcon={<Icon icon="material-symbols:upload" />}
                       startIcon={
-                        loadingBtn2? <></> : <Icon icon="ep:upload-filled" />
+                        loadingBtn2 ? <></> : <Icon icon="ep:upload-filled" />
                       }
                     >
-                      {loadingBtn2? (
+                      {loadingBtn2 ? (
                         <Icon
                           icon="line-md:loading-twotone-loop"
                           className="text-2xl"
-                        />) : (
-                          <>Update Other Document (If Any)</>
+                        />
+                      ) : (
+                        <>Update Other Document (If Any)</>
                       )}
-
 
                       <VisuallyHiddenInput
                         type="file"
