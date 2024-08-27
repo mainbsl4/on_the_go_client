@@ -145,6 +145,12 @@ const userLinkData = [
     icon: <Icon className="text-3xl" icon="icon-park-outline:list-fail" />,
     link: "/dashbord/lone-request-list",
   },
+  {
+    id: 7,
+    text: "Ledger Report",
+    icon: <Icon className="text-3xl" icon="icon-park-outline:list-fail" />,
+    link: "/dashbord/ledger",
+  },
 ];
 
 const drawerWidth = 280;
