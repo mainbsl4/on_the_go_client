@@ -26,9 +26,9 @@ export default function LedgerTable() {
     (state: RootState) => state?.user?.user?.data?.deposit_request
   );
   const userDepositData = depositRequestDataWhenLogin
-  ? depositRequestDataWhenLogin
-  : depositRequestDataAfterLogin;
-// ++++++++++++++++++++++++++++++++++++++++++++++++++
+    ? depositRequestDataWhenLogin
+    : depositRequestDataAfterLogin;
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++
   const loanListAllWhenLogin = useSelector(
     (state: RootState) => state?.user?.user?.user?.loan_request
   );
@@ -37,8 +37,8 @@ export default function LedgerTable() {
     (state: RootState) => state?.user?.user?.data?.loan_request
   );
   const userLoneData = loanListAllWhenLogin
-  ? loanListAllWhenLogin
-  : loanListAfterLogin;
+    ? loanListAllWhenLogin
+    : loanListAfterLogin;
 
   // ++++++++++++++++++++++++++++++++/
   const getVesaApplyData = useSelector(
@@ -47,9 +47,9 @@ export default function LedgerTable() {
   const getVisaApply = useSelector(
     (state: RootState) => state?.user?.user?.data?.visa_apply
   );
-const userVisaApplyData = getVisaApply ? getVisaApply : getVesaApplyData;
+  const userVisaApplyData = getVisaApply ? getVisaApply : getVesaApplyData;
 
-userDepositData?.forEach((depositRequest: any) => {
+  userDepositData?.forEach((depositRequest: any) => {
     if (depositRequest?.isApproved === "APPROVED") {
       combinedData.push({
         ...depositRequest,
@@ -188,22 +188,31 @@ userDepositData?.forEach((depositRequest: any) => {
           </tr>
         </thead>
         <tbody>
-          {filteredData?.slice().reverse()?.map((item: any, index: number) => (
-            <tr key={index} className="border">
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                {index + 1}
-              </td>
-              <td className="px-6 py-4">{item?.type}</td>
-              <td className="px-6 py-4">
-                {new Date(item?.created_at).toLocaleDateString("en-GB")}
-              </td>
-              <td className="px-6 py-4 bg-red-400">{item?.sellingPrise}</td>
-              <td className="px-6 py-4 bg-blue-300">{item?.amount}</td>
-            </tr>
-          ))}
+          {filteredData
+            ?.slice()
+            .sort((a, b) => {
+              const dateA = new Date(a.created_at).getTime();
+              console.log(dateA);
+              
+              const dateB = new Date(b.created_at).getTime();
+              return dateB - dateA;
+            })
+            ?.map((item: any, index: number) => (
+              <tr key={index} className="border">
+                <td
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {index + 1}
+                </td>
+                <td className="px-6 py-4">{item?.type}</td>
+                <td className="px-6 py-4">
+                  {new Date(item?.created_at).toLocaleDateString("en-GB")}
+                </td>
+                <td className="px-6 py-4 bg-red-400">{item?.sellingPrise}</td>
+                <td className="px-6 py-4 bg-blue-300">{item?.amount}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
