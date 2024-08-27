@@ -5,12 +5,11 @@ import { RootState } from "../../../lib/store/store";
 import dayjs from "dayjs";
 import { Autocomplete, TextField } from "@mui/material";
 
-
 const typs = [
   { id: "1", label: "Visa" },
   { id: "2", label: "Loan" },
   { id: "3", label: "Deposit" },
-]
+];
 export default function LedgerTable() {
   // for search
   const [fromDate, setFromDate] = React.useState("");
@@ -19,19 +18,38 @@ export default function LedgerTable() {
 
   // for marge api for report
   const combinedData = [];
+
+  const depositRequestDataWhenLogin = useSelector(
+    (state: RootState) => state?.user?.user?.user?.deposit_request
+  );
   const depositRequestDataAfterLogin = useSelector(
     (state: RootState) => state?.user?.user?.data?.deposit_request
+  );
+  const userDepositData = depositRequestDataWhenLogin
+  ? depositRequestDataWhenLogin
+  : depositRequestDataAfterLogin;
+// ++++++++++++++++++++++++++++++++++++++++++++++++++
+  const loanListAllWhenLogin = useSelector(
+    (state: RootState) => state?.user?.user?.user?.loan_request
   );
 
   const loanListAfterLogin = useSelector(
     (state: RootState) => state?.user?.user?.data?.loan_request
   );
+  const userLoneData = loanListAllWhenLogin
+  ? loanListAllWhenLogin
+  : loanListAfterLogin;
 
+  // ++++++++++++++++++++++++++++++++/
+  const getVesaApplyData = useSelector(
+    (state: RootState) => state?.user?.user?.user?.visa_apply
+  );
   const getVisaApply = useSelector(
     (state: RootState) => state?.user?.user?.data?.visa_apply
   );
+const userVisaApplyData = getVisaApply ? getVisaApply : getVesaApplyData;
 
-  depositRequestDataAfterLogin?.forEach((depositRequest: any) => {
+userDepositData?.forEach((depositRequest: any) => {
     if (depositRequest?.isApproved === "APPROVED") {
       combinedData.push({
         ...depositRequest,
@@ -40,7 +58,7 @@ export default function LedgerTable() {
     }
   });
 
-  loanListAfterLogin?.forEach((loanRequest: any) => {
+  userLoneData?.forEach((loanRequest: any) => {
     if (loanRequest?.isApproved === "APPROVED") {
       combinedData.push({
         ...loanRequest,
@@ -49,7 +67,7 @@ export default function LedgerTable() {
     }
   });
 
-  getVisaApply?.forEach((visaApply: any) => {
+  userVisaApplyData?.forEach((visaApply: any) => {
     if (visaApply?.isApproved === "DELIVERED") {
       combinedData.push({
         ...visaApply,
@@ -80,7 +98,6 @@ export default function LedgerTable() {
     }
   }, 0);
 
-
   // for search
   const handleFromDateChange = (event) => {
     setFromDate(event.target.value);
@@ -98,7 +115,6 @@ export default function LedgerTable() {
     }
   };
 
-
   const filteredData = combinedData.filter((data) => {
     const itemDate = dayjs(data.created_at);
     const from = fromDate ? dayjs(fromDate) : null;
@@ -111,7 +127,7 @@ export default function LedgerTable() {
         itemDate.isSame(from, "day")) &&
       (!to || itemDate.isBefore(to, "day") || itemDate.isSame(to, "day"))
     );
-  });  
+  });
 
   return (
     <div>
@@ -137,13 +153,13 @@ export default function LedgerTable() {
           }}
         />
 
-<Autocomplete
-  disablePortal
-  options={typs}
-  sx={{ width: 300 }}
-  onChange={handleTypesSearchQueryChange}
-  renderInput={(params) => <TextField {...params} label="Movie" />}
-/>
+        <Autocomplete
+          disablePortal
+          options={typs}
+          sx={{ width: 300 }}
+          onChange={handleTypesSearchQueryChange}
+          renderInput={(params) => <TextField {...params} label="Movie" />}
+        />
       </div>
 
       <div>
@@ -172,7 +188,7 @@ export default function LedgerTable() {
           </tr>
         </thead>
         <tbody>
-          {filteredData?.map((item: any, index: number) => (
+          {filteredData?.slice().reverse()?.map((item: any, index: number) => (
             <tr key={index} className="border">
               <td
                 scope="row"
