@@ -158,7 +158,7 @@ export default function LedgerTable() {
           options={typs}
           sx={{ width: 300 }}
           onChange={handleTypesSearchQueryChange}
-          renderInput={(params) => <TextField {...params} label="Movie" />}
+          renderInput={(params) => <TextField {...params} label="Type" />}
         />
       </div>
 
