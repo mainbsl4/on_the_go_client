@@ -2293,7 +2293,7 @@ export default function Visa_Application_List_Table() {
                     ) : selectedDataForView?.isApproved === "RECEIVED" ? (
                       <Chip label="RECEIVED" color="success" />
                     ) : selectedDataForView?.isApproved === "APPLIED" ? (
-                      <Chip label="APPLIED" color="primary" />
+                      <Chip label="APPLIED" sx={{ backgroundColor: "#FFFF00" }} />
                     ) : selectedDataForView?.isApproved === "APPROVED" ? (
                       <Chip label="APPROVED" color="info" />
                     ) : selectedDataForView?.isApproved === "REJECTED" ? (
