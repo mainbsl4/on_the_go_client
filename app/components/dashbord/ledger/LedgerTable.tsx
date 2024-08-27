@@ -172,13 +172,14 @@ export default function LedgerTable() {
             <th scope="col" className="px-6 py-3">
               SL
             </th>
+            <th scope="col" className="px-6 py-3">
+              Date
+            </th>
 
             <th scope="col" className="px-6 py-3">
               Type
             </th>
-            <th scope="col" className="px-6 py-3">
-              Date
-            </th>
+
             <th scope="col" className="px-6 py-3">
               Debit
             </th>
@@ -191,7 +192,7 @@ export default function LedgerTable() {
           {filteredData
             ?.slice()
             .sort((a, b) => {
-              const dateA = new Date(a.created_at).getTime();              
+              const dateA = new Date(a.created_at).getTime();
               const dateB = new Date(b.created_at).getTime();
               return dateB - dateA;
             })
@@ -203,10 +204,10 @@ export default function LedgerTable() {
                 >
                   {index + 1}
                 </td>
-                <td className="px-6 py-4">{item?.type}</td>
                 <td className="px-6 py-4">
                   {new Date(item?.created_at).toLocaleDateString("en-GB")}
                 </td>
+                <td className="px-6 py-4">{item?.type}</td>
                 <td className="px-6 py-4 bg-red-400">{item?.sellingPrise}</td>
                 <td className="px-6 py-4 bg-blue-300">{item?.amount}</td>
               </tr>
