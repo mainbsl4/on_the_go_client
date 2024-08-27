@@ -71,7 +71,7 @@ export default function LedgerTable() {
     if (visaApply?.isApproved === "DELIVERED") {
       combinedData.push({
         ...visaApply,
-        type: "Visa",
+        type: `Visa ${visaApply?.passportNo}`,
       });
     }
   });
@@ -191,9 +191,7 @@ export default function LedgerTable() {
           {filteredData
             ?.slice()
             .sort((a, b) => {
-              const dateA = new Date(a.created_at).getTime();
-              console.log(dateA);
-              
+              const dateA = new Date(a.created_at).getTime();              
               const dateB = new Date(b.created_at).getTime();
               return dateB - dateA;
             })
