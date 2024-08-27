@@ -71,7 +71,7 @@ export default function LedgerTable() {
     if (visaApply?.isApproved === "DELIVERED") {
       combinedData.push({
         ...visaApply,
-        type: `Visa ${visaApply?.passportNo}`,
+        type: `Visa`,
       });
     }
   });
@@ -82,8 +82,8 @@ export default function LedgerTable() {
 
   // sum total dabit
   const totalDabit = combinedData?.reduce((acc, curr) => {
-    if (curr.type === "Deposit" || curr.type === "Loan") {
-      return acc + curr.amount;
+    if (curr.type === "Visa") {
+      return acc + curr.sellingPrise;
     } else {
       return acc;
     }
@@ -91,8 +91,10 @@ export default function LedgerTable() {
 
   // sum total cradit
   const totalCredit = combinedData?.reduce((acc, curr) => {
-    if (curr.type === "Visa") {
-      return acc + curr.sellingPrise;
+
+
+    if (curr.type === "Deposit" || curr.type === "Loan") {
+      return acc + curr.amount;
     } else {
       return acc;
     }
@@ -207,7 +209,7 @@ export default function LedgerTable() {
                 <td className="px-6 py-4">
                   {new Date(item?.created_at).toLocaleDateString("en-GB")}
                 </td>
-                <td className="px-6 py-4">{item?.type}</td>
+                <td className="px-6 py-4">{item?.type + item?.passportNo}</td>
                 <td className="px-6 py-4 bg-red-400">{item?.sellingPrise}</td>
                 <td className="px-6 py-4 bg-blue-300">{item?.amount}</td>
               </tr>
