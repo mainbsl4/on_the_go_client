@@ -122,15 +122,15 @@ export default function page() {
                       )}
                     </div>
                   </div>
-                  {/* <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-start"></div>
                     <a
-                      href="#"
+                      href="email_validation"
                       className="text-sm font-medium text-primary-600 hover:underline "
                     >
                       Forgot password?
                     </a>
-                  </div> */}
+                  </div>
                   <button
                     type="submit"
                     disabled={isSubmitting}
