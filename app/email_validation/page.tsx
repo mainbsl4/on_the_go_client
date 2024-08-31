@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import { base_url } from "../utils/config";
 
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ export default function Page() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:10000/api/user/emailverify/${email}`
+        `${base_url}user/emailverify/${email}`
       );
       console.log("Success:", response.data);
     } catch (error) {
