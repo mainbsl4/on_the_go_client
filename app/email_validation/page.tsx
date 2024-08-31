@@ -14,9 +14,14 @@ export default function Page() {
         `${base_url}user/emailverify/${email}`
       );
       console.log("Success:", response.data);
-      toast.success(`Please check your Email`, {
-        position: "top-center",
-      });
+      if(response){
+        toast.success(`Please check your Email`, {
+          position: "top-center",
+        });
+      }
+      // toast.success(`Please check your Email`, {
+      //   position: "top-center",
+      // });
     } catch (error) {
       // console.error("Error:", error);
       toast.error(`Something Worng, please try again`, {
