@@ -13,6 +13,11 @@ export interface SignupFormValues {
   password: string;
   confirmPassword: string;
 }
+export interface ConfirmPasswordFormValues {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 export interface SigninFormValues {
   credential: string;
