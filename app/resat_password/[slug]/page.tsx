@@ -5,6 +5,7 @@ import { Field, Form, Formik } from "formik";
 import { ConfirmPasswordFormSchema } from "../../utils/validationSchema";
 import axios from "axios";
 import { base_url } from "../../utils/config";
+import { toast } from "react-toastify";
 
 export default function page({ params }: { params: { slug: string } }) {
 
@@ -17,11 +18,22 @@ export default function page({ params }: { params: { slug: string } }) {
 
   const handleSubmit = async (values: ConfirmPasswordFormValues) => {
     try {
-      
       const response = await axios.put(`${base_url}user/forgetPassword/`, values);
       console.log('Response:', response.data);
+      // redrict ro signin page 
+      toast.success(`Password reset successfully`, {
+        position: "top-center",
+      });
+
+      // setTimeout(() => {
+      //   window.location.href = "/signin";
+      // }, 3000);
+      window.location.href = "/signin";
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
+      toast.error(`Please try again`, {
+        position: "top-center",
+      });
     }
   };
   return (

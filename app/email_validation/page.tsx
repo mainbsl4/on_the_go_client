@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { base_url } from "../utils/config";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -13,8 +14,15 @@ export default function Page() {
         `${base_url}user/emailverify/${email}`
       );
       console.log("Success:", response.data);
+      toast.success(`Please check your Email`, {
+        position: "top-center",
+      });
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
+      toast.error(`Something Worng, please try again`, {
+        position: "top-center",
+      });
+      // console.error("Error:", error);
     }
   };
 
