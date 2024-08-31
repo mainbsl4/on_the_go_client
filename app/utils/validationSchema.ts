@@ -22,6 +22,15 @@ export const SignUpFormSchema = Yup.object().shape({
     .required("Confirm password is required"),
 });
 
+export const ConfirmPasswordFormSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm password is required"),
+});
+
 export const SigninFormSchema = Yup.object().shape({
   credential: Yup.string().required("Email Or Phone is required"),
   password: Yup.string().required("Password is required"),
