@@ -49,13 +49,18 @@ export default function page() {
         console.log("ress", response);
         router.push("/dashbord");
       } else {
-        console.error("Login failed:", response.error);
+        toast.success(`Login failed: ${response.error}`, {
+          position: "top-center",
+        });
       }
     } catch (error) {
-      console.error("Login failed:", error);
+      toast.success(`Login failed: ${error}`, {
+        position: "top-center",
+      });
+      // console.error("Login failed:", error);
     }
 
-    console.log(values);
+    // console.log(values);
   };
 
   return (
