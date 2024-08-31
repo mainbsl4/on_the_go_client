@@ -405,7 +405,7 @@ export default function Lone_request_Admin_Table() {
                       ) : loanList?.isApproved === "RECEIVED" ? (
                         <Chip label="RECEIVED" color="success" />
                       ) : loanList?.isApproved === "APPLIED" ? (
-                        <Chip label="APPLIED" color="primary" />
+                        <Chip label="APPLIED" sx={{ backgroundColor: "#FFFF00" }} />
                       ) : loanList?.isApproved === "APPROVED" ? (
                         <Chip label="APPROVED" color="info" />
                       ) : loanList?.isApproved === "REJECTED" ? (
@@ -516,7 +516,7 @@ export default function Lone_request_Admin_Table() {
                         ) : loanList?.isApproved === "RECEIVED" ? (
                           <Chip label="RECEIVED" color="success" />
                         ) : loanList?.isApproved === "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip label="APPLIED" sx={{ backgroundColor: "#FFFF00" }} />
                         ) : loanList?.isApproved === "APPROVED" ? (
                           <Chip label="APPROVED" color="info" />
                         ) : loanList?.isApproved === "REJECTED" ? (
@@ -629,7 +629,7 @@ export default function Lone_request_Admin_Table() {
                         ) : loanList?.isApproved === "RECEIVED" ? (
                           <Chip label="RECEIVED" color="success" />
                         ) : loanList?.isApproved === "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip label="APPLIED" sx={{ backgroundColor: "#FFFF00" }} />
                         ) : loanList?.isApproved === "APPROVED" ? (
                           <Chip label="APPROVED" color="info" />
                         ) : loanList?.isApproved === "REJECTED" ? (
@@ -742,7 +742,7 @@ export default function Lone_request_Admin_Table() {
                         ) : loanList?.isApproved === "RECEIVED" ? (
                           <Chip label="RECEIVED" color="success" />
                         ) : loanList?.isApproved === "APPLIED" ? (
-                          <Chip label="APPLIED" color="primary" />
+                          <Chip label="APPLIED" sx={{ backgroundColor: "#FFFF00" }} />
                         ) : loanList?.isApproved === "APPROVED" ? (
                           <Chip label="APPROVED" color="info" />
                         ) : loanList?.isApproved === "REJECTED" ? (
@@ -831,7 +831,7 @@ export default function Lone_request_Admin_Table() {
                   ) : selectedDataForView?.isApproved === "RECEIVED" ? (
                     <Chip label="RECEIVED" color="success" />
                   ) : selectedDataForView?.isApproved === "APPLIED" ? (
-                    <Chip label="APPLIED" color="primary" />
+                    <Chip label="APPLIED" sx={{ backgroundColor: "#FFFF00" }} />
                   ) : selectedDataForView?.isApproved === "APPROVED" ? (
                     <Chip label="APPROVED" color="info" />
                   ) : selectedDataForView?.isApproved === "REJECTED" ? (
