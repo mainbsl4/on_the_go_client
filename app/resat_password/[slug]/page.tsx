@@ -6,6 +6,8 @@ import { ConfirmPasswordFormSchema } from "../../utils/validationSchema";
 import axios from "axios";
 import { base_url } from "../../utils/config";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function page({ params }: { params: { slug: string } }) {
 
